@@ -1,4 +1,4 @@
-/*
+
 #include "Map.h"
 #include "Area.h"
 #include "Player.h"
@@ -77,4 +77,3 @@ player4->print();
 system("pause");
 return 0;
 }
-*/
