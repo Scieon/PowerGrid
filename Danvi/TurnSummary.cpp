@@ -1,4 +1,4 @@
-#include <iostream>
+ #include <iostream>
 #include <algorithm>
 #include <string>
 
@@ -40,36 +40,35 @@ int TurnSummary::getTurnCounter(){
 who has the most number of houses in the network. If two players are tied, then choose the player with the largest number of power plant. */
 void TurnSummary::turnOrder(){
 	//Enters this step in the first round because it will randomize who gets to play first.
+	cout << " ///////////////////////////////////////////////////////" << endl;
+	cout << " THIS IS FIRST STEP TO DETERMINE THE TURN ORDER" << endl;
+	cout << " ///////////////////////////////////////////////////////" << endl;
+
 	if (turnCounter == 1)
 	{
-		cout << " ///////////////////////////////////////////////////////" << endl;
-		cout << " THIS IS FIRST STEP TO DETERMINE THE TURN ORDER" << endl;
-		cout << " ///////////////////////////////////////////////////////" << endl;
-
 		random_shuffle(vector_player.begin(), vector_player.end());
-		int position = 1;
-		for (Player* p : vector_player)
-		{
-			p->setTurnOrder(position);
-			cout << "Here is the P" << position << " with the color: " << p->getColor() << endl;
-			position++;
-		}
 	}
 	else
 	{   //After first round, it will always go through this one to determine the order
-		cout << " ///////////////////////////////////////////////////////" << endl;
-		cout << " THIS IS FIRST STEP TO DETERMINE THE TURN ORDER" << endl;
-		cout << " ///////////////////////////////////////////////////////" << endl;
-
 		//This is where you will need to check each player's who has the highest amount of bought houses. If two players have the same number of houses then 
-		//the turn order will be determined by the highest power plant number 
+		//the turn order will be determined by the highest power plant number
 
-		if (vector_player.at(0)->getHouseManager()->getHouseCount() < vector_player.at(1)->getHouseManager()->getHouseCount()){
+		int player1HouseCount = vector_player.at(0)->getHouseManager()->getHouseCount();
+		int player2HouseCount = vector_player.at(1)->getHouseManager()->getHouseCount();
+
+		if (player1HouseCount1 < player2HouseCount){
 			reverse(vector_player.begin(), vector_player.end());
 		}
-		else if (vector_player.at(0)->getHouseManager()->getHouseCount() == vector_player.at(1)->getHouseManager()->getHouseCount()){
-			if (vector_player.at(0)->getPowerPlantManager()->determineHighestCost() < vector_player.at(1)->getPowerPlantManager()->determineHighestCost()){
+		else if (player1HouseCount == player2HouseCount){
+			
+			int player1HighestPlant = vector_player.at(0)->getPowerPlantManager()->determineHighestCost();
+			int player2HighestPlant = vector_player.at(1)->getPowerPlantManager()->determineHighestCost();
+
+			if (player1HighestPlant < player2HighestPlant){
 				reverse(vector_player.begin(), vector_player.end());
+			}
+			else {
+				//Already correct order
 			}
 		}
 		else
