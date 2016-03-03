@@ -11,12 +11,9 @@ public:
 	~Coal();
 	Coal();
 	Coal(int quantity);
-	int getCost() const;
-	void setCost(int cost);
 	string getType() const;
 
 private:
-	int cost;
 	string type = "Coal";
 };
 

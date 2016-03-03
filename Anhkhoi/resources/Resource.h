@@ -21,11 +21,13 @@ public:
 	void setColor(string color);
 	string getColor() const;
 	//Virtual functions to make the class abstract
-	virtual int getCost() const = 0;
-	virtual void setCost(int cost) = 0;
+	virtual int getCost() const;
+	virtual void setCost(int cost);
+	virtual string getType()const = 0;
 
 
 private:
+	int cost;
 	int quantity; //Amount of resources
 	string color; //Color of the resource object
 };

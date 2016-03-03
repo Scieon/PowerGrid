@@ -33,3 +33,11 @@ void Resource::addQuantity(int quantity) {
 	this->quantity += quantity;
 }
 
+void Resource::setCost(int cost) {
+	this->cost = cost;
+}
+
+int Resource::getCost()const {
+	return cost;
+}
+

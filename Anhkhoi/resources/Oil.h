@@ -8,12 +8,10 @@ public:
 	Oil();
 	Oil(int quantity);
 	~Oil();
-	int getCost() const;
-	void setCost(int cost);
 	string getType() const;
 
 private:
-	int cost;
+
 	string type = "Oil";
 
 };
