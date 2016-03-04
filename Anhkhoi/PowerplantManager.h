@@ -10,14 +10,8 @@ class PowerplantManager {
 
 
 public:
-	
+	PowerplantManager();
 	~PowerplantManager();
-
-	static PowerplantManager* getInstance()
-	{
-		static PowerplantManager * instance = new PowerplantManager();
-		return instance;
-	}
 
 	void printMarket();
 
@@ -29,13 +23,11 @@ public:
 	
 
 private:
-	PowerplantManager(); //Constructor is private
-	PowerplantManager(PowerplantManager const&) = delete; // Don't Implement
-	void operator=(PowerplantManager const&) = delete; // Don't implement
-
 	Powerplant powerplants[3];
 	int numberOfPlants;
 	vector<Powerplant> * powerplantsVector;
+
+
 };
 
 
