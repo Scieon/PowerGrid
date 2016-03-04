@@ -20,7 +20,7 @@ public:
 	int getResourceReq();
 	int getStorage();
 	void showPlantInfo();
-
+	bool operator<(const Powerplant&);
 
 private:
 	
@@ -37,3 +37,5 @@ private:
 
 
 #endif
+
+

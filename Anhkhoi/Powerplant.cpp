@@ -66,3 +66,9 @@ void Powerplant::showPlantInfo() {
 		<< "Number of supplied cities:  " << num_cities_powered << endl << endl;
 }
 
+//Used to sort market.
+bool Powerplant::operator<(const Powerplant & pp)
+{
+	return min_bid < pp.min_bid;
+}
+
