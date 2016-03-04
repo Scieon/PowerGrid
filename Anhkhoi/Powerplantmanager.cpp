@@ -9,7 +9,6 @@ using namespace std;
 
 //Defautl constructor initializing all possible power plants
 PowerplantManager::PowerplantManager() {
-
 	Powerplant coal4(4, "Coal", 2, 1);
 	Powerplant coal8(8, "Coal", 3, 2);
 	Powerplant coal10(10, "Coal", 2, 2);
@@ -60,7 +59,7 @@ PowerplantManager::PowerplantManager() {
 
 	Powerplant step3(-1, "Step 3", -1, -1);
 
-
+	//Vector of all Powerplants
 	powerplantsVector = new vector<Powerplant>();
 
 	//Powerplant Start
@@ -124,6 +123,7 @@ PowerplantManager::PowerplantManager() {
 	//Randomly shuffle the cards 
 	//from index 9 (Powerplant 13) to end-1 (excluding step 3)
 	random_shuffle(powerplantsVector->begin() + 9, powerplantsVector->end() - 1);
+
 }
 
 PowerplantManager::~PowerplantManager() {
@@ -184,10 +184,6 @@ bool PowerplantManager::isPowerplantInActualMarket(int bid) {
 		return false;
 	}
 	return true;
-}
-
-void PowerplantManager::removePowerplant(Powerplant& pp) {
-
 }
 
 //Sorts the powerplantVector first 8 elements according to 
