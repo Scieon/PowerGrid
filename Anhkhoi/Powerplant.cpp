@@ -61,7 +61,8 @@ void Powerplant::showPlantInfo() {
 
 	if (resource_type == "Hybrid")
 		type = "Coal or Oil";
-	cout << "------- " << resource_type << " Plant ----------" << endl << "Current Price: " << min_bid << " elektros" << endl
+	cout << "------- " << resource_type << " Plant ----------" << endl
+		<< "Current Price: " << min_bid << " elektros" << endl
 		<< "Operation Cost: " << resources_required << " units of " << type << endl
 		<< "Number of supplied cities:  " << num_cities_powered << endl << endl;
 }

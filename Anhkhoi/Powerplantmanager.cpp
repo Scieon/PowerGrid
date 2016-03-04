@@ -3,6 +3,7 @@
 #include <vector>
 #include <algorithm> // std::random_shuffle
 #include <ctime> // std::time()
+#include <iostream>
 
 using namespace std;
 
@@ -120,27 +121,86 @@ PowerplantManager::PowerplantManager() {
 	//See:https://stackoverflow.com/questions/13459953/random-shuffle-not-really-random
 	std::srand(std::time(0));
 
-	//Randomly shuffle the cards from index 9 to end-1
+	//Randomly shuffle the cards 
+	//from index 9 (Powerplant 13) to end-1 (excluding step 3)
 	random_shuffle(powerplantsVector->begin() + 9, powerplantsVector->end() - 1);
-	sortMarket();
 }
 
 PowerplantManager::~PowerplantManager() {
 
 }
 
+void PowerplantManager::printMarket() {
+
+	/*
+	TODO:: Case where market is < 8 ppcards
+	*/
+	for (int i = 0; i < 8; i++) {
+		if (i == 0) {
+			cout << "Actual Market: " << endl;
+		}
+		if (i == 4) {
+			cout << "Future Market: " << endl;
+		}
+
+		(*powerplantsVector)[i].showPlantInfo();
+	}
+
+}
+
+/*
+Returns index of powerplant in actual market using the bid
+Returns 0 if the powerplant isn't in market
+*/
+int PowerplantManager::findPowerplantIndexInActualMarket(int bid) {
+	
+	int ppVSize = powerplantsVector->size();
+	int index = 0;
+
+	if (ppVSize <= 4) {
+		for (Powerplant pp : *powerplantsVector) {
+			if (pp.getBid() == bid) {
+				return index;
+			}
+			index++;
+		}
+		return 0; //powerplant not found
+	}
+	else {
+		for (int i = 0; i < 4; i++) {
+			if ((*powerplantsVector)[i].getBid() == bid) {
+				return i;
+			}
+		}
+		return 0; //powerplant not found
+	}
+	
+}
+
+//Checks if the powerplant is in the actual market
+bool PowerplantManager::isPowerplantInActualMarket(int bid) {
+
+	if (findPowerplantIndexInActualMarket(bid) == 0) {
+		return false;
+	}
+	return true;
+}
+
+void PowerplantManager::removePowerplant(Powerplant& pp) {
+
+}
 
 //Sorts the powerplantVector first 8 elements according to 
 //their miniumum bid
 void PowerplantManager::sortMarket() {
-	
-	int ppSize = powerplantsVector->size();
 
-	if (ppSize <= 8) {
+	int ppVSize = powerplantsVector->size();
+
+	if (ppVSize <= 8) {
 		std::sort(powerplantsVector->begin(), powerplantsVector->end());
 	}
 	//sort only the first 8 elements
-	else{
-		std::sort(powerplantsVector->begin(), powerplantsVector->end() + 8 - ppSize);
+	else {
+		std::sort(powerplantsVector->begin(), powerplantsVector->end() + 8 - ppVSize);
 	}
 }

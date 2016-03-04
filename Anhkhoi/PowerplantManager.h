@@ -13,6 +13,12 @@ public:
 	PowerplantManager();
 	~PowerplantManager();
 
+	void printMarket();
+
+	int findPowerplantIndexInActualMarket(int bid);
+
+	bool isPowerplantInActualMarket(int bid);
+
 	void sortMarket();
 	
 
