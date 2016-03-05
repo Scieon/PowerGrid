@@ -17,11 +17,18 @@ public:
 	void building();
 	void bureaucracy();
 
+	
+
+	
+
 
 private:
 	int turnCounter;
 	int nbOfPlayer = 0;
 	std::vector<Player*> vector_player;
+	PowerplantManager * powerplants_Vector;
+
+	Player * getNextPlayer(Player & p);
 };
 
 #endif //TURNSUMMARY_H

@@ -137,10 +137,18 @@ void PowerplantManager::printMarket() {
 	*/
 	for (int i = 0; i < 8; i++) {
 		if (i == 0) {
-			cout << "Actual Market: " << endl;
+			cout << endl;
+			cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
+			cout << "@@@@@  Actual Market  @@@@@" << endl;
+			cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
+			cout << endl;
 		}
 		if (i == 4) {
-			cout << "Future Market: " << endl;
+			cout << endl;
+			cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
+			cout << "@@@@@  Future Market  @@@@@" << endl;
+			cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
+			cout << endl;
 		}
 
 		(*powerplantsVector)[i].showPlantInfo();
@@ -150,7 +158,7 @@ void PowerplantManager::printMarket() {
 
 /*
 Returns index of powerplant in actual market using the bid
-Returns 0 if the powerplant isn't in market
+Returns -2 if the powerplant isn't in market (since -1 is used for Step 3 card)
 */
 int PowerplantManager::findPowerplantIndexInActualMarket(int bid) {
 	
@@ -164,7 +172,7 @@ int PowerplantManager::findPowerplantIndexInActualMarket(int bid) {
 			}
 			index++;
 		}
-		return 0; //powerplant not found
+		return -2; //powerplant not found
 	}
 	else {
 		for (int i = 0; i < 4; i++) {
@@ -172,7 +180,7 @@ int PowerplantManager::findPowerplantIndexInActualMarket(int bid) {
 				return i;
 			}
 		}
-		return 0; //powerplant not found
+		return -2; //powerplant not found
 	}
 	
 }
@@ -180,7 +188,7 @@ int PowerplantManager::findPowerplantIndexInActualMarket(int bid) {
 //Checks if the powerplant is in the actual market
 bool PowerplantManager::isPowerplantInActualMarket(int bid) {
 
-	if (findPowerplantIndexInActualMarket(bid) == 0) {
+	if (findPowerplantIndexInActualMarket(bid) == -2) {
 		return false;
 	}
 	return true;
@@ -205,4 +213,15 @@ void PowerplantManager::sortMarket() {
 	else {
 		std::sort(powerplantsVector->begin(), powerplantsVector->end() + 8 - ppVSize);
 	}
+}
+
+//Checks the Actual market to see if the player has enough electro
+//To purchase one of the items
+bool PowerplantManager::hasEnoughElectroForMarket(int electro) {
+
+	//checks only first powerplant since market is already sorted
+	if ((*powerplantsVector)[0].getBid() <= electro) {
+		return true;
+	}
+	return false;
 }

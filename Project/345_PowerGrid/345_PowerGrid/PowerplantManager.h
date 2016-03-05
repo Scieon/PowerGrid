@@ -20,6 +20,8 @@ public:
 	bool isPowerplantInActualMarket(int bid);
 
 	void sortMarket();
+
+	bool hasEnoughElectroForMarket(int electro);
 	
 
 private:
