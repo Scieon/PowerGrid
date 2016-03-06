@@ -11,7 +11,7 @@ TODO
 
 **Build 1**
 
-|Done| Requirment | Grade |
+|Done| Requirement | Grade |
 |:-:| :-------------: |:-------------:|
 | | User-driven creation of map (board) elements | **/9** |
 | | Saving map exactly as edited      | **/4** |
@@ -22,7 +22,7 @@ TODO
 | | Load from file resource market && power plants | **/3** |
 | | Implement driver's phases 1-4 | **/10** |
 | | Game starts with user saved map (load map) | **/5** |
-| | User chooses 2 players and given electro | **/4** |
+| x| User chooses 2 players and given electro | **/4** |
 | | Players place house on 1 in scoring track  | **/3** |
 | | Place resources as supply near board | **/3** |
 | | Place power plant cards on board | **/3** |
