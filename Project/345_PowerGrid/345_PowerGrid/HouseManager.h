@@ -14,7 +14,11 @@ public:
 	void addHouses(House house);
 	int getHouseCount();
 
+	bool isHouseCountMax();
+
 private:
+
+	const int MAX_HOUSE_COUNT = 22;
 	int houseCount;
 	vector<House> houseVector;
 };

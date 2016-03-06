@@ -7,6 +7,9 @@ using namespace std;
 //Default constructor
 HouseManager::HouseManager(){ 
 	houseCount = 0;
+	houseVector = vector<House>();
+
+	houseVector.clear();
 }
 
 //Destructor
@@ -22,6 +25,12 @@ void HouseManager::setHouseCount(int houseCount){
 //Getter
 int HouseManager::getHouseCount(){
 	return houseCount;
+}
+
+//Check if the maximum number of houses per player is reached
+bool HouseManager::isHouseCountMax()
+{
+	return houseCount == MAX_HOUSE_COUNT;
 }
 
 //Adding the number of bought houses/cities to the collection

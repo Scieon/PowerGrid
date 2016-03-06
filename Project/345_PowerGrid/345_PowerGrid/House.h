@@ -8,12 +8,14 @@ class House{
 public:
 	House();
 	~House();
-	House(string);
+	House(int, string);
+	int getIndex();
+	void setIndex(int);
 	string getLocation();
 	void setLocation(string);
 
 private: 
-	int house;
+	int index;
 	string location;
 };
 
