@@ -17,7 +17,7 @@ public:
 	int getTurnOrder();
 	string getColor();
 	int getMoney();
-    Resource *resource[4]; //Should put this private since its attribute
+   
 	HouseManager* getHouseManager();
 
 	//Power Plant methods added by Anhkhoi, feel free to modify
@@ -32,6 +32,7 @@ private:
 	int turnOrder;
 	string color;
 	HouseManager* houseManager;
+	Resource *resource[4]; 
 	Powerplant * powerplants[3]; //Players can have up to 3 power plants stored in an array of powerplants
 	int numberOfPlants = 0;  //Counter for each player
 	
