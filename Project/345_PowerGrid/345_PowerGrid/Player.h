@@ -25,6 +25,8 @@ public:
 	//Power Plant methods added by Anhkhoi, feel free to modify
 	void showPlants();
 	void addPlant(Powerplant p1); //incomplete "p2->addPlant(oil3);"
+	
+	void addResource(string type, int quantity); //Don't care about cost 
 
 
 private:
