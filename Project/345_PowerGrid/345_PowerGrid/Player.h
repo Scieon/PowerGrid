@@ -14,19 +14,19 @@ public:
 	void setTurnOrder(int);
 	void setColor(string);
 	void setMoney(int);
-	void setResources(Resource);
 	int getTurnOrder();
 	string getColor();
 	int getMoney();
+        Resource *resource[4];
 	HouseManager* getHouseManager();
-	Resource* getResources();
+
 
 private:
 	int money;
 	int turnOrder;
 	string color;
 	HouseManager* houseManager;
-	Resource* resource;
+	
 };
 
 #endif //PLAYER_H
