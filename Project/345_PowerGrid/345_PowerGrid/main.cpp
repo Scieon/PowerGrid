@@ -11,8 +11,8 @@
 using namespace std;
 
 int main(){
-	Player* player1 = new Player("red", 1);
-	Player* player2 = new Player("blue", 2);
+	Player* player1 = new Player("red");
+	Player* player2 = new Player("blue");
 	int nbPlayers;
 	int i = 1;
 	int y = 1;

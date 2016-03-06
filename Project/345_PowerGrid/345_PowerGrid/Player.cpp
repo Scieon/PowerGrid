@@ -13,9 +13,8 @@ int Player::number_of_players = 0;
 Player::Player() {}
 
 //Constructor initializes for Players 
-Player::Player(string color, int turnOrder){
+Player::Player(string color){
 	money = 50;
-	this->turnOrder = turnOrder;
 	this->color = color;
 	
 	resources = new ResourceManager();
@@ -27,11 +26,6 @@ Player::Player(string color, int turnOrder){
 //Destructor
 Player::~Player(){
 
-}
-
-//Mutator function to set who goes first
-void Player::setTurnOrder(int turnOrder){
-	this->turnOrder = turnOrder;
 }
 
 //Mutator function to set the color of the player/house
@@ -46,11 +40,6 @@ void Player::setMoney(int amount){
 
 void Player::subtractMoney(int elektros) {
 	this->money -= elektros;
-}
-
-//Accessor function to get the order of who is going first 
-int Player::getTurnOrder(){
-	return turnOrder;
 }
 
 //Accessor function to get the color of the player

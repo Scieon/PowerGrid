@@ -15,14 +15,12 @@ using namespace std;
 
 class Player{
 public:
-	Player(string, int);
+	Player(string);
 	Player();
 	~Player();
-	void setTurnOrder(int);
 	void setColor(string color);
 	void setMoney(int elektros);
 	void subtractMoney(int elektros);
-	int getTurnOrder();
 	string getColor();
 	int getMoney();
    
