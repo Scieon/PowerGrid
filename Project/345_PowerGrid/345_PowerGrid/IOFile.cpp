@@ -8,8 +8,6 @@
 #include <string>
 #include <vector>
 
-
-
 using std::cout;
 using std::endl;
 using std::ofstream;
@@ -37,7 +35,6 @@ void IOFile::savePlayer(Player & player1, Player &player2) {
 	cout << "Saving Player 1" <<endl;
 	
 	output << "Player1" << endl;
-	output << "Name=" << player1.getName() << endl;
 	output << "Electro=" << player1.getElectro() << endl;
 	output << "NumberOfHouses=" << player1.getNumberOfHouses() << endl;
 	output << "Color=" << player1.getColor() << endl;
@@ -52,7 +49,6 @@ void IOFile::savePlayer(Player & player1, Player &player2) {
 	cout << "Saving Player 2" << endl;
 	output << endl;
 	output << "Player2" << endl;
-	output << "Name=" << player2.getName() << endl;
 	output << "Electro=" << player2.getElectro() << endl;
 	output << "NumberOfHouses=" << player2.getNumberOfHouses() << endl;
 	output << "Color=" << player2.getColor() << endl;
@@ -77,9 +73,6 @@ void IOFile::loadPlayer(Player &player1, Player &player2) {
 	
 	input >> skip; //Player1
 	
-	input >> skip;
-	pos = skip.find("=");
-	player1.setName(skip.substr(pos+1)); //name
 
 	input >> skip;
 	pos = skip.find("=");
@@ -109,11 +102,9 @@ void IOFile::loadPlayer(Player &player1, Player &player2) {
 	pos = skip.find("=");
 	player1.setUranium(stoi(skip.substr(pos + 1))); //uranium
 
+
 	input >> skip; //Player2
 
-	input >> skip;
-	pos = skip.find("=");
-	player2.setName(skip.substr(pos + 1)); //name
 
 	input >> skip;
 	pos = skip.find("=");
