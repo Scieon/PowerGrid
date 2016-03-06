@@ -2,6 +2,7 @@
 #include "Player.h" 
 #include "House.h" 
 #include "Resource.h"
+#include "Powerplant.h"
 #include "Verify.h"
 
 using namespace std;
@@ -22,7 +23,7 @@ Player::Player(string color, int turnOrder){
 }
 
 //Destructor
-Player::~Player(){
+Player::~Player(){a
 
 }
 
@@ -75,6 +76,23 @@ void Player::addPlant(Powerplant p1) {
 	}
 }
 
+//This function adds a selected amount of a resource into a players resource possessions
+void Player::addResource(string type, int quantity) {
+	if (type == "Coal")
+		resources[0]->addQuantity(quantity);
+
+	if (type == "Oil")
+		resources[1]->addQuantity(quantity);
+
+	if (type == "Garbage")
+		resources[2]->addQuantity(quantity);
+
+	if (type == "Uranium")
+		resources[3]->addQuantity(quantity);
+
+	else
+		cout << "Error in adding resource quantity" << endl;
+}
 
 //Display user possessions and characteristics
 void Player::showInfo() const {
