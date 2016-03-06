@@ -272,31 +272,37 @@ void TurnSummary::buyRawMaterial(){
 			//have to add each in player, and need to add max of 2 items only
 			//They must choose how many of the raw material that they would like to buy. It will calculate the cost to their money too.
 			if (materialChoice == "coal"){
-				cout << "How many coal would you like buy? ";
+				cout << "How many coal would you like buy: ";
 				cin >> qty;
-				p->getResources()->setCoal(qty + p->getResources()->getCoal());
+				//p->getResources()->setCoal(qty + p->getResources()->getCoal());
+				p->addResource("Coal", qty);
 				p->setMoney(p->getMoney() - (3 * qty));
 				cout << endl << "Here is how much you have after buying " << p->getMoney() << "$" << endl;
-				cout <<" HERE IS THE COAL " <<p->getResources()->getCoal() << endl;
+				//cout <<" HERE IS THE COAL " <<p->getResources()->getCoal() << endl;
+				cout << "Current coal in possession: " << p->getResource("Coal") << endl;
 			}
 			else if (materialChoice == "oil"){
 				cout << "How many oil would you like to buy? ";
 				cin >> qty;
-				p->getResources()->setOil(qty + p->getResources()->getOil());
+				//p->getResources()->setOil(qty + p->getResources()->getOil());
+				p->addResource("Oil", qty);
+
 				p->setMoney(p->getMoney() - (3 * qty));
 				cout << endl << "Here is how much you have after buying " << p->getMoney() << "$" << endl;
 			}
 			else if (materialChoice == "uranium"){
 				cout << "How many uranium would you like to buy? ";
 				cin >> qty;
-				p->getResources()->setUranium(qty + p->getResources()->getUranium());
+				//p->getResources()->setUranium(qty + p->getResources()->getUranium());
+				p->addResource("Uranium", qty);
 				p->setMoney(p->getMoney() - (12 * qty));
 				cout << endl << "Here is how much you have after buying " << p->getMoney() << "$" << endl;
 			}
 			else if (materialChoice == "garbage"){
 				cout << "How many garbage would you like to buy? ";
 				cin >> qty;
-				p->getResources()->setGarbage(qty + p->getResources()->getGarbage());
+				//p->getResources()->setGarbage(qty + p->getResources()->getGarbage());
+				p->addResource("Garbage", qty);
 				p->setMoney(p->getMoney() - (6 * qty));
 				cout << endl << "Here is how much you have after buying " << p->getMoney() << "$" << endl;
 			}
@@ -319,14 +325,14 @@ void TurnSummary::building(){
 		cin >> buildOption;
 		House h1 = House("Duisburg");
 		House h2 = House("Essen");
-		House h3 = House("D¸sseldorf");
+		House h3 = House("DÅEseldorf");
 		House h4 = House("Dortmunt");
 
 		while (true){
 			//First few rounds will only let you buy for 10. Have to implement exception that after buying that city, it is no longer available. For now, we will leave it as it is.
 			if (buildOption == "yes"){
 				string houseChoice;
-				cout << "Would " <<p->getColor() << " like to buy a house at Duisburg, Essen, D¸sseldorf, or Dortmunt?" << endl;
+				cout << "Would " <<p->getColor() << " like to buy a house at Duisburg, Essen, DÅEseldorf, or Dortmunt?" << endl;
 				cin >> houseChoice;
 				p->setMoney(p->getMoney() - 10);
 				p->getHouseManager()->addHouses(h1);

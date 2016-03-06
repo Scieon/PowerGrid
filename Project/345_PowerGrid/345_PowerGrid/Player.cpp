@@ -3,10 +3,14 @@
 #include "House.h" 
 #include "Resource.h"
 #include "Powerplant.h"
-#include "Verify.h"
+
 
 using namespace std;
 
+//Static Counter 
+int Player::number_of_players = 0;
+
+Player::Player() {}
 
 //Constructor initializes for Players 
 Player::Player(string color, int turnOrder){
@@ -14,12 +18,10 @@ Player::Player(string color, int turnOrder){
 	this->turnOrder = turnOrder;
 	this->color = color;
 	
-	resource[0] = new Coal(1, 0);
-	resource[1] = new Oil(3,0);
-	resource[2] = new Garbage(8,0);
-	resource[3] = new Uranium(12,0);
-	
+	resources = new ResourceManager();
 	houseManager = new HouseManager();
+	++number_of_players;
+	playerNumber = number_of_players;
 }
 
 //Destructor
@@ -42,6 +44,10 @@ void Player::setMoney(int amount){
 	this->money = amount;
 }
 
+void Player::subtractMoney(int elektros) {
+	this->money -= elektros;
+}
+
 //Accessor function to get the order of who is going first 
 int Player::getTurnOrder(){
 	return turnOrder;
@@ -62,49 +68,78 @@ HouseManager* Player::getHouseManager(){
 	return houseManager;
 }
 
-//Adds a powerplant to a players possessions
-void Player::addPlant(Powerplant p1) {
+int Player::getResource(string type) {
+	if (type == "Coal")
+		return resources->getResourceQuantity(type);
 
-	if (powerplants[0].getBid() == -1) {
+	if (type == "Oil")
+		return resources->getResourceQuantity(type);
+
+	if (type == "Garbage")
+		return resources->getResourceQuantity(type);
+
+	if (type == "Uranium")
+		return resources->getResourceQuantity(type);
+}
+
+//Adds a powerplant to a players possessions
+void Player::addPlant(Powerplant * p1) {
+
+	//Place in slot 1
+	if (powerplants[0]->getBid() == -1) {
 		powerplants[0] = p1; //This is a shallow copy since we do not want to create a second powerplant as if we were creating a deep copy
 		numberOfPlants++;
+		return;
 	}
 
-	else {
-		powerplants[1] = p1;
+	//Place in slot 2
+	if (powerplants[1]->getBid() == -1) {
+		powerplants[1] = p1; 
 		numberOfPlants++;
+		return;
 	}
+
+	//Place in slot 3
+	if (powerplants[2]->getBid() == -1) {
+		powerplants[2] = p1;
+		numberOfPlants++;
+		return;
+	}
+
+	cout << "Player already has 3 power plants" << endl;
+	system("pause");
 }
 
 //This function adds a selected amount of a resource into a players resource possessions
 void Player::addResource(string type, int quantity) {
 	if (type == "Coal")
-		resources[0]->addQuantity(quantity);
+		resources->addResourceQuantity("Coal",quantity);
 
 	if (type == "Oil")
-		resources[1]->addQuantity(quantity);
+		resources->addResourceQuantity("Oil",quantity);
 
 	if (type == "Garbage")
-		resources[2]->addQuantity(quantity);
+		resources->addResourceQuantity("Garbage",quantity);
 
 	if (type == "Uranium")
-		resources[3]->addQuantity(quantity);
+		resources->addResourceQuantity("Uranium", quantity);
 
 	else
 		cout << "Error in adding resource quantity" << endl;
 }
 
-//Display user possessions and characteristics
-void Player::showInfo() const {
 
-	cout << "-------------------- Player " << number_of_players << ": Details" << "--------------------" << endl;
-	cout << "Elektros: " << elektros << endl << "Color: " << houses.getColor() << endl;
-	cout << "Number of Houses " << houses.getHouses() << endl;
-	cout << "Number of Powerplants: " << numberOfPlants << endl << endl;
-	cout << "Coal Quantity: " << resources[0]->getQuantity() << endl;
-	cout << "Oil Quantity: " << resources[1]->getQuantity() << endl;
-	cout << "Garbage Quantity: " << resources[2]->getQuantity() << endl;
-	cout << "Uranium Quantity: " << resources[3]->getQuantity() << endl << endl;
+
+//Display user possessions and characteristics
+void Player::showInfo(){
+
+
+	cout << "Here is the player " << playerNumber <<" resources:" << endl;
+	cout << "P" << playerNumber <<" Money:" << this->getMoney() << endl;
+	cout << "P" << playerNumber <<" Resource Uranium: " << this->getResource("Uranium") << endl;
+	cout << "P" << playerNumber <<"  Resource Garbage: " << this->getResource("Garbage") << endl;
+	cout << "P" << playerNumber <<" Resource Coal: " << this->getResource("Coal") << endl;
+	cout << "P" << playerNumber <<" Resource Oil: " << this->getResource("Oil") << endl << endl;
 
 
 }

@@ -1,105 +1,47 @@
 #include "Resource.h"
-#include <string>
-#include <iostream>
-using namespace std;
 
-// Default Constructor
-Resource::Resource(){
-    color = "NA";
-    type = "NA";
-    shape = "NA";
-    cost = 0;
-    quantity = 0;
+
+Resource::~Resource() {
+	//cout << "Deleting from Resource" << endl;
 }
 
+//Default Constructor
+Resource::Resource() {}
 
-// getters for resources
-
-string Resource::get_color(){
-    return color;
+//Mutator Function to set the new amount of resources.
+void Resource::setQuantity(int qty) {
+	quantity = qty;
 }
 
-string Resource::get_shape(){
-    return shape;
+//Accessor function to return the amount of resources.
+int Resource::getQuantity() const {
+	return quantity;
 }
 
-string Resource::get_type(){
-    return type;
+//Muator function set the color of the resource.
+void Resource::setColor(string color) {
+	this->color = color;
 }
 
-int Resource::get_cost(){
-    return cost;
+//Accessor Function to return the color of the resource.
+string Resource::getColor() const {
+	return color;
 }
 
-int Resource::get_quantity(){
-    return quantity;
+//Variation of setQuantity but instead adds to the existing amount.
+void Resource::addQuantity(int quantity) {
+	this->quantity += quantity;
 }
 
-// setters for class Resource
-void Resource::set_color(string input){
-    color = input;
+void Resource::removeQuantity(int quantity) {
+	this->quantity -= quantity;
 }
 
-void Resource::set_shape(string input){
-    shape = input;
+void Resource::setCost(int cost) {
+	this->cost = cost;
 }
 
-void Resource::set_type(string input){
-    type = input;
+int Resource::getCost()const {
+	return cost;
 }
-
-void Resource::set_cost(int k){
-    cost = k;
-}
-
-void Resource::set_quantity(int k){
-    quantity = k;
-}
-
-//Resource information method that returns type,cost,color,shape
-void Resource::resource_info(){
-    cout << endl << "Resource Characteristics" << endl
-    << "---------------------------" << endl;
-    cout << "Type: " << type << endl;
-    cout << "Color: " << color << endl;
-    cout << "Shape: " << shape << endl;
-    cout << "Cost: " << cost << endl;
-    cout << "---------------------------" << endl;
-}
-
-// Coal constructor
-Coal::Coal(int cost,int quantity){
-    color = "Brown";
-    type = "Coal";
-    shape = "Cube";
-    this->cost = cost;
-    this->quantity = quantity;
-}
-
-// Oil constructor
-Oil::Oil(int cost,int quantity){
-    color = "Black";
-    type = "Oil";
-    shape = "Cylinder";
-    this->cost = cost;
-    this->quantity = quantity;
-}
-
-// Garbage constructor
-Garbage::Garbage(int cost,int quantity){
-    color = "Yellow";
-    type = "Garbage";
-    shape = "Large Octagonal";
-    this->cost = cost;
-    this->quantity = quantity;
-}
-
-Uranium::Uranium(int cost,int quantity){
-    color = "Red";
-    type = "Uranium";
-    shape = "Small Octagonal";
-    this->cost = cost;
-    this->quantity = quantity;
-}
-
 

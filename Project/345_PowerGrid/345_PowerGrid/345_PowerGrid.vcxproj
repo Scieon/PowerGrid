@@ -110,23 +110,35 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Coal.cpp" />
+    <ClCompile Include="Garbage.cpp" />
     <ClCompile Include="House.cpp" />
     <ClCompile Include="HouseManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Oil.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Powerplant.cpp" />
     <ClCompile Include="Powerplantmanager.cpp" />
     <ClCompile Include="Resource.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="ResourceMarket.cpp" />
     <ClCompile Include="TurnSummary.cpp" />
+    <ClCompile Include="Uranium.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Coal.h" />
+    <ClInclude Include="Garbage.h" />
     <ClInclude Include="House.h" />
     <ClInclude Include="HouseManager.h" />
+    <ClInclude Include="Oil.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Powerplant.h" />
     <ClInclude Include="PowerplantManager.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="ResourceMarket.h" />
     <ClInclude Include="TurnSummary.h" />
+    <ClInclude Include="Uranium.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Project2.vcxproj" />
