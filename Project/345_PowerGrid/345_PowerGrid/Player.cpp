@@ -13,11 +13,11 @@ Player::Player(string color, int turnOrder){
 	this->turnOrder = turnOrder;
 	this->color = color;
 	
-    	 resource[0] = new Coal(1, 0);
-	 resource[1] = new Oil(3,0);
-         resource[2] = new Garbage(8,0);
-	 resource[3] = new Uranium(12,0);
-    
+	resource[0] = new Coal(1, 0);
+	resource[1] = new Oil(3,0);
+	resource[2] = new Garbage(8,0);
+	resource[3] = new Uranium(12,0);
+	
 	houseManager = new HouseManager();
 }
 
@@ -61,9 +61,35 @@ HouseManager* Player::getHouseManager(){
 	return houseManager;
 }
 
+//Adds a powerplant to a players possessions
+void Player::addPlant(Powerplant p1) {
+
+	if (powerplants[0].getBid() == -1) {
+		powerplants[0] = p1; //This is a shallow copy since we do not want to create a second powerplant as if we were creating a deep copy
+		numberOfPlants++;
+	}
+
+	else {
+		powerplants[1] = p1;
+		numberOfPlants++;
+	}
+}
 
 
+//Display user possessions and characteristics
+void Player::showInfo() const {
 
+	cout << "-------------------- Player " << number_of_players << ": Details" << "--------------------" << endl;
+	cout << "Elektros: " << elektros << endl << "Color: " << houses.getColor() << endl;
+	cout << "Number of Houses " << houses.getHouses() << endl;
+	cout << "Number of Powerplants: " << numberOfPlants << endl << endl;
+	cout << "Coal Quantity: " << resources[0]->getQuantity() << endl;
+	cout << "Oil Quantity: " << resources[1]->getQuantity() << endl;
+	cout << "Garbage Quantity: " << resources[2]->getQuantity() << endl;
+	cout << "Uranium Quantity: " << resources[3]->getQuantity() << endl << endl;
+
+
+}
 
 
 
