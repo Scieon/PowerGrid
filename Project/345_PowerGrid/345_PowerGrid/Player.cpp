@@ -23,7 +23,7 @@ Player::Player(string color, int turnOrder){
 }
 
 //Destructor
-Player::~Player(){a
+Player::~Player(){
 
 }
 
