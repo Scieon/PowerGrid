@@ -118,6 +118,7 @@
     <ClCompile Include="Garbage.cpp" />
     <ClCompile Include="House.cpp" />
     <ClCompile Include="HouseManager.cpp" />
+    <ClCompile Include="IOFile.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapOfPlayersCity.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="Garbage.h" />
     <ClInclude Include="House.h" />
     <ClInclude Include="HouseManager.h" />
+    <ClInclude Include="IOFile.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapOfPlayersCity.h" />
     <ClInclude Include="Oil.h" />

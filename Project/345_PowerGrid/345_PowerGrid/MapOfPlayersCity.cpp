@@ -1,42 +1,30 @@
 #include "MapOfPlayersCity.h"
-#include <vector>
 
-using namespace std;
 //Player's houses location
+
+
+MapOfPlayersCity::MapOfPlayersCity()
+{
+	player_houses = new vector<vector<string> >(42);
+}
+
 
 MapOfPlayersCity::~MapOfPlayersCity()
 {
 }
 
-MapOfPlayersCity::MapOfPlayersCity()
-{
-	player_houses = new vector<vector<Player> >(42);
-
-	//clear vectors with default player values
-	for (vector<Player> vec : *player_houses) {
-		vec.clear();
-	}
-}
-
-MapOfPlayersCity::MapOfPlayersCity(CityManager *city)
-{
-	city_manager = city;
-}
-
-
-
-vector<vector<Player> >* MapOfPlayersCity::getPlayerHousesVector()
+vector<vector<string>>* MapOfPlayersCity::getPlayerHousesVector()
 {
 	return player_houses;
 }
 
-void MapOfPlayersCity::setPlayerHouse(int index, Player player)
+void MapOfPlayersCity::setPlayerHouse(int index, string name)
 {
-	(*player_houses)[index].push_back(player);
+	(*player_houses)[index].push_back(name);
 }
 
 //Loads values to player_houses
-void MapOfPlayersCity::loadPlayerHouses(vector<vector<Player> > set)
+void MapOfPlayersCity::loadPlayerHouses(vector<vector<string> > set)
 {
 	//0-41 (size of the map)
 	for (unsigned int i = 0; i < set.size(); i++) {
