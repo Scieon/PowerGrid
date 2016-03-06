@@ -10,17 +10,30 @@ using namespace std;
 //Static Counter 
 int Player::number_of_players = 0;
 
-Player::Player() {}
+Player::Player() 
+{
+	powerplants = new Powerplant[3]();
+}
 
 //Constructor initializes for Players 
 Player::Player(string color){
-	money = 50;
+	elektro = 50;
 	this->color = color;
 	
 	resources = new ResourceManager();
 	houseManager = new HouseManager();
 	++number_of_players;
 	playerNumber = number_of_players;
+	powerplants = new Powerplant[3]();
+}
+
+Player::Player(string color, int elektro, HouseManager * hm, Powerplant * pp, ResourceManager * rm)
+{
+	this->color = color;
+	this->elektro = elektro;
+	this->houseManager = hm;
+	this->powerplants = pp;
+	this->resources = rm;
 }
 
 //Destructor
@@ -34,12 +47,12 @@ void Player::setColor(string color){
 }
 
 //Setter for amount of elektro
-void Player::setMoney(int amount){
-	this->money = amount;
+void Player::setElektro(int amount){
+	this->elektro = amount;
 }
 
 void Player::subtractMoney(int elektros) {
-	this->money -= elektros;
+	this->elektro -= elektros;
 }
 
 //Accessor function to get the color of the player
@@ -47,9 +60,9 @@ string Player::getColor(){
 	return color;
 }
 
-//Accessor function of money
-int Player::getMoney(){
-	return money;
+//Accessor function of elektro
+int Player::getElektro(){
+	return elektro;
 }
 
 //Accessor function of HouseManager to get collection of house
@@ -75,22 +88,22 @@ int Player::getResource(string type) {
 void Player::addPlant(Powerplant * p1) {
 
 	//Place in slot 1
-	if (powerplants[0]->getBid() == -1) {
-		powerplants[0] = p1; //This is a shallow copy since we do not want to create a second powerplant as if we were creating a deep copy
+	if (powerplants[0].getBid() == -1) {
+		powerplants[0] = *p1; //This is a shallow copy since we do not want to create a second powerplant as if we were creating a deep copy
 		numberOfPlants++;
 		return;
 	}
 
 	//Place in slot 2
-	if (powerplants[1]->getBid() == -1) {
-		powerplants[1] = p1; 
+	if (powerplants[1].getBid() == -1) {
+		powerplants[1] = *p1; 
 		numberOfPlants++;
 		return;
 	}
 
 	//Place in slot 3
-	if (powerplants[2]->getBid() == -1) {
-		powerplants[2] = p1;
+	if (powerplants[2].getBid() == -1) {
+		powerplants[2] = *p1;
 		numberOfPlants++;
 		return;
 	}
@@ -124,7 +137,7 @@ void Player::showInfo(){
 
 
 	cout << "Here is the player " << playerNumber <<" resources:" << endl;
-	cout << "P" << playerNumber <<" Money:" << this->getMoney() << endl;
+	cout << "P" << playerNumber <<" Money:" << this->getElektro() << endl;
 	cout << "P" << playerNumber <<" Resource Uranium: " << this->getResource("Uranium") << endl;
 	cout << "P" << playerNumber <<"  Resource Garbage: " << this->getResource("Garbage") << endl;
 	cout << "P" << playerNumber <<" Resource Coal: " << this->getResource("Coal") << endl;

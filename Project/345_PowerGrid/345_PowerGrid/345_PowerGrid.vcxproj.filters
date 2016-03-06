@@ -19,6 +19,12 @@
     <Filter Include="Source Files\Resources">
       <UniqueIdentifier>{450cd598-6272-4112-a708-528802d76554}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Map">
+      <UniqueIdentifier>{3044c6fe-a131-4bbe-b51e-5a814ea01515}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Map">
+      <UniqueIdentifier>{0cbed839-ae5b-4771-9a3a-2fe9488f4f75}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="House.cpp">
@@ -63,26 +69,26 @@
     <ClCompile Include="ResourceMarket.cpp">
       <Filter>Source Files\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Area.cpp">
+    <ClCompile Include="IOFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AreaManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Map</Filter>
     </ClCompile>
-    <ClCompile Include="City.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Area.cpp">
+      <Filter>Source Files\Map</Filter>
     </ClCompile>
     <ClCompile Include="CityManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="City.cpp">
+      <Filter>Source Files\Map</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Map</Filter>
     </ClCompile>
     <ClCompile Include="MapOfPlayersCity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="IOFile.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -125,26 +131,26 @@
     <ClInclude Include="ResourceMarket.h">
       <Filter>Header Files\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Area.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AreaManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="City.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CityManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MapOfPlayersCity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="IOFile.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Area.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="AreaManager.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="City.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="CityManager.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MapOfPlayersCity.h">
+      <Filter>Header Files\Map</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

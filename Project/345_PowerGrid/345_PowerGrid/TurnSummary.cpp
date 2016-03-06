@@ -98,7 +98,7 @@ void TurnSummary::buyPowerPlant(){
 	powerplants_Vector->printMarket();
 	cout << endl;
 	cout << "Player " << p->getColor() << endl;
-	cout << "You currently have " << p->getMoney() << " electros" << endl;
+	cout << "You currently have " << p->getElektro() << " electros" << endl;
 	cout << "Please enter the minimum bid of the Power Plant you want to in from the Actual Market" << endl;
 	cout << "Power Plant minimum bid: " << endl;
 
@@ -106,7 +106,7 @@ void TurnSummary::buyPowerPlant(){
 	cin >> plantBid;
 
 	bool checkPP = powerplants_Vector->isPowerplantInActualMarket(plantBid);
-	bool checkElectro = powerplants_Vector->hasEnoughElectroForMarket(p->getMoney());
+	bool checkElectro = powerplants_Vector->hasEnoughElectroForMarket(p->getElektro());
 
 	while (!checkPP || !checkElectro) {
 		if (!checkPP) {
@@ -117,7 +117,7 @@ void TurnSummary::buyPowerPlant(){
 			cout << endl;
 			cout << "You do not have enough electros for this Power Plant" << endl;
 		}
-		cout << "You currently have " << p->getMoney() << " electros" << endl;
+		cout << "You currently have " << p->getElektro() << " electros" << endl;
 		cout << "Please enter the minimum bid of the Power Plant you want to buy in the Actual Market" << endl;
 		cout << "Power Plant minimum bid: " << endl;
 		cin >> plantBid;
@@ -140,14 +140,14 @@ void TurnSummary::buyPowerPlant(){
 		p = getNextPlayer(*p);
 		cout << endl;
 
-		if (p->getMoney() <= plantBid) {
+		if (p->getElektro() <= plantBid) {
 			cout << "Player " << p->getColor() << endl;
 			cout << "You do not have enough electros to bid" << endl;
 			break;
 		}
 
 		cout << "It's your turn Player " << p->getColor() << endl;
-		cout << "You currently have " << p->getMoney() << " electros" << endl;
+		cout << "You currently have " << p->getElektro() << " electros" << endl;
 		cout << "The current bid is " << plantBid << endl;
 		cout << "Do you want to bid on power plant? Type 'y' for yes" << endl;
 		cin >> answer;
@@ -157,7 +157,7 @@ void TurnSummary::buyPowerPlant(){
 			cin >> playerBid;
 
 			bool bidTooLow = playerBid < plantBid;
-			bool notEnoughElectro = playerBid > p->getMoney();
+			bool notEnoughElectro = playerBid > p->getElektro();
 
 			while (bidTooLow || notEnoughElectro) {
 				if (bidTooLow) {
@@ -172,7 +172,7 @@ void TurnSummary::buyPowerPlant(){
 				cout << "Please enter the amount you want to bid: " << endl;
 				cin >> playerBid;
 				bidTooLow = playerBid < plantBid;
-				notEnoughElectro = playerBid > p->getMoney();
+				notEnoughElectro = playerBid > p->getElektro();
 			}
 			plantBid = playerBid;
 			//Reloop
@@ -218,23 +218,23 @@ void TurnSummary::buyPowerPlant(){
 		//add powerplant to player powerplant manager
 		if (plantChoice == 1){
 			//p->getPowerPlantManager()->addPowerPlant(p1);
-			p->setMoney(p->getMoney() - 3);
-			cout << "Here is how much you have after buying " <<p->getMoney() << "$" << endl;
+			p->setElektro(p->getElektro() - 3);
+			cout << "Here is how much you have after buying " <<p->getElektro() << "$" << endl;
 		}
 		else if (plantChoice == 2){
 			//p->getPowerPlantManager()->addPowerPlant(p2);
-			p->setMoney(p->getMoney() - 4);
-			cout << "Here is how much you have after buying " << p->getMoney() << "$" << endl;
+			p->setElektro(p->getElektro() - 4);
+			cout << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
 		}
 		else if (plantChoice == 3){
 			//p->getPowerPlantManager()->addPowerPlant(p3);
-			p->setMoney(p->getMoney() - 5);
-			cout << "Here is how much you have after buying " << p->getMoney() << "$" << endl;
+			p->setElektro(p->getElektro() - 5);
+			cout << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
 		}
 		else if (plantChoice == 4){
 			//p->getPowerPlantManager()->addPowerPlant(p4);
-			p->setMoney(p->getMoney() - 6);
-			cout << "Here is how much you have after buying " << p->getMoney() << "$" << endl;
+			p->setElektro(p->getElektro() - 6);
+			cout << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
 		}
 
 		
@@ -276,8 +276,8 @@ void TurnSummary::buyRawMaterial(){
 				cin >> qty;
 				//p->getResources()->setCoal(qty + p->getResources()->getCoal());
 				p->addResource("Coal", qty);
-				p->setMoney(p->getMoney() - (3 * qty));
-				cout << endl << "Here is how much you have after buying " << p->getMoney() << "$" << endl;
+				p->setElektro(p->getElektro() - (3 * qty));
+				cout << endl << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
 				//cout <<" HERE IS THE COAL " <<p->getResources()->getCoal() << endl;
 				cout << "Current coal in possession: " << p->getResource("Coal") << endl;
 			}
@@ -287,24 +287,24 @@ void TurnSummary::buyRawMaterial(){
 				//p->getResources()->setOil(qty + p->getResources()->getOil());
 				p->addResource("Oil", qty);
 
-				p->setMoney(p->getMoney() - (3 * qty));
-				cout << endl << "Here is how much you have after buying " << p->getMoney() << "$" << endl;
+				p->setElektro(p->getElektro() - (3 * qty));
+				cout << endl << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
 			}
 			else if (materialChoice == "uranium"){
 				cout << "How many uranium would you like to buy? ";
 				cin >> qty;
 				//p->getResources()->setUranium(qty + p->getResources()->getUranium());
 				p->addResource("Uranium", qty);
-				p->setMoney(p->getMoney() - (12 * qty));
-				cout << endl << "Here is how much you have after buying " << p->getMoney() << "$" << endl;
+				p->setElektro(p->getElektro() - (12 * qty));
+				cout << endl << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
 			}
 			else if (materialChoice == "garbage"){
 				cout << "How many garbage would you like to buy? ";
 				cin >> qty;
 				//p->getResources()->setGarbage(qty + p->getResources()->getGarbage());
 				p->addResource("Garbage", qty);
-				p->setMoney(p->getMoney() - (6 * qty));
-				cout << endl << "Here is how much you have after buying " << p->getMoney() << "$" << endl;
+				p->setElektro(p->getElektro() - (6 * qty));
+				cout << endl << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
 			}
 			else if (materialChoice == "done"){
 				break;
@@ -323,10 +323,10 @@ void TurnSummary::building(){
 		cout << "*****************************************************************" << endl;
 		cout << endl << "Would PLAYER " <<p->getColor() << " like to build houses? yes or no. At the first round, you can only build houses on cities costing 10. The LAST PLAYER will begin again. " << endl;
 		cin >> buildOption;
-		House h1 = House("Duisburg");
-		House h2 = House("Essen");
-		House h3 = House("DÅEseldorf");
-		House h4 = House("Dortmunt");
+		//House h1 = House("Duisburg");
+		//House h2 = House("Essen");
+		//House h3 = House("DÅEseldorf");
+		//House h4 = House("Dortmunt");
 
 		while (true){
 			//First few rounds will only let you buy for 10. Have to implement exception that after buying that city, it is no longer available. For now, we will leave it as it is.
@@ -334,8 +334,8 @@ void TurnSummary::building(){
 				string houseChoice;
 				cout << "Would " <<p->getColor() << " like to buy a house at Duisburg, Essen, DÅEseldorf, or Dortmunt?" << endl;
 				cin >> houseChoice;
-				p->setMoney(p->getMoney() - 10);
-				p->getHouseManager()->addHouses(h1);
+				p->setElektro(p->getElektro() - 10);
+				//p->getHouseManager()->addHouses(h1);
 			}
 			else if (buildOption == "no"){
 				break;
@@ -369,7 +369,7 @@ void TurnSummary::bureaucracy(){
 
 		//The number of houses that the player chooses to power must be less than or equal to the amount of houses they bought.
 		if (nbHousePower <= (p->getHouseManager()->getHouseCount())){
-			p->setMoney(p->getMoney() + (paymentTable[nbHousePower]));
+			p->setElektro(p->getElektro() + (paymentTable[nbHousePower]));
 		}
 		else{
 			while (nbHousePower > (p->getHouseManager()->getHouseCount())){
@@ -377,7 +377,7 @@ void TurnSummary::bureaucracy(){
 				cout << "How many houses would PLAYER " <<p->getColor() << " like to power?";
 				cin >> nbHousePower;
 			}
-			p->setMoney(p->getMoney() + (paymentTable[nbHousePower]));
+			p->setElektro(p->getElektro() + (paymentTable[nbHousePower]));
 		}
 	}
 	turnCounter++; //the first round going through this will be different then afterwards it will become the same

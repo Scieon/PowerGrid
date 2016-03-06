@@ -31,17 +31,26 @@ void IOFile::savePlayer(Player & player1, Player &player2) {
 	ofstream output;
 	// Create/open a file
 	output.open("player.txt");
+
+	vector<House> vec_house = player1.getHouseManager()->getHouseVector();
+
 	
 	cout << "Saving Player 1" <<endl;
 	
 	output << "Player1" << endl;
-	output << "Electro=" << player1.getElectro() << endl;
-	output << "NumberOfHouses=" << player1.getNumberOfHouses() << endl;
+	output << "Elektro=" << player1.getElektro() << endl;
+	output << "NumberOfHouses=" << player1.getHouseManager()->getHouseCount() << endl;
 	output << "Color=" << player1.getColor() << endl;
 	output << "Coal=" << player1.getCoal() << endl;
 	output << "Oil=" << player1.getOil() << endl;
 	output << "Garbage=" << player1.getGarbage() << endl;
 	output << "Uranium=" << player1.getUranium() << endl;
+	output << "Player_Houses:" << endl;
+	for (House house : vec_house) {
+		output << house.getIndex() << "," << house.getLocation() << endl;
+	}
+
+
 
 	cout << "Player 1 saved" << endl;
 
@@ -49,8 +58,8 @@ void IOFile::savePlayer(Player & player1, Player &player2) {
 	cout << "Saving Player 2" << endl;
 	output << endl;
 	output << "Player2" << endl;
-	output << "Electro=" << player2.getElectro() << endl;
-	output << "NumberOfHouses=" << player2.getNumberOfHouses() << endl;
+	output << "Elektro=" << player2.getElektro() << endl;
+	output << "NumberOfHouses=" << player2.getHouseManager()->getHouseCount() << endl;
 	output << "Color=" << player2.getColor() << endl;
 	output << "Coal=" << player2.getCoal() << endl;
 	output << "Oil=" << player2.getOil() << endl;
@@ -76,7 +85,7 @@ void IOFile::loadPlayer(Player &player1, Player &player2) {
 
 	input >> skip;
 	pos = skip.find("=");
-	player1.setElectro(stoi(skip.substr(pos+1))); //electro
+	player1.setElektro(stoi(skip.substr(pos+1))); //electro
 	
 	input >> skip;
 	pos = skip.find("=");

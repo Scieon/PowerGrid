@@ -14,6 +14,8 @@ public:
 	void addHouses(House house);
 	int getHouseCount();
 
+	vector <House> getHouseVector();
+
 	bool isHouseCountMax();
 
 private:

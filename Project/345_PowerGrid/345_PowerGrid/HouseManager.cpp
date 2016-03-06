@@ -27,6 +27,11 @@ int HouseManager::getHouseCount(){
 	return houseCount;
 }
 
+vector<House> HouseManager::getHouseVector()
+{
+	return houseVector;
+}
+
 //Check if the maximum number of houses per player is reached
 bool HouseManager::isHouseCountMax()
 {

@@ -16,13 +16,14 @@ using namespace std;
 class Player{
 public:
 	Player(string);
+	Player(string color, int electro, HouseManager *hm, Powerplant *pp, ResourceManager *rm);
 	Player();
 	~Player();
 	void setColor(string color);
-	void setMoney(int elektros);
+	void setElektro(int elektros);
 	void subtractMoney(int elektros);
 	string getColor();
-	int getMoney();
+	int getElektro();
    
 	void showInfo();
 	HouseManager* getHouseManager();
@@ -39,13 +40,12 @@ private:
 
 	static int number_of_players;
 	int playerNumber;
-	int money;
-	int turnOrder;
+	int elektro;
 	string color;
 	HouseManager* houseManager;
 	//Resource * resources[4]; 
 	ResourceManager * resources;
-	Powerplant * powerplants[3]; //Players can have up to 3 power plants stored in an array of powerplants
+	Powerplant * powerplants; //Players can have up to 3 power plants stored in an array of powerplants
 	int numberOfPlants = 0;  //Counter for each player
 	
 };
