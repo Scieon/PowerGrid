@@ -5,7 +5,8 @@
 #include "HouseManager.h"
 #include "Resource.h"
 #include "PowerPlantManager.h"
-#include "Powerplants.h"
+#include "Powerplant.h"
+
 using namespace std;
 
 class Player{
