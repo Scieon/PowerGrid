@@ -2,6 +2,7 @@
 #include "Player.h" 
 #include "House.h" 
 #include "Resource.h"
+#include "Verify.h"
 
 using namespace std;
 
@@ -11,7 +12,12 @@ Player::Player(string color, int turnOrder){
 	money = 50;
 	this->turnOrder = turnOrder;
 	this->color = color;
-	resource = new Resource();
+	
+    	 resource[0] = new Coal(1, 0);
+	 resource[1] = new Oil(3,0);
+         resource[2] = new Garbage(8,0);
+	 resource[3] = new Uranium(12,0);
+    
 	houseManager = new HouseManager();
 }
 
@@ -50,15 +56,11 @@ int Player::getMoney(){
 	return money;
 }
 
-//Accessor function of Resources such as oil, uranium, garbage or coal
-Resource* Player::getResources(){
-	return resource;
-}
-
 //Accessor function of HouseManager to get collection of house
 HouseManager* Player::getHouseManager(){
 	return houseManager;
 }
+
 
 
 
