@@ -7,6 +7,7 @@
 #include "Resource.h"
 #include "TurnSummary.h"
 #include "ResourceMarket.h"
+#include "Powerplant.h"
 
 using namespace std;
 
@@ -19,18 +20,42 @@ int main(){
 	string color;
 
 
-	ResourceMarket * r = new ResourceMarket();
+	//--------------TESTING FOR RESOURCE MARKET PHASE 3 ------------------------------------/
 
-	r->showInfo();
+	ResourceMarket * r = new ResourceMarket();
+	Powerplant * coal4 = new Powerplant(4, "Coal", 3, 1); //(int min_bid, string resource_type, int resources_required, int num_cities_powered) 
+	Powerplant * oil3 = new Powerplant(3, "Garbage", 2, 1);
+	Powerplant * hybrid5 = new Powerplant (5, "Hybrid", 3, 1);
+	//r->showInfo();
+
+	
+	player1->addPlant(coal4);
+	player1->addPlant(oil3);
+	player1->addPlant(hybrid5);
+	player1->showPlants();
+
+	//cout << player1->getTotalStorage() << endl;
+	cout << player1->getResourceStorage("Coal") << endl;
+	player1->validateResourcePurchase(33, 8,"Coal"); //(cost,quantity,type);
 
 	system("pause");
 	//Print the resources of the player 1
 
 	player1->showInfo();
 
+	system("pause");
+
+	player1->validateResourcePurchase(16, 4, "Coal"); //(cost,quantity,type);
+
+	player1->showInfo();
+
+	system("pause");
 
 	//Print the resources of player 2
 	player2->showInfo();
+
+	//-------------- END OF TEST ------------------------------------/
+
 
 	/*
 	// Beginning of Second Distinct Part

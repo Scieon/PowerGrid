@@ -274,11 +274,12 @@ void TurnSummary::buyRawMaterial(){
 			if (materialChoice == "coal"){
 				cout << "How many coal would you like buy: ";
 				cin >> qty;
-				//p->getResources()->setCoal(qty + p->getResources()->getCoal());
+
+				//Validate resource and elektro
 				p->addResource("Coal", qty);
 				p->setElektro(p->getElektro() - (3 * qty));
+
 				cout << endl << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
-				//cout <<" HERE IS THE COAL " <<p->getResources()->getCoal() << endl;
 				cout << "Current coal in possession: " << p->getResource("Coal") << endl;
 			}
 			else if (materialChoice == "oil"){

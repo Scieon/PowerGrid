@@ -28,7 +28,7 @@ private:
 	string resource_type;
 
 	int num_cities_powered; 
-	int resources_required = -1; //Number of resources required
+	int resources_required = 0; //Number of resources required
 	int storage = 2* resources_required; //Number of resources stored in power plant.
 
 

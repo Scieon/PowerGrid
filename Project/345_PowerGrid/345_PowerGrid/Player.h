@@ -34,6 +34,10 @@ public:
 	void addPlant(Powerplant * p1); //incomplete "p2->addPlant(oil3);"
 	void addResource(string type, int quantity); //Don't care about cost 
 	int getResource(string type); //Return resource quantity
+	void validateResourcePurchase(int cost, int quantity, string type);
+
+	int getTotalStorage(); //Returns total amount of resources stored across all possible power plants
+	int getResourceStorage(string resource); //Returns total amount of specific resource that can be stored
 
 
 private:
@@ -43,7 +47,6 @@ private:
 	int elektro;
 	string color;
 	HouseManager* houseManager;
-	//Resource * resources[4]; 
 	ResourceManager * resources;
 	Powerplant * powerplants; //Players can have up to 3 power plants stored in an array of powerplants
 	int numberOfPlants = 0;  //Counter for each player
