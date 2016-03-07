@@ -71,6 +71,71 @@ ResourceMarket::ResourceMarket() {
 
 }
 
+//Returns current cost of an valid quantity of a resource
+int ResourceMarket::getMarketCost(string resource, int quantity) {
+
+	if (quantity > this->getMarketQuantity(resource)) {
+		cout << "The market does not have " << quantity << " units of " << resource << "!" << endl;
+		return -1;
+	}
+
+	//The following are helpful counters for the functionality of the method
+	int index = 0;
+	int index1 = findPartial(resource); //-1 is everything is full or not empty
+	int index2 = findEmpty(resource); //-1 if nothing is empty
+	int counter = 0;
+	bool insideIndex = true;
+
+	//The cost of the resource
+	int cost = 0;
+
+	//The following two if statements allow us to start at the proper resource slot
+	if (index1 != -1)
+		index = index1;
+
+	else if (index2 != -1)
+		index = index2;
+
+	//Looping through market to find cost the desired quantity
+	//We require a rather convoluted setup because we do not want to make actual changes to the resource market
+	while (quantity != 0) {
+		insideIndex = true;
+		int amountAtIndex = market[index + counter]->getResourceQuantity(resource);
+
+		while (insideIndex) {
+
+			if (amountAtIndex != 0) {
+				cost += market[index + counter]->getResourceCost(resource); //Computing cost of 1 unit at that index
+				quantity -= 1; //Getting the cost of 1 resource at a time
+				amountAtIndex--;
+
+				if (quantity == 0)
+					return cost;
+			}
+			else {
+				counter++; //Move to next slot
+				insideIndex = false; //No longer inside current slot
+			}
+		} //End of inner while
+
+	}//End of while
+	return cost;
+
+}
+
+//Return total quantity of resource in market
+int ResourceMarket::getMarketQuantity(string resource) {
+
+	int amount_in_market = 0; 
+
+	for (int i = 0; i <= 11; i++) {
+		amount_in_market += market[i]->getResourceQuantity(resource);
+	}
+	return amount_in_market;
+
+
+
+}
 //Calls the replenish method accordingly
 //Replenish is helper method for this function
 void ResourceMarket::refill(int step, int players) {
@@ -85,7 +150,7 @@ void ResourceMarket::refill(int step, int players) {
 			// Replenish("Oil",2);
 			// Replenish("Garbage,1);
 			// Replenish("Uranium,1);
-		
+
 		}
 
 		if (step == 2) {
@@ -102,7 +167,7 @@ void ResourceMarket::refill(int step, int players) {
 		}
 
 		break;
-		
+
 	case 3:
 		break;
 	case 4:
@@ -164,7 +229,7 @@ void ResourceMarket::replenish(string resource, int quantity) {
 		}
 
 	}
-	
+
 	Do 2 cases for garbage and oil
 
 	*/
@@ -218,12 +283,12 @@ ResourceMarket::~ResourceMarket() {
 void ResourceMarket::showInfo() {
 
 	for (int i = 0; i <= 11; i++) {
-		
-		 cout << "Slot[" << i << "]: " << "Coal, Oil, Garbage, Uranium" << endl << "Quantity: " <<
-			 market[i]->getResourceQuantity("Coal") <<",  "<< 
-			 market[i]->getResourceQuantity("Oil") << ",  " << 
-			 market[i]->getResourceQuantity("Garbage") << ",  " <<
-			 market[i]->getResourceQuantity("Uranium") << "  " <<  endl << "Price: " << market[i]->getResourceCost("Uranium") << endl << endl;
+
+		cout << "Slot[" << i << "]: " << "Coal, Oil, Garbage, Uranium" << endl << "Quantity: " <<
+			market[i]->getResourceQuantity("Coal") << ",  " <<
+			market[i]->getResourceQuantity("Oil") << ",  " <<
+			market[i]->getResourceQuantity("Garbage") << ",  " <<
+			market[i]->getResourceQuantity("Uranium") << "  " << endl << "Price: " << market[i]->getResourceCost("Uranium") << endl << endl;
 	}
 
 }

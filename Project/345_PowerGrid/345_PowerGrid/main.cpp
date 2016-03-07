@@ -12,11 +12,46 @@
 
 using namespace std;
 
+
 int main(){
+
+	
+
+	/*/--------------TESTING FOR RESOURCE MARKET PHASE 3 ------------------------------------/
+
+	Player* player1 = new Player("red");
+
+	ResourceMarket * r = new ResourceMarket();
+	Powerplant * coal4 = new Powerplant(4, "Coal", 3, 1); //(int min_bid, string resource_type, int resources_required, int num_cities_powered) 
+	Powerplant * oil3 = new Powerplant(3, "Garbage", 2, 1);
+	Powerplant * hybrid5 = new Powerplant(5, "Hybrid", 3, 1);
+	r->showInfo();
+	//cout << endl << "Amount: " << r->getMarketQuantity("Garbage") << endl;
+
+
+	player1->addPlant(coal4);
+	player1->addPlant(oil3);
+	player1->addPlant(hybrid5);
+	//player1->showPlants();
+
+	//cout << player1->getTotalStorage() << endl;
+	//cout << player1->getResourceStorage("Coal") << endl;
+	//player1->validateResourcePurchase(33, 8, "Coal"); //(cost,quantity,type);
+
+	cout << "Cost: " << r->getMarketCost("Coal", 7) << endl;
+	cout << "Cost: " << r->getMarketCost("Uranium", 2)<< endl;
+	cout << "Cost: " << r->getMarketCost("Uranium", 1) << endl;
+	cin.get();
+	//-------------- END OF TEST ------------------------------------/
+
+
+
+
 
 	/*
 	When asked for areas you can simply type 1,2,3
 	*/
+	
 	
 	cout << "Welcome to Funkenschlag" << endl;
 	cout << "Do you want to load a game? Type \"yes\" if so" << endl;
@@ -108,7 +143,7 @@ int main(){
 			y++;
 		}
 		return 0;
-	}
+	} 
 	/*
 	Player* player1 = new Player("red");
 	Player* player2 = new Player("blue");

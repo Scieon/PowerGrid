@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Map.h"
 #include "MapOfPlayersCity.h"
+#include "ResourceMarket.h"
 #include <iostream>
 using namespace std;
 
@@ -23,13 +24,13 @@ public:
 
 	
 
-
 private:
 	int turnCounter;
 	int nbOfPlayer = 0;
 	std::vector<Player*> vector_player;
 	PowerplantManager * powerplants_Vector;
 	Map * map;
+	ResourceMarket * market;
 	MapOfPlayersCity * mapOfPlayersCity;
 
 
