@@ -7,7 +7,7 @@
 
 using namespace std;
 
-//Defautl constructor initializing all possible power plants
+//Default constructor initializing all possible power plants
 PowerplantManager::PowerplantManager() {
 
 	Powerplant coal4(4, "Coal", 2, 1);
