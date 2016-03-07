@@ -1,5 +1,9 @@
 #include "MapOfPlayersCity.h"
+#include <iostream>
+#include <string>
+#include <vector>
 
+using namespace std;
 //Player's houses location
 
 
@@ -36,5 +40,32 @@ void MapOfPlayersCity::loadPlayerHouses(vector<vector<string> > set)
 			(*player_houses)[i].push_back(set[i][j]);
 		}
 
+	}
+}
+
+bool MapOfPlayersCity::isCityFree(int index)
+{
+	if (!STEP2) {
+		if (player_houses[index].size() == 0) {
+			return true;
+		}
+		return false;
+	}
+	
+}
+
+void MapOfPlayersCity::printPlayersCity()
+{
+	cout << "Printing players in map..." << endl;
+	int i = 0;
+
+	for (vector<string> player : *player_houses) {
+		if (player.size() == 1) {
+			cout << "Index: " << i << " Player Color: " << player[0] << endl;
+		}
+		else if (player.size() == 2) {
+			cout << "Index: " << i << " Player Color 1: " << player[0] << " Player Color 2: " << player[1] << endl;
+		}
+		i++;
 	}
 }

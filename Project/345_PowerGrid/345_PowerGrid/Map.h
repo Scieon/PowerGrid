@@ -13,33 +13,10 @@
 #include <utility> // for pair
 #include <algorithm>
 #include <iterator>
-#include <tuple>
 
 using std::string;
-using std::tuple;
 using std::vector;
 
-
-/*
-	Structures used to find shorest path
-*/
-typedef int vertex_t;
-typedef double weight_t;
-
-struct neighbor {
-	vertex_t target;
-	weight_t weight;
-	neighbor(vertex_t arg_target, weight_t arg_weight)
-		: target(arg_target), weight(arg_weight) { }
-};
-
-typedef std::vector<std::vector<neighbor> > adjacency_list_t;
-
-
-
-/*
-	Map class
-*/
 class Map
 {
 public:
@@ -68,7 +45,25 @@ private:
 
 	//Map methods
 	void addEdge(int index1, int index2, double weight);
+
+	void printMap();
 	
 };
 
 
+
+
+/*
+Structures used to find shorest path
+*/
+typedef int vertex_t;
+typedef double weight_t;
+
+struct neighbor {
+	vertex_t target;
+	weight_t weight;
+	neighbor(vertex_t arg_target, weight_t arg_weight)
+		: target(arg_target), weight(arg_weight) { }
+};
+
+typedef std::vector<std::vector<neighbor> > adjacency_list_t;

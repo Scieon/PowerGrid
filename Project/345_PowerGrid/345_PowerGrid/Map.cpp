@@ -150,6 +150,8 @@ void Map::addEdge(int vertex1, int vertex2, double weight) {
 
 
 
+
+
 //Shortest length from source to all other vertices
 //Output in vector min_distance
 void Map::DijkstraComputePaths(vertex_t source,
@@ -205,5 +207,17 @@ std::list<vertex_t> Map::DijkstraGetShortestPathTo(
 	return path;
 }
 
+void Map::printMap()
+{
+	cout << "Printing map..." << endl;
+	int i = 0;
+
+	for (vector<neighbor> city : *map) {
+		if (city.size() != 0) {
+			cout << "Index: " << i << " Name: " << city_manager->getName(i) << endl;
+		}
+		i++;
+	}
+}
 
 

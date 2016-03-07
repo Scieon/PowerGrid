@@ -43,7 +43,7 @@ int main(){
 	{
 		cout << "Insert the player color: " << endl;
 		cin >> color;
-		Player* p = new Player(color, i);
+		Player* p = new Player(color);
 		vector_player.push_back(p);
 		i++;
 	}

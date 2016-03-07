@@ -41,20 +41,22 @@ void IOFile::savePlayer(Player & player1, Player &player2) {
 	output << "Elektro=" << player1.getElektro() << endl;
 	output << "NumberOfHouses=" << player1.getHouseManager()->getHouseCount() << endl;
 	output << "Color=" << player1.getColor() << endl;
+	/*
 	output << "Coal=" << player1.getCoal() << endl;
 	output << "Oil=" << player1.getOil() << endl;
 	output << "Garbage=" << player1.getGarbage() << endl;
 	output << "Uranium=" << player1.getUranium() << endl;
 	output << "Player_Houses:" << endl;
+	*/
 	for (House house : vec_house) {
 		output << house.getIndex() << "," << house.getLocation() << endl;
 	}
 
-
+	
 
 	cout << "Player 1 saved" << endl;
 
-
+	/*
 	cout << "Saving Player 2" << endl;
 	output << endl;
 	output << "Player2" << endl;
@@ -67,7 +69,7 @@ void IOFile::savePlayer(Player & player1, Player &player2) {
 	output << "Uranium=" << player2.getUranium() << endl;
 
 	cout << "Player 2 saved" << endl;
-
+	*/
 	output.close();
 }
 
@@ -79,7 +81,7 @@ void IOFile::loadPlayer(Player &player1, Player &player2) {
 	string skip;
 	int pos;
 
-	
+	/*
 	input >> skip; //Player1
 	
 
@@ -142,7 +144,7 @@ void IOFile::loadPlayer(Player &player1, Player &player2) {
 	input >> skip;
 	pos = skip.find("=");
 	player2.setUranium(stoi(skip.substr(pos + 1))); //uranium
-
+	*/
 	input.close();
 }
 
