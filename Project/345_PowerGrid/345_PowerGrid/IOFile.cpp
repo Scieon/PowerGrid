@@ -27,49 +27,76 @@ IOFile::~IOFile()
 {
 }
 
-void IOFile::savePlayer(Player & player1, Player &player2) {
+void IOFile::savePlayer(Player &player1, Player &player2) {
 	ofstream output;
 	// Create/open a file
 	output.open("player.txt");
 
-	vector<House> vec_house = player1.getHouseManager()->getHouseVector();
-
+	vector<House> vec_house1 = player1.getHouseManager()->getHouseVector();
+	vector<Powerplant> vec_pp1 = *player1.getPowerplantsVector();
 	
 	cout << "Saving Player 1" <<endl;
-	
 	output << "Player1" << endl;
 	output << "Elektro=" << player1.getElektro() << endl;
 	output << "NumberOfHouses=" << player1.getHouseManager()->getHouseCount() << endl;
 	output << "Color=" << player1.getColor() << endl;
-	/*
-	output << "Coal=" << player1.getCoal() << endl;
-	output << "Oil=" << player1.getOil() << endl;
-	output << "Garbage=" << player1.getGarbage() << endl;
-	output << "Uranium=" << player1.getUranium() << endl;
+	output << "Coal=" << player1.getResource("Coal") << endl;
+	output << "Oil=" << player1.getResource("Oil") << endl;
+	output << "Garbage=" << player1.getResource("Garbage") << endl;
+	output << "Uranium=" << player1.getResource("Uranium") << endl;
+
 	output << "Player_Houses:" << endl;
-	*/
-	for (House house : vec_house) {
+	for (House house : vec_house1) {
 		output << house.getIndex() << "," << house.getLocation() << endl;
 	}
+	output << "End_Player_Houses" << endl;
 
-	
+	output << "Player_Powerplants" << endl;
+	for (Powerplant pp : vec_pp1) {
+		output << "Bid=" << pp.getBid() <<
+			", Type=" << pp.getType() <<
+			", Resource_required=" << pp.getResourceReq() <<
+			", Cities_powered=" << pp.getCitiesPowered() <<
+			endl;
+	}
+	output << "End_Player_Powerplants" << endl;
 
 	cout << "Player 1 saved" << endl;
 
-	/*
+
+	//////////Player 2//////////
+
+	vector<House> vec_house2 = player2.getHouseManager()->getHouseVector();
+	vector<Powerplant> vec_pp2 = *player2.getPowerplantsVector();
+
 	cout << "Saving Player 2" << endl;
-	output << endl;
 	output << "Player2" << endl;
 	output << "Elektro=" << player2.getElektro() << endl;
 	output << "NumberOfHouses=" << player2.getHouseManager()->getHouseCount() << endl;
 	output << "Color=" << player2.getColor() << endl;
-	output << "Coal=" << player2.getCoal() << endl;
-	output << "Oil=" << player2.getOil() << endl;
-	output << "Garbage=" << player2.getGarbage() << endl;
-	output << "Uranium=" << player2.getUranium() << endl;
+	output << "Coal=" << player2.getResource("Coal") << endl;
+	output << "Oil=" << player2.getResource("Oil") << endl;
+	output << "Garbage=" << player2.getResource("Garbage") << endl;
+	output << "Uranium=" << player2.getResource("Uranium") << endl;
+
+	output << "Player_Houses:" << endl;
+	for (House house : vec_house2) {
+		output << house.getIndex() << "," << house.getLocation() << endl;
+	}
+	output << "End_Player_Houses" << endl;
+
+	output << "Player_Powerplants" << endl;
+	for (Powerplant pp : vec_pp2) {
+		output << "Bid=" << pp.getBid() <<
+			", Type=" << pp.getType() <<
+			", Resource_required=" << pp.getResourceReq() <<
+			", Cities_powered=" << pp.getCitiesPowered() <<
+			endl;
+	}
+	output << "End_Player_Powerplants" << endl;
 
 	cout << "Player 2 saved" << endl;
-	*/
+	
 	output.close();
 }
 

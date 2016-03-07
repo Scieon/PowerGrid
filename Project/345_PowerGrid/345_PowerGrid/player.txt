@@ -1,0 +1,17 @@
+Player1
+Elektro=1
+NumberOfHouses=2
+Color=red
+Coal=12
+Oil=0
+Garbage=0
+Uranium=0
+Player_Houses:
+0,Seattle
+1,Portland
+End_Player_Houses
+Player_Powerplants
+Bid=4, Type=Coal, Resource_required=3, Cities_powered=1
+Bid=3, Type=Garbage, Resource_required=2, Cities_powered=1
+Bid=5, Type=Hybrid, Resource_required=3, Cities_powered=1
+End_Player_Powerplants

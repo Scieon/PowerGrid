@@ -8,6 +8,7 @@
 #include "TurnSummary.h"
 #include "ResourceMarket.h"
 #include "Powerplant.h"
+#include "IOFile.h"
 
 using namespace std;
 
@@ -51,8 +52,22 @@ int main(){
 
 	system("pause");
 
+
 	//Print the resources of player 2
 	player2->showInfo();
+	
+	//Testing house save start
+	House h1(0, "Seattle");
+	House h2(1, "Portland");
+
+	player1->getHouseManager()->addHouses(h1);
+	player1->getHouseManager()->addHouses(h2);
+
+	IOFile::savePlayer(*player1, *player2);
+	//Testing house save end
+
+	system("pause");
+	
 
 	//-------------- END OF TEST ------------------------------------/
 

@@ -1,5 +1,3 @@
-/*
-
 #include "Map.h"
 #include "Area.h"
 #include "AreaManager.h"
@@ -222,5 +220,3 @@ void Map::printMap()
 	}
 }
 
-
-*/

@@ -73,6 +73,11 @@ HouseManager* Player::getHouseManager() {
 	return houseManager;
 }
 
+vector<Powerplant>* Player::getPowerplantsVector()
+{
+	return powerplants;
+}
+
 int Player::getResource(string type) {
 	if (type == "Coal")
 		return resources->getResourceQuantity(type);
@@ -226,7 +231,7 @@ void Player::showInfo() {
 }
 
 
-
+//Checks if the player has 3 power plants
 bool Player::isPowerplantsFull() {
 	return (powerplants->size() == 3);
 }
