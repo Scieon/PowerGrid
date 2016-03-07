@@ -43,6 +43,7 @@ void MapOfPlayersCity::loadPlayerHouses(vector<vector<string> > set)
 	}
 }
 
+//Checks if step 2 is not started
 bool MapOfPlayersCity::isCityFree(int index)
 {
 	if (!STEP2) {
@@ -54,6 +55,7 @@ bool MapOfPlayersCity::isCityFree(int index)
 	
 }
 
+//Prints all the players city 
 void MapOfPlayersCity::printPlayersCity()
 {
 	cout << "Printing players in map..." << endl;

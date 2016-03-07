@@ -219,4 +219,3 @@ void Map::printMap()
 		i++;
 	}
 }
-

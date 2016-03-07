@@ -1,14 +1,16 @@
 #ifndef TURNSUMMARY_H
 #define TURNSUMMARY_H
 #include "Player.h"
+#include "Map.h"
+#include "MapOfPlayersCity.h"
 #include <iostream>
 using namespace std;
 
 class TurnSummary{
 public:
 	TurnSummary();
+	TurnSummary(std::vector<Player*> vector_player, Map * map);
 	~TurnSummary();
-	TurnSummary(std::vector<Player*>);
 	void setTurnCounter(int turnCounter);
 	int getTurnCounter();
 	void turnOrder();
@@ -27,6 +29,11 @@ private:
 	int nbOfPlayer = 0;
 	std::vector<Player*> vector_player;
 	PowerplantManager * powerplants_Vector;
+	Map * map;
+	MapOfPlayersCity * mapOfPlayersCity;
+
+
+	
 
 	Player * getNextPlayer(Player & p);
 };

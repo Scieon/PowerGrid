@@ -13,8 +13,107 @@
 using namespace std;
 
 int main(){
+
+	/*
+	When asked for areas you can simply type 1,2,3
+	*/
+	
+	cout << "Welcome to Funkenschlag" << endl;
+	cout << "Do you want to load a game? Type \"yes\" if so" << endl;
+	string answer;
+	cin >> answer;
+	if (answer == "yes") {
+		//Load game
+
+
+		return 0;
+	}
+	else {
+		cout << "Starting new game..." << endl;
+		
+		// Beginning of Second Distinct Part
+
+		int nbPlayers;
+		string color;
+		cout << "You can only play with 2 players. More player option coming soon" << endl;
+		
+		std::vector<Player*> vector_player;
+
+		//Add the number of players in the vector collection
+		for (int i = 1; i < 3; i++)
+		{
+			cout << "Player " << i << endl << "Please insert your color: ";
+			cin >> color;
+			Player* p = new Player(color);
+			vector_player.push_back(p);
+		}
+
+		//Now we have to get the areas played from players
+		//create area and city manager
+		AreaManager * area_manager = new AreaManager();
+		CityManager * cityManager = new CityManager();
+
+		cout << "Please enter the areas you want to play (3 integers). " 
+			<< "See image for details." 
+			<< endl 
+			<< "The areas must be connected..."
+			<< endl;
+		int a1;
+		int a2;
+		int a3;
+		vector<Area> * areas = new vector<Area>();
+		int count = 0;
+
+		//do while loop
+		//Checking if areas are possible
+		do {
+			if (count != 0) {
+				cout << "This is an impossible game. Please try again. Check image for details." << endl;
+				areas->clear();
+			}
+			cin >> a1;
+			cin >> a2;
+			cin >> a3;
+
+			//creating areas
+			Area area1(a1);
+			Area area2(a2);
+			Area area3(a3);
+
+			//create areaVector
+			areas->push_back(area1);
+			areas->push_back(area2);
+			areas->push_back(area3);
+			count++;
+		}
+		while (!area_manager->areAdjacent(*areas));
+
+
+		//Set areas
+		area_manager->setGameAreas(*areas);
+		
+		//Create game map according to areas
+		Map * gameMap = new Map(area_manager, cityManager); //do not delete
+
+		TurnSummary * turn = new TurnSummary(vector_player, gameMap);
+		
+		//turns
+		int y = 1;
+		while (y<4) {
+			//turn->turnOrder();
+			//turn->buyPowerPlant();
+			turn->buyRawMaterial();
+			//turn->building();
+			//turn->bureaucracy();
+			y++;
+		}
+		return 0;
+	}
+	/*
 	Player* player1 = new Player("red");
 	Player* player2 = new Player("blue");
+
+	
 	int nbPlayers;
 	int i = 1;
 	int y = 1;
@@ -93,12 +192,12 @@ int main(){
 		cout <<"Here is the color of player " << p->getColor() << endl;
 	}
 	*/
-
+/*
 	std::vector<Player*> vector_player;
 	vector_player.push_back(player1);
 	vector_player.push_back(player2);
 
-	TurnSummary * turn = new TurnSummary(vector_player);
+	TurnSummary * turn = new TurnSummary(vector_player, gameMap);
 	while (y<4){
 		//turn->turnOrder();
 		//turn->buyPowerPlant();
@@ -111,4 +210,6 @@ int main(){
 	
 	cin.get();
 	return 0;
+	*/
+
 }

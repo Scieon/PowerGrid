@@ -6,6 +6,8 @@
 #include "PowerPlant.h"
 #include "Resource.h"
 #include "PowerPlantManager.h"
+#include "Map.h"
+#include "MapOfPlayersCity.h"
 
 using namespace std;
 
@@ -16,11 +18,13 @@ TurnSummary::TurnSummary(){
 }
 
 //Constructor
-TurnSummary::TurnSummary(std::vector<Player*> vector_player){
+TurnSummary::TurnSummary(std::vector<Player*> vector_player, Map *map){
 	turnCounter = 1;
 	this->vector_player = vector_player;
 	nbOfPlayer = vector_player.size();
 	powerplants_Vector = new PowerplantManager();
+	this->map = map;
+	mapOfPlayersCity = new MapOfPlayersCity();
 }
 
 //Destructor
@@ -324,10 +328,13 @@ void TurnSummary::building(){
 		cout << "*****************************************************************" << endl;
 		cout << endl << "Would PLAYER " <<p->getColor() << " like to build houses? yes or no. At the first round, you can only build houses on cities costing 10. The LAST PLAYER will begin again. " << endl;
 		cin >> buildOption;
-		//House h1 = House("Duisburg");
-		//House h2 = House("Essen");
-		//House h3 = House("DEseldorf");
-		//House h4 = House("Dortmunt");
+
+		int houseCount = p->getHouseManager()->getHouseCount();
+		//if player has no houses yet
+		if (houseCount == 0) {
+			cout << "You can build in these Cities:" << endl;
+
+		}
 
 		while (true){
 			//First few rounds will only let you buy for 10. Have to implement exception that after buying that city, it is no longer available. For now, we will leave it as it is.
