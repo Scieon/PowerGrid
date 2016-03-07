@@ -38,7 +38,6 @@ void IOFile::savePlayer(Player &player1, Player &player2) {
 	cout << "Saving Player 1" <<endl;
 	output << "Player1" << endl;
 	output << "Elektro=" << player1.getElektro() << endl;
-	output << "NumberOfHouses=" << player1.getHouseManager()->getHouseCount() << endl;
 	output << "Color=" << player1.getColor() << endl;
 	output << "Coal=" << player1.getResource("Coal") << endl;
 	output << "Oil=" << player1.getResource("Oil") << endl;
@@ -54,9 +53,9 @@ void IOFile::savePlayer(Player &player1, Player &player2) {
 	output << "Player_Powerplants" << endl;
 	for (Powerplant pp : vec_pp1) {
 		output << "Bid=" << pp.getBid() <<
-			", Type=" << pp.getType() <<
-			", Resource_required=" << pp.getResourceReq() <<
-			", Cities_powered=" << pp.getCitiesPowered() <<
+			" Type=" << pp.getType() <<
+			" Resource_required=" << pp.getResourceReq() <<
+			" Cities_powered=" << pp.getCitiesPowered() <<
 			endl;
 	}
 	output << "End_Player_Powerplants" << endl;
@@ -72,7 +71,6 @@ void IOFile::savePlayer(Player &player1, Player &player2) {
 	cout << "Saving Player 2" << endl;
 	output << "Player2" << endl;
 	output << "Elektro=" << player2.getElektro() << endl;
-	output << "NumberOfHouses=" << player2.getHouseManager()->getHouseCount() << endl;
 	output << "Color=" << player2.getColor() << endl;
 	output << "Coal=" << player2.getResource("Coal") << endl;
 	output << "Oil=" << player2.getResource("Oil") << endl;
@@ -88,9 +86,9 @@ void IOFile::savePlayer(Player &player1, Player &player2) {
 	output << "Player_Powerplants" << endl;
 	for (Powerplant pp : vec_pp2) {
 		output << "Bid=" << pp.getBid() <<
-			", Type=" << pp.getType() <<
-			", Resource_required=" << pp.getResourceReq() <<
-			", Cities_powered=" << pp.getCitiesPowered() <<
+			" Type=" << pp.getType() <<
+			" Resource_required=" << pp.getResourceReq() <<
+			" Cities_powered=" << pp.getCitiesPowered() <<
 			endl;
 	}
 	output << "End_Player_Powerplants" << endl;
@@ -105,73 +103,156 @@ void IOFile::loadPlayer(Player &player1, Player &player2) {
 	ifstream input("player.txt");
 
 
-	string skip;
+	string line;
 	int pos;
 
-	/*
-	input >> skip; //Player1
+	
+	input >> line; //Player1
 	
 
-	input >> skip;
-	pos = skip.find("=");
-	player1.setElektro(stoi(skip.substr(pos+1))); //electro
+	input >> line;
+	pos = line.find("=");
+	player1.setElektro(stoi(line.substr(pos+1))); //elektro
 	
-	input >> skip;
-	pos = skip.find("=");
-	player1.setNumberOfHouses(stoi(skip.substr(pos + 1))); //number_of_houses
+	input >> line;
+	pos = line.find("=");
+	player1.setColor(line.substr(pos + 1)); //Color
 
-	input >> skip;
-	pos = skip.find("=");
-	player1.setColor(skip.substr(pos + 1)); //Color
+	input >> line;
+	pos = line.find("=");
+	player1.addResource("Coal",stoi(line.substr(pos + 1))); //coal
 
-	input >> skip;
-	pos = skip.find("=");
-	player1.setCoal(stoi(skip.substr(pos + 1))); //coal
+	input >> line;
+	pos = line.find("=");
+	player1.addResource("Oil",stoi(line.substr(pos + 1))); //oil
 
-	input >> skip;
-	pos = skip.find("=");
-	player1.setOil(stoi(skip.substr(pos + 1))); //oil
+	input >> line;
+	pos = line.find("=");
+	player1.addResource("Garbage",stoi(line.substr(pos + 1))); //garbage
 
-	input >> skip;
-	pos = skip.find("=");
-	player1.setGarbage(stoi(skip.substr(pos + 1))); //garbage
+	input >> line;
+	pos = line.find("=");
+	player1.addResource("Uranium",stoi(line.substr(pos + 1))); //uranium
 
-	input >> skip;
-	pos = skip.find("=");
-	player1.setUranium(stoi(skip.substr(pos + 1))); //uranium
+	input >> line; //Player_Houses:
 
+	input >> line;
 
-	input >> skip; //Player2
+	while (line != "End_Player_Houses") {
+		
+		pos = line.find(",");
+		int index = stoi(line.substr(0, pos)); //get index
+		string location = line.substr(pos + 1); //get location
 
+		House * house = new House(index, location);
+		player1.getHouseManager()->addHouses(*house);
+		input >> line;
+	}
+	input >> line; //End_Player_Houses
+	input >> line; //Player_Powerplants
 
-	input >> skip;
-	pos = skip.find("=");
-	player2.setElectro(stoi(skip.substr(pos + 1))); //electro
+	while (line != "End_Player_Powerplants") {
 
-	input >> skip;
-	pos = skip.find("=");
-	player2.setNumberOfHouses(stoi(skip.substr(pos + 1))); //number_of_houses
+		int min_bid;
+		string type;
+		int resource_required;
+		int city_powered;
 
-	input >> skip;
-	pos = skip.find("=");
-	player2.setColor(skip.substr(pos + 1)); //Color
+		pos = line.find("="); 
+		min_bid = stoi(line.substr(pos + 1));
 
-	input >> skip;
-	pos = skip.find("=");
-	player2.setCoal(stoi(skip.substr(pos + 1))); //coal
+		input >> line;
 
-	input >> skip;
-	pos = skip.find("=");
-	player2.setOil(stoi(skip.substr(pos + 1))); //oil
+		pos = line.find("=");
+		type = line.substr(pos + 1); 
 
-	input >> skip;
-	pos = skip.find("=");
-	player2.setGarbage(stoi(skip.substr(pos + 1))); //garbage
+		input >> line;
 
-	input >> skip;
-	pos = skip.find("=");
-	player2.setUranium(stoi(skip.substr(pos + 1))); //uranium
-	*/
+		pos = line.find("=");
+		resource_required = stoi(line.substr(pos + 1)); 
+
+		input >> line;
+
+		pos = line.find("=");
+		city_powered = stoi(line.substr(pos + 1));
+		
+		player1.addPlant(new Powerplant(min_bid, type, resource_required, city_powered));
+
+		input >> line;
+	}
+
+	input >> line; //Player2
+
+	input >> line;
+	pos = line.find("=");
+	player2.setElektro(stoi(line.substr(pos + 1))); //elektro
+
+	input >> line;
+	pos = line.find("=");
+	player2.setColor(line.substr(pos + 1)); //Color
+
+	input >> line;
+	pos = line.find("=");
+	player2.addResource("Coal", stoi(line.substr(pos + 1))); //coal
+
+	input >> line;
+	pos = line.find("=");
+	player2.addResource("Oil", stoi(line.substr(pos + 1))); //oil
+
+	input >> line;
+	pos = line.find("=");
+	player2.addResource("Garbage", stoi(line.substr(pos + 1))); //garbage
+
+	input >> line;
+	pos = line.find("=");
+	player2.addResource("Uranium", stoi(line.substr(pos + 1))); //uranium
+
+	input >> line; //Player_Houses:
+
+	input >> line;
+
+	while (line != "End_Player_Houses") {
+
+		pos = line.find(",");
+		int index = stoi(line.substr(0, pos)); //get index
+		string location = line.substr(pos + 1); //get location
+
+		House * house = new House(index, location);
+		player2.getHouseManager()->addHouses(*house);
+		input >> line;
+	}
+	input >> line; //End_Player_Houses
+	input >> line; //Player_Powerplants
+
+	while (line != "End_Player_Powerplants") {
+
+		int min_bid;
+		string type;
+		int resource_required;
+		int city_powered;
+
+		pos = line.find("=");
+		min_bid = stoi(line.substr(pos + 1));
+
+		input >> line;
+
+		pos = line.find("=");
+		type = line.substr(pos + 1);
+
+		input >> line;
+
+		pos = line.find("=");
+		resource_required = stoi(line.substr(pos + 1));
+
+		input >> line;
+
+		pos = line.find("=");
+		city_powered = stoi(line.substr(pos + 1));
+
+		player2.addPlant(new Powerplant(min_bid, type, resource_required, city_powered));
+
+		input >> line;
+	}
 	input.close();
 }
 

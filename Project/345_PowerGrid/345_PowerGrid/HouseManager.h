@@ -22,7 +22,7 @@ private:
 
 	const int MAX_HOUSE_COUNT = 22;
 	int houseCount;
-	vector<House> houseVector;
+	vector<House> * houseVector;
 };
 
 #endif //HOUSES_H

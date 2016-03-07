@@ -25,6 +25,9 @@
     <Filter Include="Header Files\Map">
       <UniqueIdentifier>{0cbed839-ae5b-4771-9a3a-2fe9488f4f75}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Test">
+      <UniqueIdentifier>{abf9fe21-4811-4c76-982a-62291e453593}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="House.cpp">
@@ -89,6 +92,9 @@
     </ClCompile>
     <ClCompile Include="MapOfPlayersCity.cpp">
       <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="TestIOLoad.cpp">
+      <Filter>Source Files\Test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
