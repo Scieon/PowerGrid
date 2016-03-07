@@ -121,8 +121,8 @@ void Player::validateResourcePurchase(int cost, int quantity, string type) {
 
 	
 	if (type == "Coal") {
-		bool condition1 = getResourceStorage("Coal") < (getResource("Coal") + quantity);
-		bool condition2 = getTotalStorage() < (getResource("Coal") + getResource("Oil") + quantity);
+		bool condition1 = getResourceStorage("Coal") < (getResource("Coal") + quantity); //Cannot buy more resources than total storage
+		bool condition2 = getTotalStorage() < (getResource("Coal") + getResource("Oil") + quantity); //Cannot buy specific quantity that exceeds that types storage
 
 		if (condition1 || condition2) {
 			cout << "Cannot store that many Coal!" << endl;
@@ -168,7 +168,7 @@ void Player::validateResourcePurchase(int cost, int quantity, string type) {
 int Player::getTotalStorage() {
 	int storage = 0;
 	for (int i = 0; i < 3; i++) {
-		if (powerplants[i].getBid() != -1)
+		if (powerplants[i].getBid() != -1) //To check if powerplant exists 
 			storage += powerplants[i].getStorage();
 	}
 	return storage;
