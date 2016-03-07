@@ -12,7 +12,8 @@ int Player::number_of_players = 0;
 
 Player::Player()
 {
-	powerplants = new Powerplant[3]();
+	powerplants = new vector<Powerplant>();
+	powerplants->clear();
 }
 
 //Constructor initializes for Players 
@@ -24,10 +25,12 @@ Player::Player(string color) {
 	houseManager = new HouseManager();
 	++number_of_players;
 	playerNumber = number_of_players;
-	powerplants = new Powerplant[3]();
+	powerplants = new vector<Powerplant>();
+
+	powerplants->clear(); //clears default initialization
 }
 
-Player::Player(string color, int elektro, HouseManager * hm, Powerplant * pp, ResourceManager * rm)
+Player::Player(string color, int elektro, HouseManager * hm, vector<Powerplant> * pp, ResourceManager * rm)
 {
 	this->color = color;
 	this->elektro = elektro;
@@ -87,29 +90,12 @@ int Player::getResource(string type) {
 //Adds a powerplant to a players possessions
 void Player::addPlant(Powerplant * p1) {
 
-	//Place in slot 1
-	if (powerplants[0].getBid() == -1) {
-		powerplants[0] = *p1; //This is a shallow copy since we do not want to create a second powerplant as if we were creating a deep copy
-		numberOfPlants++;
+	if (this->isPowerplantsFull()) {
 		return;
 	}
-
-	//Place in slot 2
-	if (powerplants[1].getBid() == -1) {
-		powerplants[1] = *p1;
-		numberOfPlants++;
-		return;
+	else {
+		powerplants->push_back(*p1);
 	}
-
-	//Place in slot 3
-	if (powerplants[2].getBid() == -1) {
-		powerplants[2] = *p1;
-		numberOfPlants++;
-		return;
-	}
-
-	cout << "Player already has 3 power plants" << endl;
-	system("pause");
 }
 
 void Player::validateResourcePurchase(int cost, int quantity, string type) {
@@ -167,9 +153,8 @@ void Player::validateResourcePurchase(int cost, int quantity, string type) {
 //Returns total amount of resources stored across all possible power plants
 int Player::getTotalStorage() {
 	int storage = 0;
-	for (int i = 0; i < 3; i++) {
-		if (powerplants[i].getBid() != -1) //To check if powerplant exists 
-			storage += powerplants[i].getStorage();
+	for (Powerplant pp : *powerplants) {
+			storage += pp.getStorage();
 	}
 	return storage;
 }
@@ -178,13 +163,15 @@ int Player::getTotalStorage() {
 int Player::getResourceStorage(string resource) {
 	int storage = 0;
 
-	for (int i = 0; i < 3; i++) {
-		if (powerplants[i].getBid() != -1 && powerplants[i].getType() == resource)
-			storage += powerplants[i].getStorage();
+	for (Powerplant pp : *powerplants) {
+		if (pp.getType() == resource) {
+			storage += pp.getStorage();
+		}
 
-		//Hybrid is special case
-		if(powerplants[i].getType() == "Hybrid" && (resource == "Coal" || resource == "Oil"))
-			storage += powerplants[i].getStorage();
+		if (pp.getType() == "Hybrid" && (resource == "Coal" || resource == "Oil")) {
+			storage += pp.getStorage();
+		}
+		
 	}
 	return storage;
 }
@@ -219,15 +206,9 @@ void Player::addResource(string type, int quantity) {
 //Hepler function that displays the info of all a players powerplants
 void Player::showPlants() {
 
-	if (powerplants[0].getBid() != -1)
-		powerplants[0].showPlantInfo();
-
-	if (powerplants[1].getBid() != -1)
-		powerplants[1].showPlantInfo();
-
-	if (powerplants[2].getBid() != -1)
-		powerplants[2].showPlantInfo();
-
+	for (Powerplant pp : *powerplants) {
+		pp.showPlantInfo();
+	}
 }
 
 //Display user possessions and characteristics
@@ -246,7 +227,9 @@ void Player::showInfo() {
 
 
 
-
+bool Player::isPowerplantsFull() {
+	return (powerplants->size() == 3);
+}
 
 
 

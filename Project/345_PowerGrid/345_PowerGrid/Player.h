@@ -16,7 +16,7 @@ using namespace std;
 class Player{
 public:
 	Player(string);
-	Player(string color, int electro, HouseManager *hm, Powerplant *pp, ResourceManager *rm);
+	Player(string color, int electro, HouseManager *hm, vector<Powerplant> *pp, ResourceManager *rm);
 	Player();
 	~Player();
 	void setColor(string color);
@@ -26,6 +26,7 @@ public:
 	int getElektro();
    
 	void showInfo();
+	bool isPowerplantsFull();
 	HouseManager* getHouseManager();
 
 	//Power Plant methods added by Anhkhoi, feel free to modify
@@ -48,7 +49,7 @@ private:
 	string color;
 	HouseManager* houseManager;
 	ResourceManager * resources;
-	Powerplant * powerplants; //Players can have up to 3 power plants stored in an array of powerplants
+	vector<Powerplant> * powerplants; //Players can have up to 3 power plants stored in an array of powerplants
 	int numberOfPlants = 0;  //Counter for each player
 	
 };
