@@ -1,6 +1,11 @@
 #pragma once
 #include "Player.h"
 #include "MapOfPlayersCity.h"
+#include "Area.h"
+#include <vector>
+
+using std::vector;
+
 class IOFile
 {
 public:
@@ -15,6 +20,12 @@ public:
 
 	//load into static instance of player_houses (in Map class) from file
 	static void loadMap(MapOfPlayersCity *);
+
+	//saves areas
+	static void saveAreas(MapOfPlayersCity * map);
+
+	//load areas
+	static vector<Area> * loadAreas();
 
 	//Load to players from player.txt
 	static void loadPlayer(Player & player1, Player & player2);
