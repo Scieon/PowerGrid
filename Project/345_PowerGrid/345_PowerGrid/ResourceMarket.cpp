@@ -1,5 +1,14 @@
 #include "ResourceMarket.h"
 #include "ResourceManager.h"
+#include "IOFile.h"
+#include <iostream>
+#include <fstream>
+#include <istream>
+#include <string>
+
+
+using namespace std;
+
 
 
 //Resource Market intializes game resources according to rules
@@ -296,6 +305,58 @@ int ResourceMarket::findPartial(string resource) {
 	return -1;
 }
 
+void ResourceMarket::saveMarket() {
+
+	ofstream output;
+
+	//  Open existing file resourcemarket.txt or create a new file
+	output.open("resourcemarket.txt");
+	cout << "Saving ResourceMarket" << endl;
+
+	// Loops through the ResourceMarket array and saves only the quantities to the .txt
+	for (int i = 0; i <= 11; i++) {
+		output << 
+			market[i]->getResourceQuantity("Coal") << "  " <<
+			market[i]->getResourceQuantity("Oil") << "  " <<
+			market[i]->getResourceQuantity("Garbage") << "  " <<
+			market[i]->getResourceQuantity("Uranium") << "  " << endl;
+	}
+
+	output.close();
+
+	cout << "\nResourceMarket Saved!" << endl << endl;
+
+}
+void ResourceMarket::loadMarket() {
+
+	int coal_amt,oil_amt,garbage_amt,uranium_amt, i = 0;
+
+	// Opening "resourcemarket.txt"
+	ifstream input("resourcemarket.txt");
+
+	cout << "Loading ResourceMarket" << endl << "-------------------------" << endl;
+
+	// Reads each int one by one in line (left to right) coal->oil->garbage->uranium...nextline
+	while (input >> coal_amt >> oil_amt >> garbage_amt >> uranium_amt){
+		
+		market[i]->edit("Coal", coal_amt, i + 1);
+		market[i]->edit("Oil", oil_amt, i + 1);
+		market[i]->edit("Garbage", garbage_amt, i + 1);
+		market[i]->edit("Uranium", uranium_amt, i + 1);
+		i++;
+
+
+		/*
+		// IGNORE:: checking if right amounts are implemented 
+			cout << "Coal" << coal_amt << endl; 
+			cout << "Oil" << oil_amt << endl;
+			cout << "Garbage" << garbage_amt << endl;
+			cout << "Uranium" << uranium_amt << endl;
+			cout << i << endl;
+			i++;
+		*/
+	}
+}
 
 
 void ResourceMarket::showInfo() {

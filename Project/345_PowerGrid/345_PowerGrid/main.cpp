@@ -60,8 +60,50 @@ int main(){
 	/*
 	When asked for areas you can simply type 1,2,3
 	*/
+
+
+	/*
+	//----------------- -Resourcemarketsave Test ------------------//
+	// To test first alter the resourcemarket.txt file to any value between 0-9 for quantities.
+
+	// test shows default table --> loads altered market --> updates market quantities 
+	// --> saves market --> alters market again --> loads previous market 
+	// -->> displays previous market
+
+
+	ResourceMarket  * r1 = new ResourceMarket();
+
 	
+	r1->showInfo();	
+	r1->loadMarket(); 
+
+	r1->showInfo(); 
+
+	system("pause");
+		
+	r1->updateMarket("Oil", 3); 
+	r1->saveMarket();
 	
+	cout << "-----" << endl;
+	r1->showInfo();
+
+	system("pause");
+
+	r1->updateMarket("Garbage", 2);
+	cout << "------" << endl;
+	r1->showInfo();
+
+	r1->loadMarket();
+	cout << "-----" << endl;
+	r1->showInfo();
+
+	system("pause");
+	
+
+	//-------------- END OF RESOURCE MARKET SAVE Test ------------------//
+
+	*/
+
 	cout << "Welcome to Funkenschlag" << endl;
 	cout << "Type \"yes\" then press Enter to load a game or press any key and Enter to start a new game.   ";
 	string answer;
