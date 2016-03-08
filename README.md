@@ -16,7 +16,7 @@ TODO
 | x| User-driven creation of map (board) elements | **/9** |
 | x| Saving map exactly as edited      | **/4** |
 |+-| Loading map from existing file && edit map | **/3** |
-| | Load resource market | **/4** |
+| | Load at the bottom of the board the resource market  | **/4** |
 | x| Verify map correctness before saving | **/6** |
 | x| Load from file player possessions | **/3** |
 | | Load from file resource market && power plants | **/3** |
