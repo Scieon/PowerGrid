@@ -14,7 +14,7 @@ using namespace std;
 
 //Default constructor
 TurnSummary::TurnSummary(){
-	turnCounter = 1; //keep track of who is going first
+	turnCounter = 1; //keep track round number
 	nbOfPlayer = 0; //how many people are playing in this game. for now we will have 2 only.
 	market = new ResourceMarket();
 }
@@ -83,7 +83,7 @@ void TurnSummary::turnOrder() {
 		}
 		else
 			cout << "We are keeping the order" << endl;
-		cout << "The player with the biggest most houses will start. If tied, biggest powerplant will go. " << endl;
+		cout << "The player with the most houses will start. If tied, biggest powerplant number will go. " << endl;
 
 		
 	}
@@ -96,14 +96,14 @@ void TurnSummary::buyPowerPlant() {
 	cout << " THIS IS SECOND STEP THE BUYING OF POWER PLANTS" << endl;
 	cout << " ///////////////////////////////////////////////////////" << endl;
 
-	//Need to choose from first four power plants, LET'S ASSUME THE PLAYER WILL CHOOSE 2 DIFFERENT POWER PLANT FOR NOW.
 	Player* p = vector_player[0];//first player bids
-	bool exitLoop = false;
 
 	while (true) {
+		
 		cout << "Player with color " << p->getColor() << " can bid first " << endl;
 
 		powerplants_Vector->printMarket();
+		
 		cout << endl;
 		cout << "Player " << p->getColor() << endl;
 		cout << "You currently have " << p->getElektro() << " elektros" << endl;
@@ -133,34 +133,28 @@ void TurnSummary::buyPowerPlant() {
 			checkElektro = powerplants_Vector->hasEnoughElektroForMarket(plantBid);
 		}
 
-		//Checks if the other player already bought a powerplant -- just works for 1 round. If yes, then there is no need for auction,
-		//can buy automatically on lowest plantBid without anyone interfering
+		//Checks if the other player already bought a powerplant -- just works for 1 round. If yes, then there is no need for an auction.
+		//The player with no powerplant will automatically buy the lowest plantBid without the other player interfering
 		if (getNextPlayer(*p)->getPowerplantsVector()->size() == 1) {
 			p->addPlant(powerplants_Vector->getAndRemoveSpecificPowerplant(plantBid));
 			p->setElektro(p->getElektro() - plantBid);
 			cout << "Player " << p->getColor() << " has " << p->getElektro() << "." << endl;
-
 		}
 
+		//If both players bought a powerplant on the first round then break from the first while (stop buying powerplant)
+		if (p->getPowerplantsVector()->size() == 1 && getNextPlayer(*p)->getPowerplantsVector()->size() == 1)
+		{
+			break;
+		}
+		
 		int powerPlantBid = plantBid; //to know the actual minimum bid
 		string answer;
 		int playerBid;
 
-		//If both players bought powerplants on first round then break from the first while
-		if (p->getPowerplantsVector()->size() == 1 && getNextPlayer(*p)->getPowerplantsVector()->size() == 1)
-		{
-
-			/*(//need to change but for now if whoever bought the highest powerplant will have the lowest amount of elektro
-			//and in the buy raw material, the last person will go first
-			if (p->getElektro() < getNextPlayer(*p)->getElektro()) {
-				p = getNextPlayer(*p);
-			}*/
-			break;
-		}
-
 		cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
 		cout << "@@@@ Starting Auction @@@@" << endl;
 		cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
+		
 		while (true) {
 
 			p = getNextPlayer(*p);
@@ -204,24 +198,23 @@ void TurnSummary::buyPowerPlant() {
 				//Reloop
 			}
 
-			//If they they don't want to auction anymore 
+			//If they they don't want to auction anymore then the next player will end up buying the powerplant
 			else if (answer == "n") {
 				p = getNextPlayer(*p);
-				//pwm.getSpecificPowerplant(powerPlantBid)->showPlantInfo();
 				p->setElektro(p->getElektro() - plantBid);
 				cout << "Player " << p->getColor() << " has " << p->getElektro() << "." << endl;
-				p->addPlant(powerplants_Vector->getAndRemoveSpecificPowerplant(powerPlantBid));// adds into next person's 
+				p->addPlant(powerplants_Vector->getAndRemoveSpecificPowerplant(powerPlantBid));// adds into next person's powerplant possession
 				p = getNextPlayer(*p);
 				break;
 			}
 		}
 	}
 
-	// first round will tell if there is an order change depending who bought the highest power plant
+	//First round will tell if there is an order change depending who bought the highest power plant
 	if (turnCounter == 1) {
 		if (vector_player[0]->getHighestMinBid() < vector_player[1]->getHighestMinBid()) {
 			reverse(vector_player.begin(), vector_player.end());
-			cout << "The first player for next round (meaning the last player with lowest powerplant number) will be, PLAYER" << vector_player[1]->getColor() << endl;
+			cout << "The first player for next round (meaning the last player with lowest powerplant number) will be, PLAYER " << vector_player[1]->getColor() << endl;
 		}
 
 	}
@@ -229,9 +222,12 @@ void TurnSummary::buyPowerPlant() {
 
 /* Step 3 - Buy raw material. In this part, the last player will begin. In other words, it's the reverse order of buying power plant who starts. */
 void TurnSummary::buyRawMaterial() {
+	
+	cout << endl;
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	cout << " THIS IS THIRD STEP TO BUY RAW MATERIALS" << endl;
 	cout << " ///////////////////////////////////////////////////////" << endl;
+	
 	string materialChoice;
 	int qty;
 	reverse(vector_player.begin(), vector_player.end());
@@ -240,7 +236,7 @@ void TurnSummary::buyRawMaterial() {
 		cout << "Since we are starting with the last player to buy the raw material. Here is the STARTING PLAYER with the color: " << p->getColor() << endl << endl;
 
 		while (true) {
-			cout << endl << "Player " << p->getColor() << " turn, please choose what you want to buy:" << endl <<"(coal, oil, uranium, or garbage)"<<" When finished please type done. " << endl;
+			cout << endl << "Player " << p->getColor() << " turn, please choose what you want to buy: " << endl <<"(coal, oil, uranium, or garbage)"<<" When finished please type done. " << endl;
 			cout << "Enter 1 to see current resource market." <<endl
 			<<"Enter 2 to see powerplants owned." << endl;
 			cout << "Choice: ";
@@ -333,7 +329,6 @@ void TurnSummary::buyRawMaterial() {
 					cout << "Current garbage in possession: " << p->getResource("Garbage") << endl;
 					market->updateMarket("Garbage", qty);
 				}
-
 			}
 			else if (materialChoice == "done") {
 				break;
@@ -394,7 +389,7 @@ void TurnSummary::building() {
 			//First few rounds will only let you buy for 10. Have to implement exception that after buying that city, it is no longer available. For now, we will leave it as it is.
 			if (buildOption == "yes") {
 				string houseChoice;
-				cout << "Would " << p->getColor() << " like to buy a house at Duisburg, Essen, DEseldorf, or Dortmunt?" << endl;
+				cout << "Would " << p->getColor() << " like to buy a house at Duisburg, Essen, DÂEseldorf, or Dortmunt?" << endl;
 				cin >> houseChoice;
 				p->setElektro(p->getElektro() - 10);
 				//p->getHouseManager()->addHouses(h1);
