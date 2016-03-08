@@ -63,7 +63,7 @@ int main(){
 	
 	
 	cout << "Welcome to Funkenschlag" << endl;
-	cout << "Do you want to load a game? Type \"yes\" if so" << endl;
+	cout << "Type \"yes\" then press Enter to load a game or press any key and Enter to start a new game.   ";
 	string answer;
 	cin >> answer;
 	if (answer == "yes") {
@@ -73,7 +73,7 @@ int main(){
 		return 0;
 	}
 	else {
-		cout << "Starting new game..." << endl;
+		cout << "\nStarting new game..." << endl;
 		
 		// Beginning of Second Distinct Part
 
@@ -86,7 +86,7 @@ int main(){
 		//Add the number of players in the vector collection
 		for (int i = 1; i < 3; i++)
 		{
-			cout << "Player " << i << endl << "Please insert your color: ";
+			cout << "\nPlayer " << i << endl << "Please insert your color: ";
 			cin >> color;
 			Player* p = new Player(color);
 			vector_player.push_back(p);
@@ -97,7 +97,7 @@ int main(){
 		AreaManager * area_manager = new AreaManager();
 		CityManager * cityManager = new CityManager();
 
-		cout << "Please enter the areas you want to play (3 integers). " 
+		cout << "\nPlease enter the areas you want to play (3 integers). " 
 			<< "See image for details." 
 			<< endl 
 			<< "The areas must be connected..."
