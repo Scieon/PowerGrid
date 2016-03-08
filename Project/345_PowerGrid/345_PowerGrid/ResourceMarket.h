@@ -13,24 +13,21 @@ public:
 	ResourceMarket();
 	~ResourceMarket();
 
-	void showInfo();
-	int getMarketCost(string resource, int quantity); //Returns cost of any quantity of a resource.
 
-	void refill(int step, int players);
-	int findEmpty(string resource); //Finds the last index that is empty, this will be the index used to refill the resource
-	int findPartial(string resource); //Finds the last index that is not full but not empty
-	void replenish(string resource, int quantity); //Quantity to be filled  
+	int getMarketCost(string resource, int quantity); //Returns cost of any quantity of a resource.
 	int getMarketQuantity(string resource); //Return total quantity of resource currently in market
+
+
+	void removeOneUnit(string resource); //Removes one unit of any resource at any index
+	void refill(int step, int players); 
+	void showInfo();
+	void updateMarket(string resource, int quantity); //Removes resources purchased by players during phase 3
 
 private:
 	ResourceManager * market[12];
-	
-	/*
-	These Functions should be private for final build
-		int findEmpty(string resource); 
-		find partial
-		void replenish(string resource, int quantity);
-	*/
+	int findEmpty(string resource); //Finds the last index that is empty, this will be the index used to refill the resource
+	int findPartial(string resource); //Finds the last index that is not full but not empty
+	void replenish(string resource, int quantity); //Quantity to be filled  
 
 };
 

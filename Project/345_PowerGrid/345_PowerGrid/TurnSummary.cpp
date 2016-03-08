@@ -274,10 +274,18 @@ void TurnSummary::buyRawMaterial() {
 		cout << "Since we are starting with the last player to buy the raw material. Here is the STARTING PLAYER with the color: " << p->getColor() << endl << endl;
 
 		while (true) {
-			cout << endl <<"Player " << p->getColor() << " turn, please choose what you want to buy(coal, oil, uranium, or garbage). When you're done type done. " << endl;
-			cin >> materialChoice;
+			cout << endl << "Player " << p->getColor() << " turn, please choose what you want to buy:" << endl <<"(coal, oil, uranium, or garbage)"<<" When finished please type done. " << endl;
+			cout << "Enter 1 to see current resource market." << endl;
+			cout << "Choice: ";
+			cin >> materialChoice; cout << endl;
 
-			if (materialChoice == "coal") {
+			if (materialChoice == "1") {
+				market->showInfo();
+				system("pause");
+				continue;
+			}
+
+			if (materialChoice == "coal" || materialChoice == "Coal") {
 				cout << "How many coal would you like buy: ";
 				cin >> qty;
 
@@ -293,33 +301,66 @@ void TurnSummary::buyRawMaterial() {
 					cout << "Cost was: " << market->getMarketCost("Coal", qty) << " elektros." << endl;
 					cout << endl << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
 					cout << "Current coal in possession: " << p->getResource("Coal") << endl;
+					market->updateMarket("Coal", qty);
 				}
 
 			}
-			else if (materialChoice == "oil") {
-				cout << "How many oil would you like to buy? ";
-				cin >> qty;
-				//p->getResources()->setOil(qty + p->getResources()->getOil());
-				p->addResource("Oil", qty);
+			else if (materialChoice == "oil" || materialChoice == "Oil") {
 
-				p->setElektro(p->getElektro() - (3 * qty));
-				cout << endl << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
-			}
-			else if (materialChoice == "uranium") {
-				cout << "How many uranium would you like to buy? ";
+				cout << "How many oil would you like buy: ";
 				cin >> qty;
-				//p->getResources()->setUranium(qty + p->getResources()->getUranium());
-				p->addResource("Uranium", qty);
-				p->setElektro(p->getElektro() - (12 * qty));
-				cout << endl << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
+
+				//Validating if market has enough resources (Note: getMarketCost calls getMarketQuantity)
+				if (market->getMarketCost("Oil", qty) == -1) {
+					continue;
+				}
+
+				//Validating if player can store or purchase the quantity of resources
+				if (p->validateResourcePurchase(market->getMarketCost("Oil", qty), qty, "Oil")) {
+					cout << "Cost was: " << market->getMarketCost("Oil", qty) << " elektros." << endl;
+					cout << endl << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
+					cout << "Current oil in possession: " << p->getResource("Oil") << endl;
+					market->updateMarket("Oil", qty);
+				}
+
 			}
-			else if (materialChoice == "garbage") {
-				cout << "How many garbage would you like to buy? ";
+			else if (materialChoice == "uranium" || materialChoice == "Uranium") {
+
+				cout << "How many uranium would you like buy: ";
 				cin >> qty;
-				//p->getResources()->setGarbage(qty + p->getResources()->getGarbage());
-				p->addResource("Garbage", qty);
-				p->setElektro(p->getElektro() - (6 * qty));
-				cout << endl << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
+
+				//Validating if market has enough resources (Note: getMarketCost calls getMarketQuantity)
+				if (market->getMarketCost("Uranium", qty) == -1) {
+					continue;
+				}
+
+				//Validating if player can store or purchase the quantity of resources
+				if (p->validateResourcePurchase(market->getMarketCost("Uranium", qty), qty, "Uranium")) {
+					cout << "Cost was: " << market->getMarketCost("Uranium", qty) << " elektros." << endl;
+					cout << endl << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
+					cout << "Current uranium in possession: " << p->getResource("Uranium") << endl;
+					market->updateMarket("Uranium", qty);
+				}
+			}
+
+			else if (materialChoice == "garbage" || materialChoice == "Garbage") {
+
+				cout << "How many garbage would you like buy: ";
+				cin >> qty;
+
+				//Validating if market has enough resources (Note: getMarketCost calls getMarketQuantity)
+				if (market->getMarketCost("garbage", qty) == -1) {
+					continue;
+				}
+
+				//Validating if player can store or purchase the quantity of resources
+				if (p->validateResourcePurchase(market->getMarketCost("Garbage", qty), qty, "Garbage")) {
+					cout << "Cost was: " << market->getMarketCost("Garbage", qty) << " elektros." << endl;
+					cout << endl << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
+					cout << "Current garbage in possession: " << p->getResource("Garbage") << endl;
+					market->updateMarket("Garbage", qty);
+				}
+
 			}
 			else if (materialChoice == "done") {
 				break;
@@ -401,6 +442,10 @@ void TurnSummary::bureaucracy() {
 	turnCounter++; //the first round going through this will be different then afterwards it will become the same
 }
 
+
+void TurnSummary::resourcePurchase(string materialType) {
+
+}
 //Returns next player
 Player * TurnSummary::getNextPlayer(Player & p) {
 	if (&p == &*vector_player[0]) {

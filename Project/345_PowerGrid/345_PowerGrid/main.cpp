@@ -36,11 +36,20 @@ int main(){
 
 	//cout << player1->getTotalStorage() << endl;
 	//cout << player1->getResourceStorage("Coal") << endl;
-	//player1->validateResourcePurchase(33, 8, "Coal"); //(cost,quantity,type);
+	player1->validateResourcePurchase(33, 8, "Coal"); //(cost,quantity,type);
+	player1->showInfo();
+	
+	string type;
+	int q;
 
-	cout << "Cost: " << r->getMarketCost("Coal", 7) << endl;
-	cout << "Cost: " << r->getMarketCost("Uranium", 2)<< endl;
-	cout << "Cost: " << r->getMarketCost("Uranium", 1) << endl;
+	cin >> type >> q;
+	r->updateMarket(type, q);
+	r->showInfo();
+	//cout << "Cost: " << r->getMarketCost("Coal", 7) << endl;
+	//cout << "Cost: " << r->getMarketCost("Uranium", 2)<< endl;
+	//cout << "Cost: " << r->getMarketCost("Uranium", 1) << endl;
+
+
 	cin.get();
 	//-------------- END OF TEST ------------------------------------/
 

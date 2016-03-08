@@ -9,6 +9,13 @@ ResourceManager::ResourceManager() {
 
 }
 
+ResourceManager::~ResourceManager() {
+	delete coal;
+	delete oil;
+	delete garbage;
+	delete uranium;
+}
+
 void ResourceManager::edit(string type, int quantity, int cost) {
 
 	if (type == "Coal") {
@@ -91,9 +98,24 @@ int ResourceManager::getResourceCost(string resource) {
 
 }
 
-ResourceManager::~ResourceManager() {
-	delete coal;
-	delete oil;
-	delete garbage;
-	delete uranium;
+//void removeOneUnit(string resource); //Removes one unit of any resource at any index
+void ResourceManager::removeOneUnit(string resource) {
+
+	if (resource == "Coal") {
+		coal->removeQuantity(1);
+	}
+
+	if (resource == "Oil") {
+		oil->removeQuantity(1);
+	}
+
+	if (resource == "Garbage") {
+		garbage->removeQuantity(1);
+	}
+
+	if (resource == "Uranium") {
+		uranium->removeQuantity(1);
+	}
 }
+
+

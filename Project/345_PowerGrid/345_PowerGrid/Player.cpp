@@ -121,7 +121,7 @@ bool Player::validateResourcePurchase(int cost, int quantity, string type) {
 			cout << "Cannot store that many Coal!" << endl;
 			return false;
 		}
-		cout << "Validated" << endl;
+		//cout << "Validated" << endl;
 	}
 
 	if (type == "Oil") {
@@ -132,7 +132,7 @@ bool Player::validateResourcePurchase(int cost, int quantity, string type) {
 			cout << "Cannot store that many Oil!" << endl;
 			return false;
 		}
-		cout << "Validated" << endl;
+		//cout << "Validated" << endl;
 	}
 
 	if (type == "Garbage") {
@@ -140,7 +140,7 @@ bool Player::validateResourcePurchase(int cost, int quantity, string type) {
 			cout << "Cannot store that many Garbage!" << endl;
 			return false;
 		}
-		cout << "Validated" << endl;
+		//cout << "Validated" << endl;
 	}
 
 	if (type == "Uranium") {
@@ -148,7 +148,7 @@ bool Player::validateResourcePurchase(int cost, int quantity, string type) {
 			cout << "Cannot store that many Uranium!" << endl;
 			return false;
 		}
-		cout << "Validated" << endl;
+		//cout << "Validated" << endl;
 	}
 
 	//At this point all validation have passed we can let user buy it.

@@ -71,6 +71,12 @@ ResourceMarket::ResourceMarket() {
 
 }
 
+//Destructor
+ResourceMarket::~ResourceMarket() {
+
+}
+
+
 //Returns current cost of an valid quantity of a resource
 int ResourceMarket::getMarketCost(string resource, int quantity) {
 
@@ -123,18 +129,37 @@ int ResourceMarket::getMarketCost(string resource, int quantity) {
 
 }
 
+//Removes resources purchased by players during phase 3
+void ResourceMarket::updateMarket(string resource, int quantity) {
+
+	for (int i = 0; i <= 11; i++) {
+
+		while (market[i]->getResourceQuantity(resource) != 0) {
+			market[i]->removeOneUnit(resource);
+			quantity--;
+			if (quantity == 0)
+				break;
+		}
+		if (quantity == 0)
+			break;
+	}
+
+}
+
+//void removeOneUnit(string resource); //Removes one unit of any resource at any index
+void ResourceMarket::removeOneUnit(string resource) {
+
+}
+
 //Return total quantity of resource in market
 int ResourceMarket::getMarketQuantity(string resource) {
 
-	int amount_in_market = 0; 
+	int amount_in_market = 0;
 
 	for (int i = 0; i <= 11; i++) {
 		amount_in_market += market[i]->getResourceQuantity(resource);
 	}
 	return amount_in_market;
-
-
-
 }
 //Calls the replenish method accordingly
 //Replenish is helper method for this function
@@ -271,13 +296,6 @@ int ResourceMarket::findPartial(string resource) {
 	return -1;
 }
 
-
-
-//Destructor
-ResourceMarket::~ResourceMarket() {
-
-
-}
 
 
 void ResourceMarket::showInfo() {
