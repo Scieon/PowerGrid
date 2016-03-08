@@ -6,6 +6,8 @@
 #include "PowerPlant.h"
 #include "Resource.h"
 #include "PowerPlantManager.h"
+#include "Map.h"
+#include "MapOfPlayersCity.h"
 
 using namespace std;
 
@@ -13,33 +15,39 @@ using namespace std;
 TurnSummary::TurnSummary(){
 	turnCounter = 1; //keep track of who is going first
 	nbOfPlayer = 0; //how many people are playing in this game. for now we will have 2 only.
+	market = new ResourceMarket();
 }
 
 //Constructor
-TurnSummary::TurnSummary(std::vector<Player*> vector_player){
+TurnSummary::TurnSummary(std::vector<Player*> vector_player, Map *map) {
+
+	market = new ResourceMarket(); //Should load from save
+
 	turnCounter = 1;
 	this->vector_player = vector_player;
 	nbOfPlayer = vector_player.size();
 	powerplants_Vector = new PowerplantManager();
+	this->map = map;
+	mapOfPlayersCity = new MapOfPlayersCity(map);
 }
 
 //Destructor
-TurnSummary::~TurnSummary(){
+TurnSummary::~TurnSummary() {
 
 }
 
 //Getter and Setter
-void TurnSummary::setTurnCounter(int turnCounter){
+void TurnSummary::setTurnCounter(int turnCounter) {
 	this->turnCounter = turnCounter;
 }
 
-int TurnSummary::getTurnCounter(){
+int TurnSummary::getTurnCounter() {
 	return turnCounter;
 }
 
-/* Step1 - Determine turn order. The first time, it will be randomized. Then after the first time, it will always be comparing 
+/* Step1 - Determine turn order. The first time, it will be randomized. Then after the first time, it will always be comparing
 who has the most number of houses in the network. If two players are tied, then choose the player with the largest number of power plant. */
-void TurnSummary::turnOrder(){
+void TurnSummary::turnOrder() {
 	//Enters this step in the first round because it will randomize who gets to play first.
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	cout << " THIS IS FIRST STEP TO DETERMINE THE TURN ORDER" << endl;
@@ -62,7 +70,7 @@ void TurnSummary::turnOrder(){
 			reverse(vector_player.begin(), vector_player.end());
 		}
 		else if (player1HouseCount == player2HouseCount){
-			
+
 			int player1HighestPlant = vector_player.at(0)->getPowerPlantManager()->determineHighestCost();
 			int player2HighestPlant = vector_player.at(1)->getPowerPlantManager()->determineHighestCost();
 
@@ -81,7 +89,7 @@ void TurnSummary::turnOrder(){
 	}
 }
 
-/*Step2 - Print to the first player and ask him to buy a powerplant, then ask the other players. On the first round, everyone will have to buy 
+/*Step2 - Print to the first player and ask him to buy a powerplant, then ask the other players. On the first round, everyone will have to buy
  a power plant. Later on, we will implement the auction. */
 void TurnSummary::buyPowerPlant() {
 	cout << " ///////////////////////////////////////////////////////" << endl;
@@ -220,7 +228,7 @@ void TurnSummary::buyPowerPlant() {
 }
 
 /* Step 3 - Buy raw material. In this part, the last player will begin. In other words, it's the reverse order of buying power plant who starts. */
-void TurnSummary::buyRawMaterial(){
+void TurnSummary::buyRawMaterial() {
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	cout << " THIS IS THIRD STEP TO BUY RAW MATERIALS" << endl;
 	cout << " ///////////////////////////////////////////////////////" << endl;
@@ -228,52 +236,99 @@ void TurnSummary::buyRawMaterial(){
 	int qty;
 	reverse(vector_player.begin(), vector_player.end());
 
-	for (Player* p : vector_player){
-		cout << "Since we are starting with the last player to buy the raw material. Here is the STARTING PLAYER with the color: " << p->getColor() << endl <<endl;
+	for (Player* p : vector_player) {
+		cout << "Since we are starting with the last player to buy the raw material. Here is the STARTING PLAYER with the color: " << p->getColor() << endl << endl;
 
-		while (true){
-			cout << "Player " << p->getColor() << " turn, please choose what you want to buy(coal, oil, uranium, or garbage). When you're done type done. " << endl;
-			cin >> materialChoice;
+		while (true) {
+			cout << endl << "Player " << p->getColor() << " turn, please choose what you want to buy:" << endl <<"(coal, oil, uranium, or garbage)"<<" When finished please type done. " << endl;
+			cout << "Enter 1 to see current resource market." << endl;
+			cout << "Choice: ";
+			cin >> materialChoice; cout << endl;
 
-			//have to add each in player, and need to add max of 2 items only
-			//They must choose how many of the raw material that they would like to buy. It will calculate the cost to their money too.
-			if (materialChoice == "coal"){
+			if (materialChoice == "1") {
+				market->showInfo();
+				system("pause");
+				continue;
+			}
+
+			if (materialChoice == "coal" || materialChoice == "Coal") {
 				cout << "How many coal would you like buy: ";
 				cin >> qty;
 
-				//Validate resource and elektro
-				p->addResource("Coal", qty);
-				p->setElektro(p->getElektro() - (3 * qty));
+				//Validating if market has enough resources (Note: getMarketCost calls getMarketQuantity)
+				if (market->getMarketCost("Coal", qty) == -1) {
+					cout << "CONTINUE" << endl;
+					system("pause");
+					continue;
+				}
 
-				cout << endl << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
-				cout << "Current coal in possession: " << p->getResource("Coal") << endl;
-			}
-			else if (materialChoice == "oil"){
-				cout << "How many oil would you like to buy? ";
-				cin >> qty;
-				//p->getResources()->setOil(qty + p->getResources()->getOil());
-				p->addResource("Oil", qty);
+				//Validating if player can store or purchase the quantity of resources
+				if (p->validateResourcePurchase(market->getMarketCost("Coal", qty), qty, "Coal")) {
+					cout << "Cost was: " << market->getMarketCost("Coal", qty) << " elektros." << endl;
+					cout << endl << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
+					cout << "Current coal in possession: " << p->getResource("Coal") << endl;
+					market->updateMarket("Coal", qty);
+				}
 
-				p->setElektro(p->getElektro() - (3 * qty));
-				cout << endl << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
 			}
-			else if (materialChoice == "uranium"){
-				cout << "How many uranium would you like to buy? ";
+			else if (materialChoice == "oil" || materialChoice == "Oil") {
+
+				cout << "How many oil would you like buy: ";
 				cin >> qty;
-				//p->getResources()->setUranium(qty + p->getResources()->getUranium());
-				p->addResource("Uranium", qty);
-				p->setElektro(p->getElektro() - (12 * qty));
-				cout << endl << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
+
+				//Validating if market has enough resources (Note: getMarketCost calls getMarketQuantity)
+				if (market->getMarketCost("Oil", qty) == -1) {
+					continue;
+				}
+
+				//Validating if player can store or purchase the quantity of resources
+				if (p->validateResourcePurchase(market->getMarketCost("Oil", qty), qty, "Oil")) {
+					cout << "Cost was: " << market->getMarketCost("Oil", qty) << " elektros." << endl;
+					cout << endl << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
+					cout << "Current oil in possession: " << p->getResource("Oil") << endl;
+					market->updateMarket("Oil", qty);
+				}
+
 			}
-			else if (materialChoice == "garbage"){
-				cout << "How many garbage would you like to buy? ";
+			else if (materialChoice == "uranium" || materialChoice == "Uranium") {
+
+				cout << "How many uranium would you like buy: ";
 				cin >> qty;
-				//p->getResources()->setGarbage(qty + p->getResources()->getGarbage());
-				p->addResource("Garbage", qty);
-				p->setElektro(p->getElektro() - (6 * qty));
-				cout << endl << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
+
+				//Validating if market has enough resources (Note: getMarketCost calls getMarketQuantity)
+				if (market->getMarketCost("Uranium", qty) == -1) {
+					continue;
+				}
+
+				//Validating if player can store or purchase the quantity of resources
+				if (p->validateResourcePurchase(market->getMarketCost("Uranium", qty), qty, "Uranium")) {
+					cout << "Cost was: " << market->getMarketCost("Uranium", qty) << " elektros." << endl;
+					cout << endl << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
+					cout << "Current uranium in possession: " << p->getResource("Uranium") << endl;
+					market->updateMarket("Uranium", qty);
+				}
 			}
-			else if (materialChoice == "done"){
+
+			else if (materialChoice == "garbage" || materialChoice == "Garbage") {
+
+				cout << "How many garbage would you like buy: ";
+				cin >> qty;
+
+				//Validating if market has enough resources (Note: getMarketCost calls getMarketQuantity)
+				if (market->getMarketCost("garbage", qty) == -1) {
+					continue;
+				}
+
+				//Validating if player can store or purchase the quantity of resources
+				if (p->validateResourcePurchase(market->getMarketCost("Garbage", qty), qty, "Garbage")) {
+					cout << "Cost was: " << market->getMarketCost("Garbage", qty) << " elektros." << endl;
+					cout << endl << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
+					cout << "Current garbage in possession: " << p->getResource("Garbage") << endl;
+					market->updateMarket("Garbage", qty);
+				}
+
+			}
+			else if (materialChoice == "done") {
 				break;
 			}
 		}
@@ -281,51 +336,84 @@ void TurnSummary::buyRawMaterial(){
 }
 
 /* Step 4 - Building houses. Can choose which city one would like to build in. We would have to implement the cost it takes to get from one city to the next. */
-void TurnSummary::building(){
+void TurnSummary::building() {
 	string buildOption;
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	cout << " THIS IS FOURTH STEP TO BUILD HOUSES" << endl;
 	cout << " ///////////////////////////////////////////////////////" << endl;
-	for (Player* p : vector_player){
+	for (Player* p : vector_player) {
 		cout << "*****************************************************************" << endl;
-		cout << endl << "Would PLAYER " <<p->getColor() << " like to build houses? yes or no. At the first round, you can only build houses on cities costing 10. The LAST PLAYER will begin again. " << endl;
+		cout << endl << "Would PLAYER " << p->getColor() << " like to build houses? yes or no. At the first round, you can only build houses on cities costing 10. The LAST PLAYER will begin again. " << endl;
 		cin >> buildOption;
-		//House h1 = House("Duisburg");
-		//House h2 = House("Essen");
-		//House h3 = House("DEseldorf");
-		//House h4 = House("Dortmunt");
 
-		while (true){
+		int houseCount = p->getHouseManager()->getHouseCount();
+
+		//if player has no houses yet
+		if (houseCount == 0) {
+			cout << "You can build in these Cities:" << endl;
+
+			//print free locations
+			mapOfPlayersCity->printAvailableIndices();
+
+
+			cout << endl << "Please choose an Index you want to build in" << endl;
+			cout << "Index: ";
+			int index;
+			cin >> index;
+
+			//check if user put anything other than integer
+			while (std::cin.fail()) {
+				cout << "Invalid input. Please enter an integer: ";
+				cin.clear();
+				cin.ignore(256, '\n');
+				cin >> index;
+			}
+
+			//Check if the index is available before inserting
+			while (!mapOfPlayersCity->isIndexAvailable(index)) {
+				cout << "Invalid integer.. Please enter a valid index: ";
+				cin >> index;
+			}
+
+			House house(index, mapOfPlayersCity->getIndexName(index));
+
+			p->getHouseManager()->addHouses(house);
+			mapOfPlayersCity->setPlayerHouse(index, p->getColor());
+
+		}
+		/*
+		while (true) {
 			//First few rounds will only let you buy for 10. Have to implement exception that after buying that city, it is no longer available. For now, we will leave it as it is.
-			if (buildOption == "yes"){
+			if (buildOption == "yes") {
 				string houseChoice;
-				cout << "Would " <<p->getColor() << " like to buy a house at Duisburg, Essen, DEseldorf, or Dortmunt?" << endl;
+				cout << "Would " << p->getColor() << " like to buy a house at Duisburg, Essen, DEseldorf, or Dortmunt?" << endl;
 				cin >> houseChoice;
 				p->setElektro(p->getElektro() - 10);
 				//p->getHouseManager()->addHouses(h1);
 			}
-			else if (buildOption == "no"){
+			else if (buildOption == "no") {
 				break;
 			}
 			cout << "Would " << p->getColor() << " like to build again? yes or no" << endl;
 			cin >> buildOption;
 		}
+		*/
 	}
-	
+
 }
 
 /* Step 5 - Bureaucracy. Use bought resources to power electricity to how many houses. Those resources go back in the market.
-  Depending on how many houses they've powered, they will generate a certain amount of money. 
+  Depending on how many houses they've powered, they will generate a certain amount of money.
   We are at phase 1 until someone builds the 7th house. Then phase 2 ends when phase 3 card is drawn. Also, during phase 1 and 2, we must place the
   highest power plant under the stack. On the other hand, in phase 3, we will move the lowest power plant under the stack.*/
-void TurnSummary::bureaucracy(){
+void TurnSummary::bureaucracy() {
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	cout << " THIS IS FIFTH STEP THE BUREAUCRACY" << endl;
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	int nbHousePower;
 	int paymentTable[21] = { 10, 22, 33, 44, 54, 64, 73, 82, 90, 98, 105, 112, 118, 124, 129, 134, 138, 142, 145, 148, 150 };
 	reverse(vector_player.begin(), vector_player.end());
-	for (Player* p : vector_player){
+	for (Player* p : vector_player) {
 		//player gets the money depending on how many houses they have powered. Even if they don't power any houses, they will automatically get 10 elektro.
 		//Not going to power every single house they have bought, but in this case we will leave it as it is. They should be able to choose how many houses 
 		//they are going to power based on their resources.
@@ -335,13 +423,13 @@ void TurnSummary::bureaucracy(){
 		cin >> nbHousePower;
 
 		//The number of houses that the player chooses to power must be less than or equal to the amount of houses they bought.
-		if (nbHousePower <= (p->getHouseManager()->getHouseCount())){
+		if (nbHousePower <= (p->getHouseManager()->getHouseCount())) {
 			p->setElektro(p->getElektro() + (paymentTable[nbHousePower]));
 		}
-		else{
-			while (nbHousePower > (p->getHouseManager()->getHouseCount())){
-				cout << "Please insert the appropriate number of houses PLAYER " <<p->getColor() << " wish to power.";
-				cout << "How many houses would PLAYER " <<p->getColor() << " like to power?";
+		else {
+			while (nbHousePower > (p->getHouseManager()->getHouseCount())) {
+				cout << "Please insert the appropriate number of houses PLAYER " << p->getColor() << " wish to power.";
+				cout << "How many houses would PLAYER " << p->getColor() << " like to power?";
 				cin >> nbHousePower;
 			}
 			p->setElektro(p->getElektro() + (paymentTable[nbHousePower]));
@@ -350,6 +438,10 @@ void TurnSummary::bureaucracy(){
 	turnCounter++; //the first round going through this will be different then afterwards it will become the same
 }
 
+
+void TurnSummary::resourcePurchase(string materialType) {
+
+}
 //Returns next player
 Player * TurnSummary::getNextPlayer(Player & p) {
 	if (&p == &*vector_player[0]) {

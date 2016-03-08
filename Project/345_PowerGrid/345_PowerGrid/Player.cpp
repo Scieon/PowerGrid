@@ -105,11 +105,11 @@ void Player::addPlant(Powerplant * p1) {
 	}
 }
 
-void Player::validateResourcePurchase(int cost, int quantity, string type) {
+bool Player::validateResourcePurchase(int cost, int quantity, string type) {
 	
 	if (this->getElektro() < cost) {
 		cout << "Not enough elektros to purchase resources!" << endl;
-		return;
+		return false;
 	}
 
 	
@@ -119,9 +119,9 @@ void Player::validateResourcePurchase(int cost, int quantity, string type) {
 
 		if (condition1 || condition2) {
 			cout << "Cannot store that many Coal!" << endl;
-			return;
+			return false;
 		}
-		cout << "Validated" << endl;
+		//cout << "Validated" << endl;
 	}
 
 	if (type == "Oil") {
@@ -130,31 +130,32 @@ void Player::validateResourcePurchase(int cost, int quantity, string type) {
 
 		if (condition1 || condition2) {
 			cout << "Cannot store that many Oil!" << endl;
-			return;
+			return false;
 		}
-		cout << "Validated" << endl;
+		//cout << "Validated" << endl;
 	}
 
 	if (type == "Garbage") {
 		if (getResourceStorage("Garbage") < getResource("Garbage") + quantity) {
 			cout << "Cannot store that many Garbage!" << endl;
-			return;
+			return false;
 		}
-		cout << "Validated" << endl;
+		//cout << "Validated" << endl;
 	}
 
 	if (type == "Uranium") {
 		if (getResourceStorage("Uranium") < getResource("Uranium") + quantity) {
 			cout << "Cannot store that many Uranium!" << endl;
-			return;
+			return false;
 		}
-		cout << "Validated" << endl;
+		//cout << "Validated" << endl;
 	}
 
 	//At this point all validation have passed we can let user buy it.
 	this->addResource(type, quantity);
 	this->subtractMoney(cost);
-
+	return true;
+	
 }
 
 //Returns total amount of resources stored across all possible power plants
@@ -259,5 +260,13 @@ int Player::getHighestMinBid() {
 }
 
 
+bool Player::hasEnoughtElektroFor(int amount) {
+
+	int temp = elektro;
+	if ((temp - amount) >= 0) {
+		return true;
+	}
+	return false;
+}
 
 

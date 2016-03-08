@@ -35,13 +35,14 @@ public:
 	void showPlants(); //Power Plant methods added by Anhkhoi, feel free to modify
 	void showInfo();
 	bool isPowerplantsFull(); //checks if powerplant vector is full
+	bool hasEnoughtElektroFor(int amount);
 	void addPlant(Powerplant * p1); //incomplete "p2->addPlant(oil3);"
 	int getHighestMinBid();
 
 	//Resources
 	void addResource(string type, int quantity); //Don't care about cost 
 	int getResource(string type); //Return resource quantity
-	void validateResourcePurchase(int cost, int quantity, string type);
+	bool validateResourcePurchase(int cost, int quantity, string type);
 	int getTotalStorage(); //Returns total amount of resources stored across all possible power plants
 	int getResourceStorage(string resource); //Returns total amount of specific resource that can be stored
 
