@@ -35,6 +35,7 @@ public:
 	void showPlants(); //Power Plant methods added by Anhkhoi, feel free to modify
 	void showInfo();
 	bool isPowerplantsFull(); //checks if powerplant vector is full
+	bool hasEnoughtElektroFor(int amount);
 	void addPlant(Powerplant * p1); //incomplete "p2->addPlant(oil3);"
 
 	//Resources

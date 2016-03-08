@@ -137,8 +137,8 @@ int main(){
 		while (y<4) {
 			//turn->turnOrder();
 			//turn->buyPowerPlant();
-			turn->buyRawMaterial();
-			//turn->building();
+			//turn->buyRawMaterial();
+			turn->building();
 			//turn->bureaucracy();
 			y++;
 		}

@@ -209,13 +209,33 @@ std::list<vertex_t> Map::DijkstraGetShortestPathTo(
 
 void Map::printMap()
 {
-	cout << "Printing map..." << endl;
 	int i = 0;
-
 	for (vector<neighbor> city : *map) {
 		if (city.size() != 0) {
 			cout << "Index: " << i << " Name: " << city_manager->getName(i) << endl;
 		}
 		i++;
 	}
+}
+
+//checks if the size of the vertex is zero to see 
+bool Map::isIndexInGame(int index)
+{
+	return ((*map)[index].size() != 0);
+}
+
+//returns the indices played in the game
+vector<int>* Map::getPlayedIndicesVector()
+{
+	vector<int> * indices = new vector<int>();
+
+	int i = 0;
+	for (vector<neighbor> city : *map) {
+		if (city.size() != 0) {
+			indices->push_back(i);
+		}
+		i++;
+	}
+
+	return indices;
 }
