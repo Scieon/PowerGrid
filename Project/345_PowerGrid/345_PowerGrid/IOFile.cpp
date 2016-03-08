@@ -425,3 +425,70 @@ vector<Area> * IOFile::loadAreas()
 	return areas;
 	
 }
+
+//save powerplants
+void IOFile::savePowerplants(PowerplantManager * pp_manager)
+{
+	ofstream output;
+	// Create/open a file
+	output.open("powerplant.txt");
+
+	output << "Powerplants" << endl;
+	vector<Powerplant> * ppVector = pp_manager->getPowerplantVector();
+
+	for (Powerplant pp : *ppVector) {
+		output << "Bid=" << pp.getBid() <<
+			" Type=" << pp.getType() <<
+			" Resource_required=" << pp.getResourceReq() <<
+			" Cities_powered=" << pp.getCitiesPowered() <<
+			endl;
+	}
+	output.close();
+}
+
+void IOFile::loadPowerplants(PowerplantManager * pp_manager)
+{
+	ifstream input;
+	// Create/open a file
+	input.open("powerplant.txt");
+
+	vector<Powerplant> * pp_vector = new vector<Powerplant>();
+	int pos; //position
+	string line;
+
+	input >> line; //powerplants
+	input >> line;
+	while (!input.eof()) {
+
+		int min_bid;
+		string type;
+		int resource_required;
+		int city_powered;
+
+		pos = line.find("=");
+		min_bid = stoi(line.substr(pos + 1));
+
+		input >> line;
+
+		pos = line.find("=");
+		type = line.substr(pos + 1);
+
+		input >> line;
+
+		pos = line.find("=");
+		resource_required = stoi(line.substr(pos + 1));
+
+		input >> line;
+
+		pos = line.find("=");
+		city_powered = stoi(line.substr(pos + 1));
+
+		pp_vector->push_back(*new Powerplant(min_bid, type, resource_required, city_powered));
+		
+		input >> line;
+	}
+
+	pp_manager->setPowerplantVector(pp_vector);
+
+	input.close();
+}

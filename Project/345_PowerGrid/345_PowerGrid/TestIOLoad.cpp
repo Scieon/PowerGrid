@@ -26,6 +26,10 @@ int main() {
 	MapOfPlayersCity * map = new MapOfPlayersCity(new Map(area_manager));
 
 	IOFile::loadMap(map);
+
+	PowerplantManager * pp_manager = new PowerplantManager();
+	//IOFile::savePowerplants(pp_manager);
+	IOFile::loadPowerplants(pp_manager);
 	system("pause");
 
 }

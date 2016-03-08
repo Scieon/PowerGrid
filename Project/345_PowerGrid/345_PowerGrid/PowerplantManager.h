@@ -25,6 +25,10 @@ public:
 
 	Powerplant* getAndRemoveSpecificPowerplant(int plantBid);
 
+	vector<Powerplant> * getPowerplantVector();
+
+	void setPowerplantVector(vector<Powerplant> * pp_vector);
+
 	
 private:
 	vector<Powerplant> * powerplantsVector;

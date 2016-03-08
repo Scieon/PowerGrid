@@ -33,6 +33,10 @@ public:
 	//Verifies if there is no player in a city where we are not playing
 	static bool verifyMapCorrectness(MapOfPlayersCity *map);
 
+	static void savePowerplants(PowerplantManager * pp_manager);
+
+	static void loadPowerplants(PowerplantManager * pp_manager);
+
 private:
 	
 };
