@@ -3,6 +3,7 @@
 #include "MapOfPlayersCity.h"
 #include "Map.h"
 #include "AreaManager.h"
+#include "Area.h"
 #include <iostream>
 #include <fstream>
 #include <istream>
@@ -308,19 +309,6 @@ void IOFile::saveMap(MapOfPlayersCity *map) {
 	output.open("map.txt");
 	cout << "Saving map..." << endl;
 
-	output << "Areas ";
-	//Save map areas
-	vector<bool> values(*(map->getMap()->getAreasPlayed())); //shallow copy
-	int i = 0;//counter
-	for (bool val : values) {
-		if (val) {
-			output << " " << i ;
-		}
-		i++;
-	}
-
-	output << endl;
-
 	//Saves player houses
 	for (unsigned int i = 0; i < player_houses->size(); i++) {
 		if ((*player_houses)[i].size() == 0) {
@@ -383,6 +371,157 @@ void IOFile::loadMap(MapOfPlayersCity *map) {
 
 	delete loadMap;
 	loadMap = NULL;
+
+	input.close();
+}
+
+void IOFile::saveAreas(MapOfPlayersCity *map) {
+
+	ofstream output;
+	// Create/open a file
+	output.open("area.txt");
+
+	output << "Areas";
+	//Save map areas
+	vector<bool> values(*(map->getMap()->getAreasPlayed())); //shallow copy
+	int i = 0;//counter
+	for (bool val : values) {
+		if (val) {
+			output << i << endl;
+		}
+		i++;
+	}
+
+	output << endl;
+	output.close();
+}
+
+//load areas
+vector<Area> * IOFile::loadAreas()
+{
+	ifstream input("area.txt");;
+	string line;
+	input >> line; //Areas
+	input >> line;
+
+	int i1 = stoi(line); //area1
+	input >> line;
+	int i2 = stoi(line); //area2
+	input >> line;
+	int i3 =  stoi(line); //area3
+
+	Area * a1 = new Area(i1);
+	Area * a2 = new Area(i2);
+	Area * a3 = new Area(i3);
+
+	//Used for areamanager constructor
+	vector<Area> * areas = new vector<Area>(); 
+	areas->push_back(*a1);
+	areas->push_back(*a2);
+	areas->push_back(*a3);
+
+	input.close();
+
+	return areas;
+	
+}
+
+//save powerplants
+void IOFile::savePowerplants(PowerplantManager * pp_manager)
+{
+	ofstream output;
+	// Create/open a file
+	output.open("powerplant.txt");
+
+	output << "Powerplants" << endl;
+	vector<Powerplant> * ppVector = pp_manager->getPowerplantVector();
+
+	for (Powerplant pp : *ppVector) {
+		output << "Bid=" << pp.getBid() <<
+			" Type=" << pp.getType() <<
+			" Resource_required=" << pp.getResourceReq() <<
+			" Cities_powered=" << pp.getCitiesPowered() <<
+			endl;
+	}
+	output.close();
+}
+
+void IOFile::loadPowerplants(PowerplantManager * pp_manager)
+{
+	ifstream input;
+	// Create/open a file
+	input.open("powerplant.txt");
+
+	vector<Powerplant> * pp_vector = new vector<Powerplant>();
+	int pos; //position
+	string line;
+
+	input >> line; //powerplants
+	input >> line;
+	while (!input.eof()) {
+
+		int min_bid;
+		string type;
+		int resource_required;
+		int city_powered;
+
+		pos = line.find("=");
+		min_bid = stoi(line.substr(pos + 1));
+
+		input >> line;
+
+		pos = line.find("=");
+		type = line.substr(pos + 1);
+
+		input >> line;
+
+		pos = line.find("=");
+		resource_required = stoi(line.substr(pos + 1));
+
+		input >> line;
+
+		pos = line.find("=");
+		city_powered = stoi(line.substr(pos + 1));
+
+		pp_vector->push_back(*new Powerplant(min_bid, type, resource_required, city_powered));
+		
+		input >> line;
+	}
+
+	pp_manager->setPowerplantVector(pp_vector);
+
+	input.close();
+}
+
+void IOFile::saveNbPlayerAndTurnCounter(int nb_players, int turn)
+{
+	ofstream output;
+	// Create/open a file
+	output.open("nbPlayerAndTurn.txt");
+
+	output << "NbOfPlayers=" << nb_players << endl;
+	output << "TurnCount=" << turn << endl;
+
+	output.close();
+}
+
+void IOFile::loadNbPlayersAndTurnCoutner(int & nb_players, int & turn)
+{
+	ifstream input;
+	// Create/open a file
+	input.open("nbPlayerAndTurn.txt");
+
+	string line;
+	int pos; 
+
+	input >> line; //NbOfPlayers
+	pos = line.find("=");
+	nb_players = stoi(line.substr(pos + 1));
+
+	input >> line;
+
+	pos = line.find("="); //TurnCount
+	turn = stoi(line.substr(pos + 1));
 
 	input.close();
 }

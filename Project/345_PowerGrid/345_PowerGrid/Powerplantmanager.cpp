@@ -195,11 +195,6 @@ bool PowerplantManager::isPowerplantInActualMarket(int bid) {
 }
 
 
-/*void PowerplantManager::removePowerplant(Powerplant &pp) {
-
-}*/
-
-
 //Sorts the powerplantVector first 8 elements according to 
 //their miniumum bid
 void PowerplantManager::sortMarket() {
@@ -245,4 +240,16 @@ Powerplant* PowerplantManager::getAndRemoveSpecificPowerplant(int powerPlantBid)
 	sortMarket();
 	return pwpdummy;
 
+}
+
+//Returns the powerplantManager vector. Used to save file.
+vector<Powerplant>* PowerplantManager::getPowerplantVector()
+{
+	return powerplantsVector;
+}
+
+//Sets the powerplant vector. Used to load file.
+void PowerplantManager::setPowerplantVector(vector<Powerplant>* pp_vector)
+{
+	powerplantsVector = pp_vector;
 }

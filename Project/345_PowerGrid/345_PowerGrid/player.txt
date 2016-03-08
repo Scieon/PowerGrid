@@ -1,27 +1,26 @@
 Player1
-Elektro=1
-Color=red
-Coal=12
+Elektro=43
+Color=Red
+Coal=2
 Oil=0
 Garbage=0
 Uranium=0
 Player_Houses:
-0,Seattle
-1,Portland
+20,Birmingham
 End_Player_Houses
 Player_Powerplants
-Bid=4 Type=Coal Resource_required=3 Cities_powered=1
-Bid=3 Type=Garbage Resource_required=2 Cities_powered=1
-Bid=5 Type=Hybrid Resource_required=3 Cities_powered=1
+Bid=5 Type=Hybrid Resource_required=2 Cities_powered=1
 End_Player_Powerplants
 Player2
-Elektro=50
-Color=blue
+Elektro=37
+Color=Blue
 Coal=0
-Oil=0
+Oil=2
 Garbage=0
 Uranium=0
 Player_Houses:
+19,New Orleans
 End_Player_Houses
 Player_Powerplants
+Bid=7 Type=Oil Resource_required=3 Cities_powered=2
 End_Player_Powerplants

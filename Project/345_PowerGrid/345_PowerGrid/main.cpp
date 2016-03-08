@@ -110,7 +110,19 @@ int main(){
 	cin >> answer;
 	if (answer == "yes") {
 		//Load game
+		Player* player1 = new Player("not");
+		Player* player2 = new Player("important");
+		std::vector<Player*> vector_player;
+		vector_player.push_back(player1);
+		vector_player.push_back(player2);
+		IOFile::loadPlayer(*player1, *player2); //load players
+		AreaManager * area_manager = new AreaManager(); //do not delete
+		area_manager->setGameAreas(*IOFile::loadAreas()); //load areas
+		Map *gameMap = new Map(area_manager); //load map
 
+		TurnSummary * turn = new TurnSummary(vector_player, gameMap);
+
+		turn->loadGame(); //loads map, pplants, resource market
 
 		return 0;
 	}
@@ -185,11 +197,18 @@ int main(){
 		//turns
 		int y = 1;
 		while (y<4) {
-			//turn->turnOrder();
+			turn->turnOrder();
 			turn->buyPowerPlant();
 			turn->buyRawMaterial();
 			turn->building();
 			//turn->bureaucracy();
+			turn->incrementTurnCounter(); //HAS BE REMOVED AFTER WE FINISH BUREACRACY
+
+			if (turn->checkMapCorrectness()) {
+				cout << "Map is correct.... Saving game.... DONE!" << endl;
+				turn->saveGame(); // map is correct..save game
+			}
+
 			y++;
 		}
 		return 0;

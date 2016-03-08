@@ -21,22 +21,23 @@ public:
 	void bureaucracy();
 	void resourcePurchase(string materialType); //Not used for now
 
-	
+	void loadGame();
+	void saveGame();
+	void incrementTurnCounter(); //TO BE REMOVED AFTER WE FINISH BUREACRACY!
 
-	
+	bool checkMapCorrectness();
 
 private:
 	int turnCounter;
 	int nbOfPlayer = 0;
 	std::vector<Player*> vector_player;
 	PowerplantManager * powerplants_Vector;
-	Map * map;
 	ResourceMarket * market;
 	MapOfPlayersCity * mapOfPlayersCity;
 
 
 	
-
+	//Gets the next player. Used for auction
 	Player * getNextPlayer(Player & p);
 };
 
