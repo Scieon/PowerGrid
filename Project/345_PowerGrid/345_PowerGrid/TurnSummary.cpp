@@ -465,7 +465,7 @@ void TurnSummary::loadGame()
 	IOFile::loadMap(mapOfPlayersCity);
 	IOFile::loadPowerplants(powerplants_Vector);
 	IOFile::loadNbPlayersAndTurnCoutner(nbOfPlayer, turnCounter);
-	//Load resource Market
+	market->loadMarket();
 }
 
 void TurnSummary::saveGame()
@@ -475,7 +475,7 @@ void TurnSummary::saveGame()
 	IOFile::saveNbPlayerAndTurnCounter(nbOfPlayer, turnCounter);
 	IOFile::savePlayer(*vector_player[0], *vector_player[1]);
 	IOFile::savePowerplants(powerplants_Vector);
-	//Save resource market
+	market->saveMarket();
 }
 
 void TurnSummary::incrementTurnCounter()

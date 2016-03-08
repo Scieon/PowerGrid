@@ -6,21 +6,21 @@ Oil=0
 Garbage=0
 Uranium=0
 Player_Houses:
-20,Birmingham
+19,New_Orleans
 End_Player_Houses
 Player_Powerplants
 Bid=5 Type=Hybrid Resource_required=2 Cities_powered=1
 End_Player_Powerplants
 Player2
-Elektro=37
+Elektro=44
 Color=Blue
 Coal=0
-Oil=2
+Oil=0
 Garbage=0
 Uranium=0
 Player_Houses:
-19,New Orleans
+8,Salt_Lake_City
 End_Player_Houses
 Player_Powerplants
-Bid=7 Type=Oil Resource_required=3 Cities_powered=2
+Bid=6 Type=Garbage Resource_required=1 Cities_powered=1
 End_Player_Powerplants
