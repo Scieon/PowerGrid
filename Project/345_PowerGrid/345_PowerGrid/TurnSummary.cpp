@@ -241,12 +241,19 @@ void TurnSummary::buyRawMaterial() {
 
 		while (true) {
 			cout << endl << "Player " << p->getColor() << " turn, please choose what you want to buy:" << endl <<"(coal, oil, uranium, or garbage)"<<" When finished please type done. " << endl;
-			cout << "Enter 1 to see current resource market." << endl;
+			cout << "Enter 1 to see current resource market." <<endl
+			<<"Enter 2 to see powerplants owned." << endl;
 			cout << "Choice: ";
 			cin >> materialChoice; cout << endl;
 
 			if (materialChoice == "1") {
 				market->showInfo();
+				system("pause");
+				continue;
+			}
+
+			if (materialChoice == "2") {
+				p->showPlants();
 				system("pause");
 				continue;
 			}
