@@ -492,3 +492,36 @@ void IOFile::loadPowerplants(PowerplantManager * pp_manager)
 
 	input.close();
 }
+
+void IOFile::saveNbPlayerAndTurnCounter(int nb_players, int turn)
+{
+	ofstream output;
+	// Create/open a file
+	output.open("nbPlayerAndTurn.txt");
+
+	output << "NbOfPlayers=" << nb_players << endl;
+	output << "TurnCount=" << turn << endl;
+
+	output.close();
+}
+
+void IOFile::loadNbPlayersAndTurnCoutner(int & nb_players, int & turn)
+{
+	ifstream input;
+	// Create/open a file
+	input.open("nbPlayerAndTurn.txt");
+
+	string line;
+	int pos; 
+
+	input >> line; //NbOfPlayers
+	pos = line.find("=");
+	nb_players = stoi(line.substr(pos + 1));
+
+	input >> line;
+
+	pos = line.find("="); //TurnCount
+	turn = stoi(line.substr(pos + 1));
+
+	input.close();
+}

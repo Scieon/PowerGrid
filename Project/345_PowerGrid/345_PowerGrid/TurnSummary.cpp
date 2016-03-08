@@ -28,7 +28,6 @@ TurnSummary::TurnSummary(std::vector<Player*> vector_player, Map *map) {
 	this->vector_player = vector_player;
 	nbOfPlayer = vector_player.size();
 	powerplants_Vector = new PowerplantManager();
-	this->map = map;
 	mapOfPlayersCity = new MapOfPlayersCity(map);
 }
 
@@ -459,6 +458,7 @@ void TurnSummary::bureaucracy() {
 void TurnSummary::resourcePurchase(string materialType) {
 
 }
+
 //Returns next player
 Player * TurnSummary::getNextPlayer(Player & p) {
 	if (&p == &*vector_player[0]) {
@@ -468,7 +468,23 @@ Player * TurnSummary::getNextPlayer(Player & p) {
 
 }
 
+void TurnSummary::loadGame()
+{
+	IOFile::loadMap(mapOfPlayersCity);
+	IOFile::loadPowerplants(powerplants_Vector);
+	IOFile::loadNbPlayersAndTurnCoutner(nbOfPlayer, turnCounter);
+	//Load resource Market
+}
 
+void TurnSummary::saveGame()
+{
+	IOFile::saveAreas(mapOfPlayersCity);
+	IOFile::saveMap(mapOfPlayersCity);
+	IOFile::saveNbPlayerAndTurnCounter(nbOfPlayer, turnCounter);
+	IOFile::savePlayer(*vector_player[0], *vector_player[1]);
+	IOFile::savePowerplants(powerplants_Vector);
+	//Save resource market
+}
 
 
 

@@ -68,7 +68,19 @@ int main(){
 	cin >> answer;
 	if (answer == "yes") {
 		//Load game
+		Player* player1 = new Player("not");
+		Player* player2 = new Player("important");
+		std::vector<Player*> vector_player;
+		vector_player.push_back(player1);
+		vector_player.push_back(player2);
+		IOFile::loadPlayer(*player1, *player2); //load players
+		AreaManager * area_manager = new AreaManager(); //do not delete
+		area_manager->setGameAreas(*IOFile::loadAreas()); //load areas
+		Map *gameMap = new Map(area_manager); //load map
 
+		TurnSummary * turn = new TurnSummary(vector_player, gameMap);
+
+		turn->loadGame(); //loads map, pplants, resource market
 
 		return 0;
 	}
