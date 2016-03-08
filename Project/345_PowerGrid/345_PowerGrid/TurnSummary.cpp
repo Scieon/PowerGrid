@@ -139,12 +139,11 @@ void TurnSummary::buyPowerPlant() {
 			p->addPlant(powerplants_Vector->getAndRemoveSpecificPowerplant(plantBid));
 			p->setElektro(p->getElektro() - plantBid);
 			cout << "Player " << p->getColor() << " has " << p->getElektro() << "." << endl;
-		}
-
-		//If both players bought a powerplant on the first round then break from the first while (stop buying powerplant)
-		if (p->getPowerplantsVector()->size() == 1 && getNextPlayer(*p)->getPowerplantsVector()->size() == 1)
-		{
-			break;
+			
+			//If both players bought a powerplant on the first round then break from the first while (stop buying powerplant)
+			if (p->getPowerplantsVector()->size() == 1){
+				break;
+			}
 		}
 		
 		int powerPlantBid = plantBid; //to know the actual minimum bid
