@@ -1,6 +1,5 @@
 #pragma once
 #include "AreaManager.h"
-#include "CityManager.h"
 
 #include <iostream>
 #include <vector>
@@ -36,7 +35,7 @@ class Map
 {
 public:
 	Map();
-	Map(AreaManager * area, CityManager * city);
+	Map(AreaManager * area);
 	~Map();
 
 
@@ -55,16 +54,19 @@ public:
 
 	vector<int>* getPlayedIndicesVector();
 
+	vector<bool> * getAreasPlayed();
+
 private:
 
 	//Connected graph of map
 	adjacency_list_t * map;
 
 	AreaManager *area_manager;
-	CityManager *city_manager;
 
 	//Map methods
 	void addEdge(int index1, int index2, double weight);
+
+	int getArea(int index);
 
 };
 

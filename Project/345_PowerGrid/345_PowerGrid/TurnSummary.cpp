@@ -8,6 +8,7 @@
 #include "PowerPlantManager.h"
 #include "Map.h"
 #include "MapOfPlayersCity.h"
+#include "IOFile.h"
 
 using namespace std;
 
@@ -380,6 +381,15 @@ void TurnSummary::building() {
 			p->getHouseManager()->addHouses(house);
 			mapOfPlayersCity->setPlayerHouse(index, p->getColor());
 
+			cout << "Saving map..." << endl;
+			IOFile::saveMap(mapOfPlayersCity);
+		
+			bool mapCorrect = IOFile::verifyMapCorrectness(mapOfPlayersCity);
+			if (mapCorrect) {
+				cout << "YOUPIIIIIIIIIII THE MAP IS CORRECT!" << endl;
+			}
+			
+			cout << "done";
 		}
 		/*
 		while (true) {

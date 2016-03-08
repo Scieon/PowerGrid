@@ -26,6 +26,10 @@ public:
 
 	string getIndexName(int index);
 
+	Map * getMap();
+
+	void setMap(Map * map);
+
 private:
 	//Player's houses location (holds names)
 	vector<vector<string> > * player_houses;

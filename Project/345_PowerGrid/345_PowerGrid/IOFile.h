@@ -18,6 +18,12 @@ public:
 
 	//Load to players from player.txt
 	static void loadPlayer(Player & player1, Player & player2);
+
+	//Verifies if there is no player in a city where we are not playing
+	static bool verifyMapCorrectness(MapOfPlayersCity *map);
+
+private:
+	
 };
 
 

@@ -1,12 +1,15 @@
 #include "IOFile.h"
 #include "Player.h"
 #include "MapOfPlayersCity.h"
+#include "Map.h"
+#include "AreaManager.h"
 #include <iostream>
 #include <fstream>
 #include <istream>
 #include <sstream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using std::cout;
 using std::endl;
@@ -16,6 +19,7 @@ using std::istream;
 using std::string;
 using std::stoi;
 using std::vector;
+using std::find;
 
 
 IOFile::IOFile()
@@ -256,6 +260,43 @@ void IOFile::loadPlayer(Player &player1, Player &player2) {
 	input.close();
 }
 
+bool IOFile::verifyMapCorrectness(MapOfPlayersCity *map)
+{
+	vector<int> game_indices = *(map->getMap()->getPlayedIndicesVector());
+	vector<vector<string> > * player_houses = map->getPlayerHousesVector();
+
+	vector<int> * indicesNotInGame = new vector<int>();
+	
+	//finds the indices that we are not playing and stores it in indicesNotInGame
+	for (unsigned int i = 0; i < player_houses->size(); i++) {
+
+		bool integerIsInGameIndices = find(game_indices.begin(), game_indices.end(), i) != game_indices.end();
+		
+		if (integerIsInGameIndices) {
+			continue; //present
+		}
+		else {
+			indicesNotInGame->push_back(i); //not present
+		}
+	}
+	
+
+	//If there is a player in an location where we are not playing
+	for (int index : *indicesNotInGame) {
+		if ((*player_houses)[index].size() != 0) {
+			delete indicesNotInGame;
+			indicesNotInGame = NULL;
+			return false; 
+			//Map is not correct, there is player in index not in game
+		}
+	}
+	
+	delete indicesNotInGame;
+	indicesNotInGame = NULL;
+	return true;
+}
+
+
 
 //saves player_houses to map.txt
 void IOFile::saveMap(MapOfPlayersCity *map) {
@@ -266,6 +307,21 @@ void IOFile::saveMap(MapOfPlayersCity *map) {
 	// Create/open a file
 	output.open("map.txt");
 	cout << "Saving map..." << endl;
+
+	output << "Areas ";
+	//Save map areas
+	vector<bool> values(*(map->getMap()->getAreasPlayed())); //shallow copy
+	int i = 0;//counter
+	for (bool val : values) {
+		if (val) {
+			output << " " << i ;
+		}
+		i++;
+	}
+
+	output << endl;
+
+	//Saves player houses
 	for (unsigned int i = 0; i < player_houses->size(); i++) {
 		if ((*player_houses)[i].size() == 0) {
 			output << i << endl;

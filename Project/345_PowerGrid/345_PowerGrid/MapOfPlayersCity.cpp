@@ -106,3 +106,13 @@ bool MapOfPlayersCity::isIndexAvailable(int index)
 string MapOfPlayersCity::getIndexName(int index) {
 	return city_manager.getName(index);
 }
+
+//returns the map as a pointer
+Map* MapOfPlayersCity::getMap() {
+	return map;
+}
+
+//sets map
+void MapOfPlayersCity::setMap(Map * map) {
+	this->map = map;
+}

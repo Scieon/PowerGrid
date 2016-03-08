@@ -24,11 +24,10 @@ Map::Map() {
 
 }
 
-Map::Map(AreaManager *area, CityManager *city)
+Map::Map(AreaManager *area)
 {
 
 	area_manager = area;
-	city_manager = city;
 	//Connected graph of map
 	map = new adjacency_list_t(42);
 
@@ -135,10 +134,16 @@ void Map::addEdge(int vertex1, int vertex2, double weight) {
 
 	//TODO:: initalize area_manager
 
-	bool * area_is_played = area_manager->getAreaPlayed();
+	int area1 = getArea(vertex1);
+	int area2 = getArea(vertex2);
 
-	if (area_is_played[city_manager->getAreaIndex(vertex1)] 
-		&& area_is_played[city_manager->getAreaIndex(vertex2)]) {
+	
+	
+
+	vector<bool> * area_is_played = area_manager->getAreaPlayed();
+
+	if ((*area_is_played)[area1] 
+		&& (*area_is_played)[area2]) {
 		(*map)[vertex1].push_back(neighbor(vertex2, weight));
 		(*map)[vertex2].push_back(neighbor(vertex1, weight));
 	}
@@ -146,6 +151,28 @@ void Map::addEdge(int vertex1, int vertex2, double weight) {
 		//don't add vertices
 	}
 	
+}
+
+int Map::getArea(int index)
+{
+	//check vertex1 area
+	if (index < 7) {
+		return 0;
+	}
+	else if (index < 14) {
+		return 1;
+	}
+	else if (index < 21) {
+		return 2;
+	}
+	else if (index < 28) {
+		return 3;
+	}
+	else if (index < 35) {
+		return 4;
+	}
+	return 5;
+
 }
 
 
@@ -212,7 +239,7 @@ void Map::printMap()
 	int i = 0;
 	for (vector<neighbor> city : *map) {
 		if (city.size() != 0) {
-			cout << "Index: " << i << " Name: " << city_manager->getName(i) << endl;
+			cout << "Index: " << i <<  endl;
 		}
 		i++;
 	}
@@ -239,3 +266,9 @@ vector<int>* Map::getPlayedIndicesVector()
 
 	return indices;
 }
+
+vector<bool> * Map::getAreasPlayed()
+{
+	return area_manager->getAreaPlayed();
+}
+

@@ -16,10 +16,10 @@ public:
 
 	void setGameAreas(vector<Area> colors);
 
-	bool* getAreaPlayed();
+	vector<bool>* getAreaPlayed();
 
 
 private:
-	bool * area_is_played;
+	vector<bool> * area_is_played;
 };
 

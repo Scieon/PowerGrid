@@ -9,7 +9,7 @@ using namespace std;
 
 AreaManager::AreaManager()
 {
-	area_is_played = new bool[6]{ false,false,false,false,false,false };
+	area_is_played = new vector<bool>{ false,false,false,false,false,false };
 }
 
 
@@ -24,11 +24,11 @@ Sets game areas
 */
 void AreaManager::setGameAreas(vector<Area> colors) {
 	for (Area a : colors) {
-		area_is_played[a.getIndex()] = true;
+		(*area_is_played)[a.getIndex()] = true;
 	}
 }
 
-bool * AreaManager::getAreaPlayed()
+vector<bool> * AreaManager::getAreaPlayed()
 {
 	return area_is_played;
 }

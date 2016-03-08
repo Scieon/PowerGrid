@@ -95,7 +95,6 @@ int main(){
 		//Now we have to get the areas played from players
 		//create area and city manager
 		AreaManager * area_manager = new AreaManager();
-		CityManager * cityManager = new CityManager();
 
 		cout << "\nPlease enter the areas you want to play (3 integers). " 
 			<< "See image for details." 
@@ -137,7 +136,7 @@ int main(){
 		area_manager->setGameAreas(*areas);
 		
 		//Create game map according to areas
-		Map * gameMap = new Map(area_manager, cityManager); //do not delete
+		Map * gameMap = new Map(area_manager); //do not delete
 
 		TurnSummary * turn = new TurnSummary(vector_player, gameMap);
 		
