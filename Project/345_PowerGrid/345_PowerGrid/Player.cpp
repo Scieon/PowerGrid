@@ -247,6 +247,7 @@ bool Player::comparePlayer(Player* pp) {
 	}
 }
 
+//Need to see which player has the highest powerplant number and iterate through their maximum of 3 powerplants possession
 int Player::getHighestMinBid() {
 	int highest = 0; //By default
 	for (Powerplant pp : *powerplants) {
@@ -259,7 +260,7 @@ int Player::getHighestMinBid() {
 	return highest;
 }
 
-
+//Check if the player has enough money to buy
 bool Player::hasEnoughtElektroFor(int amount) {
 
 	int temp = elektro;
