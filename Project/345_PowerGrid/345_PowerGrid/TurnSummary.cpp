@@ -11,7 +11,7 @@ using namespace std;
 
 //Default constructor
 TurnSummary::TurnSummary(){
-	turnCounter = 0; //keep track of who is going first
+	turnCounter = 1; //keep track of who is going first
 	nbOfPlayer = 0; //how many people are playing in this game. for now we will have 2 only.
 }
 
@@ -83,174 +83,140 @@ void TurnSummary::turnOrder(){
 
 /*Step2 - Print to the first player and ask him to buy a powerplant, then ask the other players. On the first round, everyone will have to buy 
  a power plant. Later on, we will implement the auction. */
-void TurnSummary::buyPowerPlant(){
+void TurnSummary::buyPowerPlant() {
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	cout << " THIS IS SECOND STEP THE BUYING OF POWER PLANTS" << endl;
 	cout << " ///////////////////////////////////////////////////////" << endl;
+
 	//Need to choose from first four power plants, LET'S ASSUME THE PLAYER WILL CHOOSE 2 DIFFERENT POWER PLANT FOR NOW.
-	
-	
-	
-	Player* p = vector_player[0]; //first player bids
-	
-	cout << "Player with color " << p->getColor() << " can bid first " << endl;
-	
-	powerplants_Vector->printMarket();
-	cout << endl;
-	cout << "Player " << p->getColor() << endl;
-	cout << "You currently have " << p->getElektro() << " electros" << endl;
-	cout << "Please enter the minimum bid of the Power Plant you want to in from the Actual Market" << endl;
-	cout << "Power Plant minimum bid: " << endl;
+	Player* p = vector_player[0];//first player bids
+	bool exitLoop = false;
 
-	int plantBid;
-	cin >> plantBid;
-
-	bool checkPP = powerplants_Vector->isPowerplantInActualMarket(plantBid);
-	bool checkElectro = powerplants_Vector->hasEnoughElectroForMarket(p->getElektro());
-
-	while (!checkPP || !checkElectro) {
-		if (!checkPP) {
-			cout << endl;
-			cout << "This powerplant is not in the Actual Market" << endl;
-		}
-		else if (!checkElectro) {
-			cout << endl;
-			cout << "You do not have enough electros for this Power Plant" << endl;
-		}
-		cout << "You currently have " << p->getElektro() << " electros" << endl;
-		cout << "Please enter the minimum bid of the Power Plant you want to buy in the Actual Market" << endl;
-		cout << "Power Plant minimum bid: " << endl;
-		cin >> plantBid;
-		checkPP = powerplants_Vector->isPowerplantInActualMarket(plantBid);
-		checkElectro = powerplants_Vector->hasEnoughElectroForMarket(plantBid);
-	}
-
-	
-
-	//Print Powerplant
-
-	string answer;
-	int playerBid;
-
-	cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
-	cout << "@@@@ Starting Auction @@@@" << endl;
-	cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
 	while (true) {
+		cout << "Player with color " << p->getColor() << " can bid first " << endl;
 
-		p = getNextPlayer(*p);
+		powerplants_Vector->printMarket();
 		cout << endl;
+		cout << "Player " << p->getColor() << endl;
+		cout << "You currently have " << p->getElektro() << " elektros" << endl;
+		cout << "Please enter the minimum bid of the Power Plant you want from the Actual Market" << endl;
+		cout << "Power Plant minimum bid: " << endl;
 
-		if (p->getElektro() <= plantBid) {
-			cout << "Player " << p->getColor() << endl;
-			cout << "You do not have enough electros to bid" << endl;
+		int plantBid;
+		cin >> plantBid;
+
+		bool checkPP = powerplants_Vector->isPowerplantInActualMarket(plantBid);
+		bool checkElektro = powerplants_Vector->hasEnoughElektroForMarket(p->getElektro());
+
+		while (!checkPP || !checkElektro) {
+			if (!checkPP) {
+				cout << endl;
+				cout << "This powerplant is not in the Actual Market" << endl;
+			}
+			else if (!checkElektro) {
+				cout << endl;
+				cout << "You do not have enough elektros for this Power Plant" << endl;
+			}
+			cout << "You currently have " << p->getElektro() << " elektros" << endl;
+			cout << "Please enter the minimum bid of the Power Plant you want to buy in the Actual Market" << endl;
+			cout << "Power Plant minimum bid: " << endl;
+			cin >> plantBid;
+			checkPP = powerplants_Vector->isPowerplantInActualMarket(plantBid);
+			checkElektro = powerplants_Vector->hasEnoughElektroForMarket(plantBid);
+		}
+
+		//Checks if the other player already bought a powerplant -- just works for 1 round. If yes, then there is no need for auction,
+		//can buy automatically on lowest plantBid without anyone interfering
+		if (getNextPlayer(*p)->getPowerplantsVector()->size() == 1) {
+			p->addPlant(powerplants_Vector->getAndRemoveSpecificPowerplant(plantBid));
+			p->setElektro(p->getElektro() - plantBid);
+			cout << "Player " << p->getColor() << " has " << p->getElektro() << "." << endl;
+
+		}
+
+		int powerPlantBid = plantBid; //to know the actual minimum bid
+		string answer;
+		int playerBid;
+
+		//If both players bought powerplants on first round then break from the first while
+		if (p->getPowerplantsVector()->size() == 1 && getNextPlayer(*p)->getPowerplantsVector()->size() == 1)
+		{
+
+			/*(//need to change but for now if whoever bought the highest powerplant will have the lowest amount of elektro
+			//and in the buy raw material, the last person will go first
+			if (p->getElektro() < getNextPlayer(*p)->getElektro()) {
+				p = getNextPlayer(*p);
+			}*/
 			break;
 		}
 
-		cout << "It's your turn Player " << p->getColor() << endl;
-		cout << "You currently have " << p->getElektro() << " electros" << endl;
-		cout << "The current bid is " << plantBid << endl;
-		cout << "Do you want to bid on power plant? Type 'y' for yes" << endl;
-		cin >> answer;
+		cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
+		cout << "@@@@ Starting Auction @@@@" << endl;
+		cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
+		while (true) {
 
-		if (answer == "y") {
-			cout << "Please enter the amount you want to bid: " << endl;
-			cin >> playerBid;
+			p = getNextPlayer(*p);
+			cout << endl;
 
-			bool bidTooLow = playerBid < plantBid;
-			bool notEnoughElectro = playerBid > p->getElektro();
+			if (p->getElektro() <= plantBid) {
+				cout << "Player " << p->getColor() << endl;
+				cout << "You do not have enough elektros to bid" << endl;
+				break;
+			}
 
-			while (bidTooLow || notEnoughElectro) {
-				if (bidTooLow) {
-					cout << endl;
-					cout << "Your bid is too low" << endl;
-				}
-				else if (notEnoughElectro) {
-					cout << endl;
-					cout << "Your bid is too high" << endl;
-				}
+			cout << "It's your turn Player " << p->getColor() << endl;
+			cout << "You currently have " << p->getElektro() << " elektros" << endl;
+			cout << "The current bid is " << plantBid << endl;
+			cout << "Do you want to bid on power plant? Type 'y' for yes or 'n' for no" << endl;
+			cin >> answer;
 
+			if (answer == "y") {
 				cout << "Please enter the amount you want to bid: " << endl;
 				cin >> playerBid;
-				bidTooLow = playerBid < plantBid;
-				notEnoughElectro = playerBid > p->getElektro();
-			}
-			plantBid = playerBid;
-			//Reloop
-		}
-		else {
-			break;
-		}
-	}
 
-	//remove electro from player
-	//set powerplant to player
-	//Remove powerplant from market
-	//Reorder whole market
-	//Sort market
+				bool bidTooLow = playerBid < plantBid;
+				bool notEnoughElektro = playerBid > p->getElektro();
 
-	//get second player bid (p=getNextPlayer(*p))
-	//get his powerplant
-	
-	//remove electro from player
-	//set powerplant to player
-	//Remove powerplant from market
-	//Reorder whole market
-	//Sort market
+				while (bidTooLow || notEnoughElektro) {
+					if (bidTooLow) {
+						cout << endl;
+						cout << "Your bid is too low" << endl;
+					}
+					else if (notEnoughElektro) {
+						cout << endl;
+						cout << "Your bid is too high" << endl;
+					}
 
-
-
-	/*
-	
-	for (Player* p : vector_player)
-	{
-		
-		//condition here that will add p to x depending on what the person cin to the powerplant manager of the person 
-		int plantChoice;
-		cout << "Press 1 to 4 to buy a powerplant, if you do not want any press 0, but the first round you have to buy" << endl;
-		cin >> plantChoice;
-		if (turnCounter == 1){
-			while (plantChoice>4)
-				{
-					cout << "Sorry for the first turn you have to buy a power plant. Choose power plant 1, 2, 3, or 4." << endl;
-					cin >> plantChoice;
+					cout << "Please enter the amount you want to bid: " << endl;
+					cin >> playerBid;
+					bidTooLow = playerBid < plantBid;
+					notEnoughElektro = playerBid > p->getElektro();
 				}
-		}
-		//add powerplant to player powerplant manager
-		if (plantChoice == 1){
-			//p->getPowerPlantManager()->addPowerPlant(p1);
-			p->setElektro(p->getElektro() - 3);
-			cout << "Here is how much you have after buying " <<p->getElektro() << "$" << endl;
-		}
-		else if (plantChoice == 2){
-			//p->getPowerPlantManager()->addPowerPlant(p2);
-			p->setElektro(p->getElektro() - 4);
-			cout << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
-		}
-		else if (plantChoice == 3){
-			//p->getPowerPlantManager()->addPowerPlant(p3);
-			p->setElektro(p->getElektro() - 5);
-			cout << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
-		}
-		else if (plantChoice == 4){
-			//p->getPowerPlantManager()->addPowerPlant(p4);
-			p->setElektro(p->getElektro() - 6);
-			cout << "Here is how much you have after buying " << p->getElektro() << "$" << endl;
-		}
+				plantBid = playerBid;
+				//Reloop
+			}
 
-		
-		
+			//If they they don't want to auction anymore 
+			else if (answer == "n") {
+				p = getNextPlayer(*p);
+				//pwm.getSpecificPowerplant(powerPlantBid)->showPlantInfo();
+				p->setElektro(p->getElektro() - plantBid);
+				cout << "Player " << p->getColor() << " has " << p->getElektro() << "." << endl;
+				p->addPlant(powerplants_Vector->getAndRemoveSpecificPowerplant(powerPlantBid));// adds into next person's 
+				p = getNextPlayer(*p);
+				break;
+			}
+		}
 	}
-// first round will tell if there is an order change depending who bought the highest power plant
-	if (turnCounter == 1){
-		//powerPlantCost[counter] = p->getPowerPlantManager().determineHighestCost();
-		//counter++;
 
-		if (vector_player.at(0)->getPowerPlantManager()->determineHighestCost() < vector_player.at(1)->getPowerPlantManager()->determineHighestCost()){
+	// first round will tell if there is an order change depending who bought the highest power plant
+	if (turnCounter == 1) {
+		if (vector_player[0]->getHighestMinBid() < vector_player[1]->getHighestMinBid()) {
 			reverse(vector_player.begin(), vector_player.end());
+			cout << "The first player for next round (meaning the last player with lowest powerplant number) will be, PLAYER" << vector_player[1]->getColor() << endl;
 		}
-		
+
 	}
-	*/
 }
 
 /* Step 3 - Buy raw material. In this part, the last player will begin. In other words, it's the reverse order of buying power plant who starts. */

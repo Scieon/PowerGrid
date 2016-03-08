@@ -3,6 +3,7 @@
 #include "House.h" 
 #include "Resource.h"
 #include "Powerplant.h"
+#include "TurnSummary.h"
 
 
 using namespace std;
@@ -73,8 +74,7 @@ HouseManager* Player::getHouseManager() {
 	return houseManager;
 }
 
-vector<Powerplant>* Player::getPowerplantsVector()
-{
+vector<Powerplant>* Player::getPowerplantsVector(){
 	return powerplants;
 }
 
@@ -221,15 +221,12 @@ void Player::showPlants() {
 //Display user possessions and characteristics
 void Player::showInfo() {
 
-
 	cout << "Here is the player " << playerNumber << " resources:" << endl;
 	cout << "P" << playerNumber << " Money:" << this->getElektro() << endl;
 	cout << "P" << playerNumber << " Resource Uranium: " << this->getResource("Uranium") << endl;
 	cout << "P" << playerNumber << "  Resource Garbage: " << this->getResource("Garbage") << endl;
 	cout << "P" << playerNumber << " Resource Coal: " << this->getResource("Coal") << endl;
 	cout << "P" << playerNumber << " Resource Oil: " << this->getResource("Oil") << endl << endl;
-
-
 }
 
 
@@ -237,6 +234,30 @@ void Player::showInfo() {
 bool Player::isPowerplantsFull() {
 	return (powerplants->size() == 3);
 }
+
+//For simple use. Should do overload the equal operator instead
+bool Player::comparePlayer(Player* pp) {
+	if (pp->getColor() == this->color) {
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+int Player::getHighestMinBid() {
+	int highest = 0; //By default
+	for (Powerplant pp : *powerplants) {
+
+		if (highest < pp.getBid()) {
+			highest = pp.getBid();
+		}
+	}
+
+	return highest;
+}
+
 
 
 
