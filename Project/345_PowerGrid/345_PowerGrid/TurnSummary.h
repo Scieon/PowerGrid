@@ -23,7 +23,9 @@ public:
 
 	void loadGame();
 	void saveGame();
-	
+	void incrementTurnCounter(); //TO BE REMOVED AFTER WE FINISH BUREACRACY!
+
+	bool checkMapCorrectness();
 
 private:
 	int turnCounter;

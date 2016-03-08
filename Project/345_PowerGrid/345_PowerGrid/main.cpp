@@ -155,11 +155,18 @@ int main(){
 		//turns
 		int y = 1;
 		while (y<4) {
-			//turn->turnOrder();
+			turn->turnOrder();
 			turn->buyPowerPlant();
 			turn->buyRawMaterial();
 			turn->building();
 			//turn->bureaucracy();
+			turn->incrementTurnCounter(); //HAS BE REMOVED AFTER WE FINISH BUREACRACY
+
+			if (turn->checkMapCorrectness()) {
+				cout << "Map is correct.... Saving game.... DONE!" << endl;
+				turn->saveGame(); // map is correct..save game
+			}
+
 			y++;
 		}
 		return 0;

@@ -62,17 +62,17 @@ void TurnSummary::turnOrder() {
 		//This is where you will need to check each player's who has the highest amount of bought houses. If two players have the same number of houses then 
 		//the turn order will be determined by the highest power plant number
 
-		/*
+		
 		int player1HouseCount = vector_player.at(0)->getHouseManager()->getHouseCount();
 		int player2HouseCount = vector_player.at(1)->getHouseManager()->getHouseCount();
 
-		if (player1HouseCount1 < player2HouseCount){
+		if (player1HouseCount < player2HouseCount){
 			reverse(vector_player.begin(), vector_player.end());
 		}
 		else if (player1HouseCount == player2HouseCount){
 
-			int player1HighestPlant = vector_player.at(0)->getPowerPlantManager()->determineHighestCost();
-			int player2HighestPlant = vector_player.at(1)->getPowerPlantManager()->determineHighestCost();
+			int player1HighestPlant = (vector_player)[0]->getHighestMinBid();
+			int player2HighestPlant = vector_player.at(1)->getHighestMinBid();
 
 			if (player1HighestPlant < player2HighestPlant){
 				reverse(vector_player.begin(), vector_player.end());
@@ -85,7 +85,7 @@ void TurnSummary::turnOrder() {
 			cout << "We are keeping the order" << endl;
 		cout << "The player with the biggest most houses will start. If tied, biggest powerplant will go. " << endl;
 
-		*/
+		
 	}
 }
 
@@ -386,14 +386,6 @@ void TurnSummary::building() {
 
 			p->getHouseManager()->addHouses(house);
 			mapOfPlayersCity->setPlayerHouse(index, p->getColor());
-
-			cout << "Saving map..." << endl;
-			IOFile::saveMap(mapOfPlayersCity);
-		
-			bool mapCorrect = IOFile::verifyMapCorrectness(mapOfPlayersCity);
-			if (mapCorrect) {
-				cout << "YOUPIIIIIIIIIII THE MAP IS CORRECT!" << endl;
-			}
 			
 			cout << "done";
 		}
@@ -484,6 +476,21 @@ void TurnSummary::saveGame()
 	IOFile::savePlayer(*vector_player[0], *vector_player[1]);
 	IOFile::savePowerplants(powerplants_Vector);
 	//Save resource market
+}
+
+void TurnSummary::incrementTurnCounter()
+{
+	turnCounter++;
+}
+
+bool TurnSummary::checkMapCorrectness()
+{
+	
+	bool mapCorrect = IOFile::verifyMapCorrectness(mapOfPlayersCity);
+	if (mapCorrect) {
+		return true;
+	}
+	return false;
 }
 
 
