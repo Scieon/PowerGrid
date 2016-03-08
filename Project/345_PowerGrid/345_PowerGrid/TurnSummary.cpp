@@ -28,7 +28,7 @@ TurnSummary::TurnSummary(std::vector<Player*> vector_player, Map *map) {
 	nbOfPlayer = vector_player.size();
 	powerplants_Vector = new PowerplantManager();
 	this->map = map;
-	mapOfPlayersCity = new MapOfPlayersCity();
+	mapOfPlayersCity = new MapOfPlayersCity(map);
 }
 
 //Destructor
@@ -381,12 +381,41 @@ void TurnSummary::building() {
 		cin >> buildOption;
 
 		int houseCount = p->getHouseManager()->getHouseCount();
+
 		//if player has no houses yet
 		if (houseCount == 0) {
 			cout << "You can build in these Cities:" << endl;
 
-		}
+			//print free locations
+			mapOfPlayersCity->printAvailableIndices();
 
+
+			cout << endl << "Please choose an Index you want to build in" << endl;
+			cout << "Index: ";
+			int index;
+			cin >> index;
+
+			//check if user put anything other than integer
+			while (std::cin.fail()) {
+				cout << "Invalid input. Please enter an integer: ";
+				cin.clear();
+				cin.ignore(256, '\n');
+				cin >> index;
+			}
+
+			//Check if the index is available before inserting
+			while (!mapOfPlayersCity->isIndexAvailable(index)) {
+				cout << "Invalid integer.. Please enter a valid index: ";
+				cin >> index;
+			}
+
+			House house(index, mapOfPlayersCity->getIndexName(index));
+
+			p->getHouseManager()->addHouses(house);
+			mapOfPlayersCity->setPlayerHouse(index, p->getColor());
+
+		}
+		/*
 		while (true) {
 			//First few rounds will only let you buy for 10. Have to implement exception that after buying that city, it is no longer available. For now, we will leave it as it is.
 			if (buildOption == "yes") {
@@ -402,6 +431,7 @@ void TurnSummary::building() {
 			cout << "Would " << p->getColor() << " like to build again? yes or no" << endl;
 			cin >> buildOption;
 		}
+		*/
 	}
 
 }

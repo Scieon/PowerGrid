@@ -7,9 +7,12 @@ using namespace std;
 //Player's houses location
 
 
-MapOfPlayersCity::MapOfPlayersCity()
+MapOfPlayersCity::MapOfPlayersCity(Map * map)
 {
 	player_houses = new vector<vector<string> >(42);
+	city_manager = CityManager();
+	this->map = map;
+
 }
 
 
@@ -22,9 +25,9 @@ vector<vector<string>>* MapOfPlayersCity::getPlayerHousesVector()
 	return player_houses;
 }
 
-void MapOfPlayersCity::setPlayerHouse(int index, string name)
+void MapOfPlayersCity::setPlayerHouse(int index, string color)
 {
-	(*player_houses)[index].push_back(name);
+	(*player_houses)[index].push_back(color);
 }
 
 //Loads values to player_houses
@@ -46,12 +49,10 @@ void MapOfPlayersCity::loadPlayerHouses(vector<vector<string> > set)
 //Checks if step 2 is not started
 bool MapOfPlayersCity::isCityFree(int index)
 {
-	if (!STEP2) {
-		if (player_houses[index].size() == 0) {
-			return true;
-		}
-		return false;
+	if (!STEP2 && (*player_houses)[index].size() == 0) {
+		return true;
 	}
+	return false;
 	
 }
 
@@ -70,4 +71,38 @@ void MapOfPlayersCity::printPlayersCity()
 		}
 		i++;
 	}
+}
+
+//prints the valid indices available to play 
+void MapOfPlayersCity::printAvailableIndices() {
+
+	vector<int> indices =  *(map->getPlayedIndicesVector());
+	
+	int i = 0;
+	for (int index : indices) {
+		if ((*player_houses)[index].size() == 0) {
+			cout << "Index: " << i << " Name: " << city_manager.getName(i) << endl;
+		}
+		i++;
+	}
+
+}
+
+//Checks if the index is available. Used before purchasing house
+bool MapOfPlayersCity::isIndexAvailable(int index)
+{
+	//check if user put invalid range of input
+	//check if the index is in the game
+	//Check if city is free
+	if (index < 0 || index > 41
+		|| !map->isIndexInGame(index)
+		|| !isCityFree(index)) {
+		return false;
+	}
+	
+	return true;
+}
+
+string MapOfPlayersCity::getIndexName(int index) {
+	return city_manager.getName(index);
 }

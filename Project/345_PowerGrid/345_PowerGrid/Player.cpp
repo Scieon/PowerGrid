@@ -239,5 +239,14 @@ bool Player::isPowerplantsFull() {
 	return (powerplants->size() == 3);
 }
 
+bool Player::hasEnoughtElektroFor(int amount) {
+
+	int temp = elektro;
+	if ((temp - amount) >= 0) {
+		return true;
+	}
+	return false;
+}
+
 
 

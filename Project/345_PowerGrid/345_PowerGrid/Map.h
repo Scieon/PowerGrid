@@ -49,6 +49,11 @@ public:
 		std::vector<weight_t> &min_distance,
 		std::vector<vertex_t> &previous);
 
+	void printMap();
+
+	bool isIndexInGame(int index);
+
+	vector<int>* getPlayedIndicesVector();
 
 private:
 
@@ -61,8 +66,6 @@ private:
 	//Map methods
 	void addEdge(int index1, int index2, double weight);
 
-	void printMap();
-	
 };
 
 
