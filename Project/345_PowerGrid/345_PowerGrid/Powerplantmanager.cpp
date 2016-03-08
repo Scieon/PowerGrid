@@ -7,7 +7,7 @@
 
 using namespace std;
 
-//Defautl constructor initializing all possible power plants
+//Default constructor initializing all possible power plants
 PowerplantManager::PowerplantManager() {
 
 	Powerplant coal4(4, "Coal", 2, 1);
@@ -194,11 +194,11 @@ bool PowerplantManager::isPowerplantInActualMarket(int bid) {
 	return true;
 }
 
-/*
-void PowerplantManager::removePowerplant(Powerplant& pp) {
 
-}
-*/
+/*void PowerplantManager::removePowerplant(Powerplant &pp) {
+
+}*/
+
 
 //Sorts the powerplantVector first 8 elements according to 
 //their miniumum bid
@@ -211,17 +211,38 @@ void PowerplantManager::sortMarket() {
 	}
 	//sort only the first 8 elements
 	else {
-		std::sort(powerplantsVector->begin(), powerplantsVector->end() + 8 - ppVSize);
+		std::sort(powerplantsVector->begin(), powerplantsVector->begin() + 8);
 	}
 }
 
 //Checks the Actual market to see if the player has enough electro
 //To purchase one of the items
-bool PowerplantManager::hasEnoughElectroForMarket(int electro) {
+bool PowerplantManager::hasEnoughElektroForMarket(int elektro) {
 
 	//checks only first powerplant since market is already sorted
-	if ((*powerplantsVector)[0].getBid() <= electro) {
+	if ((*powerplantsVector)[0].getBid() <= elektro) {
 		return true;
 	}
 	return false;
+}
+
+
+//After the player makes a final buy, it will add the pwp to one of the 3 slots, and 
+//remove it from the market
+Powerplant* PowerplantManager::getAndRemoveSpecificPowerplant(int powerPlantBid) {
+	Powerplant* pwpdummy = new Powerplant();
+	int count = 0;
+	for (Powerplant pp : *powerplantsVector) {
+		if (powerPlantBid == pp.getBid()) {
+			//can have better solution, but i didnt want to change the code everywhere else
+			pwpdummy = new Powerplant(pp.getBid(),pp.getType(),pp.getResourceReq(),pp.getCitiesPowered());
+			//call remove function
+			break;
+		}
+		count++;
+	}
+	powerplantsVector->erase(powerplantsVector->begin() + count);
+	sortMarket();
+	return pwpdummy;
+
 }

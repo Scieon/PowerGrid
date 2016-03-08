@@ -21,14 +21,13 @@ public:
 
 	void sortMarket();
 
-	bool hasEnoughElectroForMarket(int electro);
-	
+	bool hasEnoughElektroForMarket(int elektro);
 
+	Powerplant* getAndRemoveSpecificPowerplant(int plantBid);
+
+	
 private:
 	vector<Powerplant> * powerplantsVector;
 };
-
-
-
 
 #endif

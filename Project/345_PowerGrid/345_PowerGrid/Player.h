@@ -37,6 +37,7 @@ public:
 	bool isPowerplantsFull(); //checks if powerplant vector is full
 	bool hasEnoughtElektroFor(int amount);
 	void addPlant(Powerplant * p1); //incomplete "p2->addPlant(oil3);"
+	int getHighestMinBid();
 
 	//Resources
 	void addResource(string type, int quantity); //Don't care about cost 
@@ -45,6 +46,8 @@ public:
 	int getTotalStorage(); //Returns total amount of resources stored across all possible power plants
 	int getResourceStorage(string resource); //Returns total amount of specific resource that can be stored
 
+	//Overload
+	bool comparePlayer(Player* pp);
 
 private:
 
@@ -53,8 +56,8 @@ private:
 	int elektro;
 	string color;
 	HouseManager* houseManager;
-	ResourceManager * resources;
-	vector<Powerplant> * powerplants; //Players can have up to 3 power plants stored in an array of powerplants
+	ResourceManager* resources;
+	vector<Powerplant>* powerplants; //Players can have up to 3 power plants stored in an array of powerplants
 	int numberOfPlants = 0;  //Counter for each player
 	
 };

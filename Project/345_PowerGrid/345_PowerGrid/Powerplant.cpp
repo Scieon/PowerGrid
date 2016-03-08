@@ -63,7 +63,7 @@ void Powerplant::showPlantInfo() {
 		type = "Coal or Oil";
 	cout << resource_type << " Power Plant" << endl
 		<< "-----------------------------------------" << endl
-		<< "Minimum Price: " << min_bid << " electros" << endl
+		<< "Minimum Price: " << min_bid << " elektros" << endl
 		<< "Operation Cost: " << resources_required << " units of " << type << endl
 		<< "Number of powered cities:  " << num_cities_powered << endl << endl;
 }
