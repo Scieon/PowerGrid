@@ -327,7 +327,7 @@ void TurnSummary::buyRawMaterial() {
 				cin >> qty;
 
 				//Validating if market has enough resources (Note: getMarketCost calls getMarketQuantity)
-				if (market->getMarketCost("garbage", qty) == -1) {
+				if (market->getMarketCost("Garbage", qty) == -1) {
 					continue;
 				}
 
