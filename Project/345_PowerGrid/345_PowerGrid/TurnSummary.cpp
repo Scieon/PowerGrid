@@ -94,7 +94,7 @@ void TurnSummary::turnOrder() {
  a power plant. Later on, we will implement the auction. */
 void TurnSummary::buyPowerPlant() {
 	
-	houseScoringTrack(); //showing the number of houses on the scoring track
+	houseScoringTrack(); //Showing the number of houses on the scoring track
 	
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	cout << " THIS IS SECOND STEP THE BUYING OF POWER PLANTS" << endl;
