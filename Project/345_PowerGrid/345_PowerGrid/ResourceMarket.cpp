@@ -329,7 +329,8 @@ void ResourceMarket::saveMarket() {
 }
 void ResourceMarket::loadMarket() {
 
-	int coal_amt,oil_amt,garbage_amt,uranium_amt, i = 0;
+	int coal_amt,oil_amt,garbage_amt,uranium_amt,i=0,k = 10;
+	
 
 	// Opening "resourcemarket.txt"
 	ifstream input("resourcemarket.txt");
@@ -337,18 +338,32 @@ void ResourceMarket::loadMarket() {
 	cout << "Loading ResourceMarket" << endl << "-------------------------" << endl;
 
 	// Reads each int one by one in line (left to right) coal->oil->garbage->uranium...nextline
-	while (input >> coal_amt >> oil_amt >> garbage_amt >> uranium_amt){
-		
-		market[i]->edit("Coal", coal_amt, i + 1);
-		market[i]->edit("Oil", oil_amt, i + 1);
-		market[i]->edit("Garbage", garbage_amt, i + 1);
-		market[i]->edit("Uranium", uranium_amt, i + 1);
-		i++;
+	while (input >> coal_amt >> oil_amt >> garbage_amt >> uranium_amt) {
 
+
+		if (i < 8) {
+
+			market[i]->edit("Coal", coal_amt, i + 1);
+			market[i]->edit("Oil", oil_amt, i + 1);
+			market[i]->edit("Garbage", garbage_amt, i + 1);
+			market[i]->edit("Uranium", uranium_amt, i + 1);
+		}
+			
+	
+		// Handles prices 10,12,14,16
+		if (i >= 8) {
+			
+			market[i]->edit("Coal", coal_amt, k);
+			market[i]->edit("Oil", oil_amt, k);
+			market[i]->edit("Garbage", garbage_amt, k);
+			market[i]->edit("Uranium", uranium_amt, k);
+			k = k + 2;
+		}
+			i++;
 
 		/*
-		// IGNORE:: checking if right amounts are implemented 
-			cout << "Coal" << coal_amt << endl; 
+		// IGNORE:: checking if right amounts are implemented
+			cout << "Coal" << coal_amt << endl;
 			cout << "Oil" << oil_amt << endl;
 			cout << "Garbage" << garbage_amt << endl;
 			cout << "Uranium" << uranium_amt << endl;

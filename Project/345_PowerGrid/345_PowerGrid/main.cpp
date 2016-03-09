@@ -73,7 +73,7 @@ int main(){
 
 	ResourceMarket  * r1 = new ResourceMarket();
 
-	
+	r1->saveMarket();
 	r1->showInfo();	
 	r1->loadMarket(); 
 
@@ -82,16 +82,21 @@ int main(){
 	system("pause");
 		
 	r1->updateMarket("Oil", 3); 
+	
 	r1->saveMarket();
 	
 	cout << "-----" << endl;
 	r1->showInfo();
 
-	system("pause");
+	r1->updateMarket("Uranium", 2);
 
-	r1->updateMarket("Garbage", 2);
 	cout << "------" << endl;
 	r1->showInfo();
+
+	system("pause");
+
+
+	
 
 	r1->loadMarket();
 	cout << "-----" << endl;
@@ -101,7 +106,6 @@ int main(){
 	
 
 	//-------------- END OF RESOURCE MARKET SAVE Test ------------------//
-
 	*/
 
 	cout << "Welcome to Funkenschlag" << endl;
