@@ -54,6 +54,8 @@ void TurnSummary::turnOrder() {
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	cout << endl;
 
+	houseScoringTrack(); //showing the number of houses on the scoring track
+
 	if (turnCounter == 1)
 	{
 		random_shuffle(vector_player.begin(), vector_player.end());
@@ -93,8 +95,6 @@ void TurnSummary::turnOrder() {
 /*Step2 - Print to the first player and ask him to buy a powerplant, then ask the other players. On the first round, everyone will have to buy
  a power plant. Later on, we will implement the auction. */
 void TurnSummary::buyPowerPlant() {
-	
-	houseScoringTrack(); //Showing the number of houses on the scoring track
 	
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	cout << " THIS IS SECOND STEP THE BUYING OF POWER PLANTS" << endl;
