@@ -52,6 +52,7 @@ void TurnSummary::turnOrder() {
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	cout << " THIS IS FIRST STEP TO DETERMINE THE TURN ORDER" << endl;
 	cout << " ///////////////////////////////////////////////////////" << endl;
+	cout << endl;
 
 	if (turnCounter == 1)
 	{
@@ -92,6 +93,9 @@ void TurnSummary::turnOrder() {
 /*Step2 - Print to the first player and ask him to buy a powerplant, then ask the other players. On the first round, everyone will have to buy
  a power plant. Later on, we will implement the auction. */
 void TurnSummary::buyPowerPlant() {
+	
+	houseScoringTrack(); //showing the number of houses on the scoring track
+	
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	cout << " THIS IS SECOND STEP THE BUYING OF POWER PLANTS" << endl;
 	cout << " ///////////////////////////////////////////////////////" << endl;
@@ -472,13 +476,11 @@ void TurnSummary::saveGame()
 	market->saveMarket();
 }
 
-void TurnSummary::incrementTurnCounter()
-{
+void TurnSummary::incrementTurnCounter(){
 	turnCounter++;
 }
 
-bool TurnSummary::checkMapCorrectness()
-{
+bool TurnSummary::checkMapCorrectness(){
 	
 	bool mapCorrect = IOFile::verifyMapCorrectness(mapOfPlayersCity);
 	if (mapCorrect) {
@@ -486,6 +488,14 @@ bool TurnSummary::checkMapCorrectness()
 	}
 	return false;
 }
+
+//Keeps track of the number of houses each player has (the scoring track on top of the board game)
+void TurnSummary::houseScoringTrack() {
+	for (Player* p : vector_player) {
+		cout << "PLAYER " << p->getColor() << " has " << p->getHouseManager()->getHouseCount() << " number of house(s)." << endl << endl;
+	}
+}
+
 
 
 
