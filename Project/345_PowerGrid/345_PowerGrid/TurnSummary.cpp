@@ -102,7 +102,9 @@ void TurnSummary::buyPowerPlant() {
 
 	Player* p = vector_player[0];//first player bids
 
+	bool playerAlreadyBought = false;
 	while (true) {
+
 
 		cout << "Player with color " << p->getColor() << " can bid first " << endl;
 
@@ -139,17 +141,20 @@ void TurnSummary::buyPowerPlant() {
 
 		//Checks if the other player already bought a powerplant -- just works for 1 round. If yes, then there is no need for an auction.
 		//The player with no powerplant will automatically buy the lowest plantBid without the other player interfering
-		if (getNextPlayer(*p)->getPowerplantsVector()->size() == 1) {
+		if (getNextPlayer(*p)->getPowerplantsVector()->size() == 1 && playerAlreadyBought) {
 			p->addPlant(powerplants_Vector->getAndRemoveSpecificPowerplant(plantBid));
 			p->setElektro(p->getElektro() - plantBid);
 			cout << "\nPlayer " << p->getColor() << " has " << p->getElektro() << "." << endl << endl;
-
+			break;
 			//If both players bought a powerplant on the first round then break from the first while (stop buying powerplant)
 			if (p->getPowerplantsVector()->size() == 1) {
 				break;
 			}
 		}
 
+		if (playerAlreadyBought) {
+			break;
+		}
 		int powerPlantBid = plantBid; //to know the actual minimum bid
 		string answer;
 		int playerBid;
@@ -207,6 +212,7 @@ void TurnSummary::buyPowerPlant() {
 				p->setElektro(p->getElektro() - plantBid);
 				cout << "Player " << p->getColor() << " has " << p->getElektro() << "." << endl;
 				p->addPlant(powerplants_Vector->getAndRemoveSpecificPowerplant(powerPlantBid));// adds into next person's powerplant possession
+				playerAlreadyBought = true;
 				p = getNextPlayer(*p);
 				break;
 			}
