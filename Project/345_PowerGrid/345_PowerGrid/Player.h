@@ -32,15 +32,15 @@ public:
 	vector<Powerplant>* getPowerplantsVector();
 	
 	//Powerplants
-	void showPlants(); //Power Plant methods added by Anhkhoi, feel free to modify
-	void showInfo();
-	bool isPowerplantsFull(); //checks if powerplant vector is full
-	bool hasEnoughtElektroFor(int amount);
-	void addPlant(Powerplant * p1); //incomplete "p2->addPlant(oil3);"
-	int getHighestMinBid();
+	void showPlants(); //Displays all powerplant characteristics that a player owns
+	void showInfo(); //Display user possessions
+	bool isPowerplantsFull(); //Checks if powerplant vector is full
+	bool hasEnoughtElektroFor(int amount); 
+	void addPlant(Powerplant * p1); //Adds a powerplant object to player's powerplant vector if it is not full
+	int getHighestMinBid(); //Return the highest costing power plant that a player owns
 
 	//Resources
-	void addResource(string type, int quantity); //Don't care about cost 
+	void addResource(string type, int quantity); //Adds a quantity of a resource to player's possessions
 	int getResource(string type); //Return resource quantity
 	bool validateResourcePurchase(int cost, int quantity, string type);
 	int getTotalStorage(); //Returns total amount of resources stored across all possible power plants
@@ -50,7 +50,6 @@ public:
 	bool comparePlayer(Player* pp);
 
 private:
-
 	static int number_of_players;
 	int playerNumber;
 	int elektro;
