@@ -45,6 +45,14 @@ void HouseManager::addHouses(House house)
 	houseCount++;
 }
 
+//returns only the indices of the player
+vector<int> * HouseManager::getHouseIndices() {
+	vector<int> * houses = new vector<int>();
 
+	for (House h : *houseVector) {
+		houses->push_back(h.getIndex());
+	}
+	return houses;
+}
 
 

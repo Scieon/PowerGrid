@@ -381,7 +381,7 @@ void IOFile::saveAreas(MapOfPlayersCity *map) {
 	// Create/open a file
 	output.open("area.txt");
 
-	output << "Areas";
+	output << "Areas" << endl;
 	//Save map areas
 	vector<bool> values(*(map->getMap()->getAreasPlayed())); //shallow copy
 	int i = 0;//counter

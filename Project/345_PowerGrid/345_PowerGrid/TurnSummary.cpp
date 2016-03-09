@@ -13,7 +13,7 @@
 using namespace std;
 
 //Default constructor
-TurnSummary::TurnSummary(){
+TurnSummary::TurnSummary() {
 	turnCounter = 1; //keep track round number
 	nbOfPlayer = 0; //how many people are playing in this game. for now we will have 2 only.
 	market = new ResourceMarket();
@@ -65,19 +65,19 @@ void TurnSummary::turnOrder() {
 		//This is where you will need to check each player's who has the highest amount of bought houses. If two players have the same number of houses then 
 		//the turn order will be determined by the highest power plant number
 
-		
+
 		int player1HouseCount = vector_player.at(0)->getHouseManager()->getHouseCount();
 		int player2HouseCount = vector_player.at(1)->getHouseManager()->getHouseCount();
 
-		if (player1HouseCount < player2HouseCount){
+		if (player1HouseCount < player2HouseCount) {
 			reverse(vector_player.begin(), vector_player.end());
 		}
-		else if (player1HouseCount == player2HouseCount){
+		else if (player1HouseCount == player2HouseCount) {
 
 			int player1HighestPlant = (vector_player)[0]->getHighestMinBid();
 			int player2HighestPlant = vector_player.at(1)->getHighestMinBid();
 
-			if (player1HighestPlant < player2HighestPlant){
+			if (player1HighestPlant < player2HighestPlant) {
 				reverse(vector_player.begin(), vector_player.end());
 			}
 			else {
@@ -88,14 +88,14 @@ void TurnSummary::turnOrder() {
 			cout << "We are keeping the order" << endl;
 		cout << "The player with the most houses will start. If tied, biggest powerplant number will go. " << endl;
 
-		
+
 	}
 }
 
 /*Step2 - Print to the first player and ask him to buy a powerplant, then ask the other players. On the first round, everyone will have to buy
  a power plant. Later on, we will implement the auction. */
 void TurnSummary::buyPowerPlant() {
-	
+
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	cout << " THIS IS SECOND STEP THE BUYING OF POWER PLANTS" << endl;
 	cout << " ///////////////////////////////////////////////////////" << endl;
@@ -103,11 +103,11 @@ void TurnSummary::buyPowerPlant() {
 	Player* p = vector_player[0];//first player bids
 
 	while (true) {
-		
+
 		cout << "Player with color " << p->getColor() << " can bid first " << endl;
 
 		powerplants_Vector->printMarket();
-		
+
 		cout << endl;
 		cout << "Player " << p->getColor() << endl;
 		cout << "You currently have " << p->getElektro() << " elektros" << endl;
@@ -143,13 +143,13 @@ void TurnSummary::buyPowerPlant() {
 			p->addPlant(powerplants_Vector->getAndRemoveSpecificPowerplant(plantBid));
 			p->setElektro(p->getElektro() - plantBid);
 			cout << "\nPlayer " << p->getColor() << " has " << p->getElektro() << "." << endl << endl;
-			
+
 			//If both players bought a powerplant on the first round then break from the first while (stop buying powerplant)
-			if (p->getPowerplantsVector()->size() == 1){
+			if (p->getPowerplantsVector()->size() == 1) {
 				break;
 			}
 		}
-		
+
 		int powerPlantBid = plantBid; //to know the actual minimum bid
 		string answer;
 		int playerBid;
@@ -157,7 +157,7 @@ void TurnSummary::buyPowerPlant() {
 		cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
 		cout << "@@@@ Starting Auction @@@@" << endl;
 		cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
-		
+
 		while (true) {
 
 			p = getNextPlayer(*p);
@@ -225,12 +225,12 @@ void TurnSummary::buyPowerPlant() {
 
 /* Step 3 - Buy raw material. In this part, the last player will begin. In other words, it's the reverse order of buying power plant who starts. */
 void TurnSummary::buyRawMaterial() {
-	
+
 	cout << endl;
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	cout << " THIS IS THIRD STEP TO BUY RAW MATERIALS" << endl;
 	cout << " ///////////////////////////////////////////////////////" << endl;
-	
+
 	string materialChoice;
 	int qty;
 	reverse(vector_player.begin(), vector_player.end());
@@ -239,9 +239,9 @@ void TurnSummary::buyRawMaterial() {
 		cout << "Since we are starting with the last player to buy the raw material. Here is the STARTING PLAYER with the color: " << p->getColor() << endl << endl;
 
 		while (true) {
-			cout << endl << "Player " << p->getColor() << " turn, please choose what you want to buy: " << endl <<"(coal, oil, uranium, or garbage)"<<" When finished please type done. " << endl;
-			cout << "Enter 1 to see current resource market." <<endl
-			<<"Enter 2 to see powerplants owned." << endl;
+			cout << endl << "Player " << p->getColor() << " turn, please choose what you want to buy: " << endl << "(coal, oil, uranium, or garbage)" << " When finished please type done. " << endl;
+			cout << "Enter 1 to see current resource market." << endl
+				<< "Enter 2 to see powerplants owned." << endl;
 			cout << "Choice: ";
 			cin >> materialChoice; cout << endl;
 
@@ -347,55 +347,91 @@ void TurnSummary::building() {
 	cout << " THIS IS FOURTH STEP TO BUILD HOUSES" << endl;
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	for (Player* p : vector_player) {
+
 		cout << "*****************************************************************" << endl;
 		cout << endl << "Would PLAYER " << p->getColor() << " like to build houses? yes or no. At the first round, you can only build houses on cities costing 10. The LAST PLAYER will begin again. " << endl;
 		cin >> buildOption;
 
-		int houseCount = p->getHouseManager()->getHouseCount();
-
-		//if player has no houses yet
-		if (houseCount == 0) {
-			cout << "You can build in these Cities:" << endl;
-
-			//print free locations
-			mapOfPlayersCity->printAvailableIndices();
-
-
-			cout << endl << "Please choose an Index you want to build in" << endl;
-			cout << "Index: ";
-			int index;
-			cin >> index;
-
-			//check if user put anything other than integer
-			while (std::cin.fail()) {
-				cout << "Invalid input. Please enter an integer: ";
-				cin.clear();
-				cin.ignore(256, '\n');
-				cin >> index;
-			}
-
-			//Check if the index is available before inserting
-			while (!mapOfPlayersCity->isIndexAvailable(index)) {
-				cout << "Invalid integer.. Please enter a valid index: ";
-				cin >> index;
-			}
-
-			House house(index, mapOfPlayersCity->getIndexName(index));
-
-			p->getHouseManager()->addHouses(house);
-			mapOfPlayersCity->setPlayerHouse(index, p->getColor());
-			
-			cout << "done";
-		}
-		/*
 		while (true) {
-			//First few rounds will only let you buy for 10. Have to implement exception that after buying that city, it is no longer available. For now, we will leave it as it is.
+
 			if (buildOption == "yes") {
-				string houseChoice;
-				cout << "Would " << p->getColor() << " like to buy a house at Duisburg, Essen, DEseldorf, or Dortmunt?" << endl;
-				cin >> houseChoice;
-				p->setElektro(p->getElektro() - 10);
-				//p->getHouseManager()->addHouses(h1);
+
+				int houseCount = p->getHouseManager()->getHouseCount();
+
+				//if player does not have enough electro to purchase 1 house
+				if (!p->hasEnoughtElektroFor(10)) {
+					cout << "Player " << p->getColor() << "You do not have enough elektro to place a house" << endl;
+					break;
+				}
+
+				//if player has no houses yet
+				if (houseCount == 0) {
+					cout << "You can build in these Cities:" << endl;
+
+					//print free locations
+					mapOfPlayersCity->printAvailableIndices();
+
+					cout << "You currently have " << p->getElektro() << " elektro" << endl;
+
+					int index = pleaseChooseIndexToBuildIn();
+
+					House house(index, mapOfPlayersCity->getIndexName(index));
+
+					p->getHouseManager()->addHouses(house);
+					mapOfPlayersCity->setPlayerHouse(index, p->getColor());
+					p->subtractMoney(10);
+					cout << "Purchase completed" << endl;
+					cout << "You now have " << p->getElektro() << " elektro" << endl;
+				} 
+				else 
+				{
+
+					vector<double> * costVector = mapOfPlayersCity->getAvailableIndicesCost(p->getHouseManager()->getHouseIndices());
+
+					int costVectorSize = costVector->size();
+					int count = 0;
+					bool testEnoughElektro = true;
+
+					while (testEnoughElektro) {
+						if (p->hasEnoughtElektroFor((*costVector)[count])) {
+							testEnoughElektro = false; //has enough money for at least 1 connection
+							break;
+						}
+						if (count == costVectorSize) {
+							break;
+						}
+						count++;
+					}
+					//if testEnoughElektro is unchanged
+					if (testEnoughElektro) {
+						cout << "Player " << p->getColor() << "You do not have enough elektro to place a house" << endl;
+						break;
+					}
+					else {
+						cout << "These are the houses you can purchase: " << endl;
+						mapOfPlayersCity->printAvailableIndicesCost(p->getHouseManager()->getHouseIndices()); //print indices
+						cout << endl << "You currently have " << p->getElektro() << " elektro" << endl;
+						cout << "Please take into account that you need 10 additonal electro to purchase that house at that location" << endl;
+						int index = 0;
+						while (true) {
+							index = pleaseChooseIndexToBuildIn();
+							if (!p->hasEnoughtElektroFor((*costVector)[index])) {
+								cout << "You do not have enough elektro for this location" << endl;
+								continue;
+							}
+							break;
+						}
+						House house(index, mapOfPlayersCity->getIndexName(index));
+
+						p->getHouseManager()->addHouses(house);
+						mapOfPlayersCity->setPlayerHouse(index, p->getColor());
+						p->subtractMoney((*costVector)[index] + 10);//remove cost of purchase
+						cout << "Purchase completed" << endl;
+						cout << "You now have " << p->getElektro() << " elektro" << endl;
+
+					}
+
+				}
 			}
 			else if (buildOption == "no") {
 				break;
@@ -403,7 +439,6 @@ void TurnSummary::building() {
 			cout << "Would " << p->getColor() << " like to build again? yes or no" << endl;
 			cin >> buildOption;
 		}
-		*/
 	}
 
 }
@@ -476,12 +511,12 @@ void TurnSummary::saveGame()
 	market->saveMarket();
 }
 
-void TurnSummary::incrementTurnCounter(){
+void TurnSummary::incrementTurnCounter() {
 	turnCounter++;
 }
 
-bool TurnSummary::checkMapCorrectness(){
-	
+bool TurnSummary::checkMapCorrectness() {
+
 	bool mapCorrect = IOFile::verifyMapCorrectness(mapOfPlayersCity);
 	if (mapCorrect) {
 		return true;
@@ -498,5 +533,26 @@ void TurnSummary::houseScoringTrack() {
 
 
 
+int TurnSummary::pleaseChooseIndexToBuildIn() {
+	cout << endl << "Please choose an Index you want to build in" << endl;
+	cout << "Index: ";
+	int index;
+	cin >> index;
 
+	//check if user put anything other than integer
+	while (std::cin.fail()) {
+		cout << "Invalid input. Please enter an integer: ";
+		cin.clear();
+		cin.ignore(256, '\n');
+		cin >> index;
+	}
+
+	//Check if the index is available before inserting
+	while (!mapOfPlayersCity->isIndexAvailable(index)) {
+		cout << "Invalid integer.. Please enter a valid index: ";
+		cin >> index;
+	}
+
+	return index;
+}
 

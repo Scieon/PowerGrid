@@ -129,6 +129,7 @@
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="ResourceMarket.cpp" />
+    <ClCompile Include="MapTest.cpp" />
     <ClCompile Include="TestIOLoad.cpp" />
     <ClCompile Include="TurnSummary.cpp" />
     <ClCompile Include="Uranium.cpp" />

@@ -127,7 +127,7 @@ int main(){
 		TurnSummary * turn = new TurnSummary(vector_player, gameMap);
 
 		turn->loadGame(); //loads map, pplants, resource market
-
+		turn->building();
 		return 0;
 	}
 	else {

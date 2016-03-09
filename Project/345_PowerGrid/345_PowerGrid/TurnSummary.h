@@ -20,6 +20,7 @@ public:
 	void building();
 	void bureaucracy();
 	void houseScoringTrack();
+	int pleaseChooseIndexToBuildIn(); //prompt player to purchase index
 	void resourcePurchase(string materialType); //Not used for now
 
 	void loadGame();

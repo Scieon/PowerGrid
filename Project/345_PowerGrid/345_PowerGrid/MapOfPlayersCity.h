@@ -22,6 +22,8 @@ public:
 
 	void printAvailableIndices();
 
+	vector<int>* getAvaiableIndices();
+
 	bool isIndexAvailable(int index);
 
 	string getIndexName(int index);
@@ -29,6 +31,10 @@ public:
 	Map * getMap();
 
 	void setMap(Map * map);
+
+	void printAvailableIndicesCost(vector<int>* houses);
+
+	vector<double>* getAvailableIndicesCost(vector<int>* houses);
 
 private:
 	//Player's houses location (holds names)

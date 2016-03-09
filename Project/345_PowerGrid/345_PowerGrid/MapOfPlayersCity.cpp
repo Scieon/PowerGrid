@@ -64,7 +64,7 @@ void MapOfPlayersCity::printPlayersCity(){
 	}
 }
 
-//prints the valid indices available to play 
+//prints the valid indices available to put a player in
 void MapOfPlayersCity::printAvailableIndices(){
 
 	vector<int> indices =  *(map->getPlayedIndicesVector());
@@ -79,7 +79,21 @@ void MapOfPlayersCity::printAvailableIndices(){
 
 }
 
-//Checks if the index is available. Used before purchasing house
+//gets the vertices that are free to put a player in (empty) and are in game
+vector<int> * MapOfPlayersCity::getAvaiableIndices() {
+	vector<int> indices = *(map->getPlayedIndicesVector());
+	vector<int> * emptyIndices = new vector<int>();
+
+	//for each index that is in the game check if there is no player inside
+	for (int index : indices) {
+		if ((*player_houses)[index].size() == 0) {
+			emptyIndices->push_back(index);
+		}
+	}
+	return emptyIndices;
+}
+
+//Checks if the index is available to put a player in (is empty). Used before purchasing house
 bool MapOfPlayersCity::isIndexAvailable(int index){
 	//check if user put invalid range of input
 	//check if the index is in the game
@@ -104,4 +118,68 @@ Map* MapOfPlayersCity::getMap(){
 //sets map
 void MapOfPlayersCity::setMap(Map * map){
 	this->map = map;
+}
+
+//prints the lowest cost from our houses to of each avaiable city
+void MapOfPlayersCity::printAvailableIndicesCost(vector<int> * houses) {
+
+	vector<int> * availableIndices = getAvaiableIndices(); //gets available indices ex: 1 3 5 6 8 10
+	int size = availableIndices->size(); //size of avaiable indices vector
+
+	vector<double> * costOfEachAvaiableIndices = new vector<double>(size, 99999);
+
+	vector<double> min_distance;
+	vector<int> previous;
+
+	int count = 0;
+	for (int index : *houses) {
+		count = 0; //reinitalize
+
+		for (int cities : *availableIndices) {
+			//computes distance from index to to all vertices in map
+			map->DijkstraComputePaths(index, *(map->getMap()), min_distance, previous);
+			//if cost is less from a city then change it
+			if (min_distance[cities] < (*costOfEachAvaiableIndices)[count]) {
+				(*costOfEachAvaiableIndices)[count] = min_distance[cities];
+			}
+			count++;
+		}
+	}
+	count = 0;
+
+	//print out costs to go in that location
+	for (int index : *availableIndices) {
+		cout << "Index: " << index << " Name: " << city_manager.getName(count) << " Cost: " << (*costOfEachAvaiableIndices)[count] << endl;
+		count++;
+	}
+
+}
+
+//returns the lowest cost from our houses to of each avaiable city
+vector<double>* MapOfPlayersCity::getAvailableIndicesCost(vector<int> * houses) {
+	vector<int> * availableIndices = getAvaiableIndices(); //gets available indices ex: 1 3 5 6 8 10
+	int size = availableIndices->size(); //size of avaiable indices vector
+
+	vector<double> * costOfEachAvaiableIndices = new vector<double>(size, 99999);
+
+	vector<double> min_distance;
+	vector<int> previous;
+
+	int count = 0;
+	for (int index : *houses) {
+		count = 0; //reinitalize
+
+		for (int cities : *availableIndices) {
+			//computes distance from index to to all vertices in map
+			map->DijkstraComputePaths(index, *(map->getMap()), min_distance, previous);
+			//if cost is less from a city then change it
+			if (min_distance[cities] < (*costOfEachAvaiableIndices)[count]) {
+				(*costOfEachAvaiableIndices)[count] = min_distance[cities];
+			}
+			count++;
+		}
+	}
+
+	return costOfEachAvaiableIndices;
+
 }
