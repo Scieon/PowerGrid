@@ -19,6 +19,7 @@ public:
 	void buyRawMaterial();
 	void building();
 	void bureaucracy();
+	void houseScoringTrack();
 	void resourcePurchase(string materialType); //Not used for now
 
 	void loadGame();
