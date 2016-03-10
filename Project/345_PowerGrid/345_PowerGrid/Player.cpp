@@ -81,17 +81,8 @@ vector<Powerplant>* Player::getPowerplantsVector(){
 
 //returns the resource quantity
 int Player::getResource(string type) {
-	if (type == "Coal")
-		return resources->getResourceQuantity(type);
 
-	if (type == "Oil")
-		return resources->getResourceQuantity(type);
-
-	if (type == "Garbage")
-		return resources->getResourceQuantity(type);
-
-	if (type == "Uranium")
-		return resources->getResourceQuantity(type);
+	return resources->getResourceQuantity(type);
 }
 
 //Adds a powerplant to a players possessions
@@ -189,28 +180,11 @@ int Player::getResourceStorage(string resource) {
 
 //This function adds a selected amount of a resource into a players resource possessions
 void Player::addResource(string type, int quantity) {
-	if (type == "Coal") {
-		resources->addResourceQuantity("Coal", quantity);
-		return;
-	}
 
-	if (type == "Oil") {
-		resources->addResourceQuantity("Oil", quantity);
-		return;
-	}
+	resources->addResourceQuantity(type, quantity);
+	return;
 
-	if (type == "Garbage") {
-		resources->addResourceQuantity("Garbage", quantity);
-		return;
-	}
-
-	if (type == "Uranium") {
-		resources->addResourceQuantity("Uranium", quantity);
-		return;
-	}
-
-	else
-		cout << "Error in adding resource quantity" << endl;
+	cout << "Error in adding resource quantity" << endl;
 }
 
 
