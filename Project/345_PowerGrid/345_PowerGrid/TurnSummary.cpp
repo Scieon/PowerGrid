@@ -1,6 +1,7 @@
 #include <iostream>
 #include <algorithm>
 #include <string>
+#include <vector>
 
 #include "TurnSummary.h"
 #include "PowerPlant.h"
@@ -9,6 +10,7 @@
 #include "Map.h"
 #include "MapOfPlayersCity.h"
 #include "IOFile.h"
+
 
 using namespace std;
 
@@ -355,18 +357,26 @@ void TurnSummary::building() {
 	for (Player* p : vector_player) {
 
 		cout << "*****************************************************************" << endl;
-		cout << endl << "Would PLAYER " << p->getColor() << " like to build houses? yes or no. At the first round, you can only build houses on cities costing 10. The LAST PLAYER will begin again. " << endl;
+		cout << endl;
+		/*
+		if (turnCounter == 1) {
+			cout << "Since this first round, you can only build houses on cities costing 10. The LAST PLAYER will begin again. " << endl;
+		}
+		*/
+
+		cout << "Player " << p->getColor() << " it's your turn. Would you like to build a house?." << endl;
+		cout << "Type 'y' for yes or 'n' for no." << endl;
 		cin >> buildOption;
 
 		while (true) {
 
-			if (buildOption == "yes") {
+			if (buildOption == "y" || buildOption == "Y") {
 
 				int houseCount = p->getHouseManager()->getHouseCount();
 
 				//if player does not have enough electro to purchase 1 house
 				if (!p->hasEnoughtElektroFor(10)) {
-					cout << "Player " << p->getColor() << "You do not have enough elektro to place a house" << endl;
+					cout << "Player " << p->getColor() << " You do not have enough elektro to place a house" << endl;
 					break;
 				}
 
@@ -386,8 +396,11 @@ void TurnSummary::building() {
 					p->getHouseManager()->addHouses(house);
 					mapOfPlayersCity->setPlayerHouse(index, p->getColor());
 					p->subtractMoney(10);
-					cout << "Purchase completed" << endl;
+					cout << endl << "Purchase completed" << endl;
 					cout << "You now have " << p->getElektro() << " elektro" << endl;
+					cout << "Player " << p->getColor() << " would you like to build a house?." << endl;
+					cout << "Type 'y' for yes or 'n' for no." << endl;
+					cin >> buildOption;
 				} 
 				else 
 				{
@@ -408,6 +421,9 @@ void TurnSummary::building() {
 						}
 						count++;
 					}
+
+					int pos; //used to find the index of the location the wants to purchase
+
 					//if testEnoughElektro is unchanged
 					if (testEnoughElektro) {
 						cout << "Player " << p->getColor() << "You do not have enough elektro to place a house" << endl;
@@ -421,7 +437,9 @@ void TurnSummary::building() {
 						int index = 0;
 						while (true) {
 							index = pleaseChooseIndexToBuildIn();
-							if (!p->hasEnoughtElektroFor((*costVector)[index])) {
+							vector<int> findIndexVector = *(mapOfPlayersCity->getAvaiableIndices()); //used to find the index of the house the player wants to buy
+							pos = find(findIndexVector.begin(), findIndexVector.end(), index) - findIndexVector.begin(); //finds the index of the "index" in the avaiable indices
+							if (!p->hasEnoughtElektroFor((*costVector)[pos])) {
 								cout << "You do not have enough elektro for this location" << endl;
 								continue;
 							}
@@ -431,19 +449,22 @@ void TurnSummary::building() {
 
 						p->getHouseManager()->addHouses(house);
 						mapOfPlayersCity->setPlayerHouse(index, p->getColor());
-						p->subtractMoney((*costVector)[index] + 10);//remove cost of purchase
-						cout << "Purchase completed" << endl;
+						p->subtractMoney((*costVector)[pos] + 10);//remove cost of purchase
+						cout << endl << "Purchase completed" << endl;
 						cout << "You now have " << p->getElektro() << " elektro" << endl;
-
+						cout << "Player " << p->getColor() << " would you like to build a house?." << endl;
+						cout << "Type 'y' for yes or 'n' for no." << endl;
+						cin >> buildOption;
 					}
 
 				}
 			}
-			else if (buildOption == "no") {
+			if (buildOption == "y" || buildOption == "Y") {
+				continue;
+			}
+			else if (buildOption == "n" || buildOption == "N") {
 				break;
 			}
-			cout << "Would " << p->getColor() << " like to build again? yes or no" << endl;
-			cin >> buildOption;
 		}
 	}
 

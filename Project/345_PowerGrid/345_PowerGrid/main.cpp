@@ -145,8 +145,11 @@ int main(){
 				cout << "This is an impossible game. Please try again. Check image for details." << endl;
 				areas->clear();
 			}
+			cout << "Area 1: ";
 			cin >> a1;
+			cout << "Area 2: ";
 			cin >> a2;
+			cout << "Area 3: ";
 			cin >> a3;
 
 			//creating areas

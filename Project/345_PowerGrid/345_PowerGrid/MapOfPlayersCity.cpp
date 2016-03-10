@@ -72,7 +72,7 @@ void MapOfPlayersCity::printAvailableIndices(){
 	int i = 0;
 	for (int index : indices) {
 		if ((*player_houses)[index].size() == 0) {
-			cout << "Index: " << i << " Name: " << city_manager.getName(i) << endl;
+			cout << "Index: " << index << " Name: " << city_manager.getName(index) << endl;
 		}
 		i++;
 	}
@@ -149,9 +149,14 @@ void MapOfPlayersCity::printAvailableIndicesCost(vector<int> * houses) {
 
 	//print out costs to go in that location
 	for (int index : *availableIndices) {
-		cout << "Index: " << index << " Name: " << city_manager.getName(count) << " Cost: " << (*costOfEachAvaiableIndices)[count] << endl;
+		cout << "Index: " << index << " Name: " << city_manager.getName(count) << " -- Cost: " << (*costOfEachAvaiableIndices)[count] << endl;
 		count++;
 	}
+
+	delete availableIndices;
+	availableIndices = NULL;
+	delete costOfEachAvaiableIndices;
+	costOfEachAvaiableIndices = NULL;
 
 }
 
