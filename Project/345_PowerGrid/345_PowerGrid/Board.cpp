@@ -127,11 +127,11 @@ void Board::buyPowerPlant() {
 		while (!checkPP || !checkElektro) {
 			if (!checkPP) {
 				cout << endl;
-				cout << "This powerplant is not in the Actual Market" << endl;
+				cout << "--ERROR-- This powerplant is not in the Actual Market --ERROR--" << endl << endl;
 			}
 			else if (!checkElektro) {
 				cout << endl;
-				cout << "You do not have enough elektros for this Power Plant" << endl;
+				cout << "--ERROR-- You do not have enough elektros for this Power Plant --ERROR--" << endl;
 			}
 			cout << "You currently have " << p->getElektro() << " elektros" << endl;
 			cout << "Please enter the minimum bid of the Power Plant you want to buy in the Actual Market" << endl;
@@ -186,7 +186,7 @@ void Board::buyPowerPlant() {
 				cout << "Please enter the amount you want to bid: " << endl;
 				cin >> playerBid;
 
-				bool bidTooLow = playerBid < plantBid;
+				bool bidTooLow = playerBid <= plantBid;
 				bool notEnoughElektro = playerBid > p->getElektro();
 
 				while (bidTooLow || notEnoughElektro) {
