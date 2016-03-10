@@ -27,12 +27,12 @@ int main(){
 	cout << "///////// PLEASE READ CAREFULLY //////////" << endl;
 	cout << "//////////////////////////////////////////" << endl << endl;
 
-	cout << "Press any key and enter to start a NEW GAME." << endl;
-	cout << "OTHERWISE type \"yes\" and press enter to LOAD a SAVED game." << endl;
+	cout << "Press \"y\" for a NEW GAME." << endl << endl;
+	cout << "OTHERWISE type press any key to LOAD a SAVED game." << endl;
 	
 	string answer;
 	cin >> answer;
-	if (answer == "yes") {
+	if (answer != "y") {
 		//Load game
 		Player* player1 = new Player("not");
 		Player* player2 = new Player("important");
@@ -154,6 +154,6 @@ int main(){
 
 			y++;
 		}
-		return 0;
-	} 
+	}
+	return 0;
 }
