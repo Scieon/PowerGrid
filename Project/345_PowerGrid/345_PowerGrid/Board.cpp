@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include "TurnSummary.h"
+#include "Board.h"
 #include "PowerPlant.h"
 #include "Resource.h"
 #include "PowerPlantManager.h"
@@ -15,14 +15,14 @@
 using namespace std;
 
 //Default constructor
-TurnSummary::TurnSummary() {
+Board::Board() {
 	turnCounter = 1; //keep track round number
 	nbOfPlayer = 0; //how many people are playing in this game. for now we will have 2 only.
 	market = new ResourceMarket();
 }
 
 //Constructor
-TurnSummary::TurnSummary(std::vector<Player*> vector_player, Map *map) {
+Board::Board(std::vector<Player*> vector_player, Map *map) {
 
 	market = new ResourceMarket(); //Should load from save
 
@@ -34,22 +34,22 @@ TurnSummary::TurnSummary(std::vector<Player*> vector_player, Map *map) {
 }
 
 //Destructor
-TurnSummary::~TurnSummary() {
+Board::~Board() {
 
 }
 
 //Getter and Setter
-void TurnSummary::setTurnCounter(int turnCounter) {
+void Board::setTurnCounter(int turnCounter) {
 	this->turnCounter = turnCounter;
 }
 
-int TurnSummary::getTurnCounter() {
+int Board::getTurnCounter() {
 	return turnCounter;
 }
 
 /* Step1 - Determine turn order. The first time, it will be randomized. Then after the first time, it will always be comparing
 who has the most number of houses in the network. If two players are tied, then choose the player with the largest number of power plant. */
-void TurnSummary::turnOrder() {
+void Board::turnOrder() {
 	//Enters this step in the first round because it will randomize who gets to play first.
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	cout << " THIS IS FIRST STEP TO DETERMINE THE TURN ORDER" << endl;
@@ -96,7 +96,7 @@ void TurnSummary::turnOrder() {
 
 /*Step2 - Print to the first player and ask him to buy a powerplant, then ask the other players. On the first round, everyone will have to buy
  a power plant. Later on, we will implement the auction. */
-void TurnSummary::buyPowerPlant() {
+void Board::buyPowerPlant() {
 
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	cout << " THIS IS SECOND STEP THE BUYING OF POWER PLANTS" << endl;
@@ -232,7 +232,7 @@ void TurnSummary::buyPowerPlant() {
 }
 
 /* Step 3 - Buy raw material. In this part, the last player will begin. In other words, it's the reverse order of buying power plant who starts. */
-void TurnSummary::buyRawMaterial() {
+void Board::buyRawMaterial() {
 
 	cout << endl;
 	cout << " ///////////////////////////////////////////////////////" << endl;
@@ -349,7 +349,7 @@ void TurnSummary::buyRawMaterial() {
 }
 
 /* Step 4 - Building houses. Can choose which city one would like to build in. We would have to implement the cost it takes to get from one city to the next. */
-void TurnSummary::building() {
+void Board::building() {
 	string buildOption;
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	cout << " THIS IS FOURTH STEP TO BUILD HOUSES" << endl;
@@ -480,7 +480,7 @@ void TurnSummary::building() {
   Depending on how many houses they've powered, they will generate a certain amount of money.
   We are at phase 1 until someone builds the 7th house. Then phase 2 ends when phase 3 card is drawn. Also, during phase 1 and 2, we must place the
   highest power plant under the stack. On the other hand, in phase 3, we will move the lowest power plant under the stack.*/
-void TurnSummary::bureaucracy() {
+void Board::bureaucracy() {
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	cout << " THIS IS FIFTH STEP THE BUREAUCRACY" << endl;
 	cout << " ///////////////////////////////////////////////////////" << endl;
@@ -513,12 +513,12 @@ void TurnSummary::bureaucracy() {
 }
 
 
-void TurnSummary::resourcePurchase(string materialType) {
+void Board::resourcePurchase(string materialType) {
 
 }
 
 //Returns next player
-Player * TurnSummary::getNextPlayer(Player & p) {
+Player * Board::getNextPlayer(Player & p) {
 	if (&p == &*vector_player[0]) {
 		return vector_player[1];
 	}
@@ -526,7 +526,7 @@ Player * TurnSummary::getNextPlayer(Player & p) {
 
 }
 
-void TurnSummary::loadGame()
+void Board::loadGame()
 {
 	IOFile::loadMap(mapOfPlayersCity);
 	IOFile::loadPowerplants(powerplants_Vector);
@@ -534,7 +534,7 @@ void TurnSummary::loadGame()
 	market->loadMarket();
 }
 
-void TurnSummary::saveGame()
+void Board::saveGame()
 {
 	IOFile::saveAreas(mapOfPlayersCity);
 	IOFile::saveMap(mapOfPlayersCity);
@@ -544,11 +544,11 @@ void TurnSummary::saveGame()
 	market->saveMarket();
 }
 
-void TurnSummary::incrementTurnCounter() {
+void Board::incrementTurnCounter() {
 	turnCounter++;
 }
 
-bool TurnSummary::checkMapCorrectness() {
+bool Board::checkMapCorrectness() {
 
 	bool mapCorrect = IOFile::verifyMapCorrectness(mapOfPlayersCity);
 	if (mapCorrect) {
@@ -558,7 +558,7 @@ bool TurnSummary::checkMapCorrectness() {
 }
 
 //Keeps track of the number of houses each player has (the scoring track on top of the board game)
-void TurnSummary::houseScoringTrack() {
+void Board::houseScoringTrack() {
 	for (Player* p : vector_player) {
 		cout << "PLAYER " << p->getColor() << " has " << p->getHouseManager()->getHouseCount() << " number of house(s)." << endl << endl;
 	}
@@ -566,7 +566,7 @@ void TurnSummary::houseScoringTrack() {
 
 
 //Prompt asking you to choose the index you want to build in. Used in building phase
-int TurnSummary::pleaseChooseIndexToBuildIn() {
+int Board::pleaseChooseIndexToBuildIn() {
 	cout << endl << "Please choose an Index you want to build in" << endl;
 	cout << "Index: ";
 	int index;

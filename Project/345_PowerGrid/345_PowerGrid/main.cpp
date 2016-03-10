@@ -5,15 +5,17 @@
 #include "Player.h"
 #include "HouseManager.h"
 #include "Resource.h"
-#include "TurnSummary.h"
+#include "Board.h"
 #include "ResourceMarket.h"
 #include "Powerplant.h"
 #include "IOFile.h"
 
 using namespace std;
 
-
 int main(){
+
+	
+	int CHANGETHISFORTURNS = 4; //number of turn to play
 
 	cout << "Welcome to Funkenschlag" << endl;
 	cout << "Type \"yes\" then press Enter to load a game or press any key and Enter to start a new game.   ";
@@ -31,12 +33,12 @@ int main(){
 		area_manager->setGameAreas(*IOFile::loadAreas()); //load areas
 		Map *gameMap = new Map(area_manager); //load map
 
-		TurnSummary * turn = new TurnSummary(vector_player, gameMap);
+		Board * turn = new Board(vector_player, gameMap);
 
 		turn->loadGame(); //loads map, pplants, resource market
 
 		int y = 1;
-		while (y<4) {
+		while (y<CHANGETHISFORTURNS) {
 			turn->turnOrder();
 			turn->buyPowerPlant();
 			turn->buyRawMaterial();
@@ -122,11 +124,11 @@ int main(){
 		//Create game map according to areas
 		Map * gameMap = new Map(area_manager); //do not delete
 
-		TurnSummary * turn = new TurnSummary(vector_player, gameMap);
+		Board * turn = new Board(vector_player, gameMap);
 		
 		//turns
 		int y = 1;
-		while (y<4) {
+		while (y<CHANGETHISFORTURNS) {
 			turn->turnOrder();
 			turn->buyPowerPlant();
 			turn->buyRawMaterial();

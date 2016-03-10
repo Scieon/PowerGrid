@@ -45,9 +45,6 @@
     <ClCompile Include="Resource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TurnSummary.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Powerplant.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -102,6 +99,9 @@
     <ClCompile Include="ResMarketSaveTest.cpp">
       <Filter>Source Files\Test</Filter>
     </ClCompile>
+    <ClCompile Include="Board.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="House.h">
@@ -114,9 +114,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TurnSummary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Powerplant.h">
@@ -163,6 +160,9 @@
     </ClInclude>
     <ClInclude Include="MapOfPlayersCity.h">
       <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Board.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

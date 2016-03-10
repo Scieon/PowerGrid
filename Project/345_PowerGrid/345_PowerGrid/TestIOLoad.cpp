@@ -6,7 +6,7 @@
 #include "Player.h"
 #include "HouseManager.h"
 #include "Resource.h"
-#include "TurnSummary.h"
+#include "Board.h"
 #include "ResourceMarket.h"
 #include "Powerplant.h"
 #include "IOFile.h"

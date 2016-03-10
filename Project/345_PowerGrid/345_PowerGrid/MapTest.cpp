@@ -6,7 +6,7 @@
 #include "Player.h"
 #include "HouseManager.h"
 #include "Resource.h"
-#include "TurnSummary.h"
+#include "Board.h"
 #include "ResourceMarket.h"
 #include "Powerplant.h"
 #include "IOFile.h"
@@ -63,7 +63,7 @@ int main() {
 	//Create game map according to areas
 	Map * gameMap = new Map(area_manager); //do not delete
 
-	TurnSummary * turn = new TurnSummary(vector_player, gameMap);
+	Board * turn = new Board(vector_player, gameMap);
 
 	std::vector<weight_t> min_distance;
 	std::vector<vertex_t> previous;

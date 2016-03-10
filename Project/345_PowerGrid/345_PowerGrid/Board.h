@@ -1,5 +1,4 @@
-#ifndef TURNSUMMARY_H
-#define TURNSUMMARY_H
+#pragma once
 #include "Player.h"
 #include "Map.h"
 #include "MapOfPlayersCity.h"
@@ -7,11 +6,11 @@
 #include <iostream>
 using namespace std;
 
-class TurnSummary{
+class Board{
 public:
-	TurnSummary();
-	TurnSummary(std::vector<Player*> vector_player, Map * map);
-	~TurnSummary();
+	Board();
+	Board(std::vector<Player*> vector_player, Map * map);
+	~Board();
 	void setTurnCounter(int turnCounter);
 	int getTurnCounter();
 	void turnOrder();
@@ -43,4 +42,3 @@ private:
 	Player * getNextPlayer(Player & p);
 };
 
-#endif //TURNSUMMARY_H

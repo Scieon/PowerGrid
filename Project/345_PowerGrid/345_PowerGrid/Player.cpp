@@ -3,7 +3,7 @@
 #include "House.h" 
 #include "Resource.h"
 #include "Powerplant.h"
-#include "TurnSummary.h"
+#include "Board.h"
 
 
 using namespace std;
