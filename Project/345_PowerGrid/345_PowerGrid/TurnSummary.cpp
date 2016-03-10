@@ -565,7 +565,7 @@ void TurnSummary::houseScoringTrack() {
 }
 
 
-
+//Prompt asking you to choose the index you want to build in. Used in building phase
 int TurnSummary::pleaseChooseIndexToBuildIn() {
 	cout << endl << "Please choose an Index you want to build in" << endl;
 	cout << "Index: ";

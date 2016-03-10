@@ -27,6 +27,7 @@ int HouseManager::getHouseCount(){
 	return houseCount;
 }
 
+//returns the house vector
 vector<House> HouseManager::getHouseVector()
 {
 	return *houseVector;

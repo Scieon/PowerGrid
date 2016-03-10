@@ -153,6 +153,7 @@ void Map::addEdge(int vertex1, int vertex2, double weight) {
 	
 }
 
+//returns area
 int Map::getArea(int index)
 {
 	//check vertex1 area
@@ -234,6 +235,7 @@ std::list<int> Map::DijkstraGetShortestPathTo(
 	return path;
 }
 
+//prints map
 void Map::printMap()
 {
 	int i = 0;
@@ -267,11 +269,13 @@ vector<int>* Map::getPlayedIndicesVector()
 	return indices;
 }
 
+//returns an the area_manager
 vector<bool> * Map::getAreasPlayed()
 {
 	return area_manager->getAreaPlayed();
 }
 
+//returns the adjacency list (the hard-coded map)
 adjacency_list_t * Map::getMap() {
 	return map;
 }

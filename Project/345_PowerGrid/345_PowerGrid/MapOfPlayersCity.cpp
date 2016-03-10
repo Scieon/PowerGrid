@@ -113,6 +113,7 @@ bool MapOfPlayersCity::isIndexAvailable(int index){
 	return true;
 }
 
+//returns the name of city using the index
 string MapOfPlayersCity::getIndexName(int index){
 	return city_manager.getName(index);
 }

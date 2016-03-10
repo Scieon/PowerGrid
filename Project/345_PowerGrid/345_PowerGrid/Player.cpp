@@ -74,10 +74,12 @@ HouseManager* Player::getHouseManager() {
 	return houseManager;
 }
 
+//returns the powerplant vector
 vector<Powerplant>* Player::getPowerplantsVector(){
 	return powerplants;
 }
 
+//returns the resource quantity
 int Player::getResource(string type) {
 	if (type == "Coal")
 		return resources->getResourceQuantity(type);
@@ -105,6 +107,7 @@ void Player::addPlant(Powerplant * p1) {
 	}
 }
 
+//validates the resources that we purchased
 bool Player::validateResourcePurchase(int cost, int quantity, string type) {
 	
 	if (this->getElektro() < cost) {
