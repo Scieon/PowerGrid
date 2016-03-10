@@ -23,8 +23,13 @@ int main(){
 	cout << "Welcome to Funkenschlag" << endl;
 	cout << "In order to enjoy the full experience, please make sure you make "
 		<< endl << "the command prompt bigger than it's original size. Thank you." << endl << endl;
-	cout << "Type \"yes\" and press Enter to load a saved game" << endl;
-	cout << "Otherwise press any key and Enter to start a new game." << endl;
+	cout << "//////////////////////////////////////////" << endl;
+	cout << "///////// PLEASE READ CAREFULLY //////////" << endl;
+	cout << "//////////////////////////////////////////" << endl << endl;
+
+	cout << "Press any key and enter to start a NEW GAME." << endl;
+	cout << "OTHERWISE type \"yes\" and press enter to LOAD a SAVED game." << endl;
+	
 	string answer;
 	cin >> answer;
 	if (answer == "yes") {
@@ -135,10 +140,10 @@ int main(){
 		//turns
 		int y = 1;
 		while (y<CHANGETHISFORTURNS) {
-			turn->turnOrder();
+			//turn->turnOrder();
 			turn->buyPowerPlant();
-			turn->buyRawMaterial();
-			turn->building();
+			//turn->buyRawMaterial();
+			//turn->building();
 			//turn->bureaucracy();
 			turn->incrementTurnCounter(); //HAS BE REMOVED AFTER WE FINISH BUREACRACY
 
