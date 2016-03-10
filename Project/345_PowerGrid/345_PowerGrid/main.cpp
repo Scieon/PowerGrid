@@ -140,10 +140,10 @@ int main(){
 		//turns
 		int y = 1;
 		while (y<CHANGETHISFORTURNS) {
-			//turn->turnOrder();
+			turn->turnOrder();
 			turn->buyPowerPlant();
-			//turn->buyRawMaterial();
-			//turn->building();
+			turn->buyRawMaterial();
+			turn->building();
 			//turn->bureaucracy();
 			turn->incrementTurnCounter(); //HAS BE REMOVED AFTER WE FINISH BUREACRACY
 
