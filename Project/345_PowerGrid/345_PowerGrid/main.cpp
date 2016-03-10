@@ -14,11 +14,17 @@ using namespace std;
 
 int main(){
 
+	/*
+		Hello corrector. We do not use any libraries so you can run the game as is...
+	*/
 	
-	int CHANGETHISFORTURNS = 4; //number of turn to play
+	int CHANGETHISFORTURNS = 4; //number of turns to play
 
 	cout << "Welcome to Funkenschlag" << endl;
-	cout << "Type \"yes\" then press Enter to load a game or press any key and Enter to start a new game.   ";
+	cout << "In order to enjoy the full experience, please make sure you make "
+		<< endl << "the command prompt bigger than it's original size. Thank you." << endl << endl;
+	cout << "Type \"yes\" and press Enter to load a saved game" << endl;
+	cout << "Otherwise press any key and Enter to start a new game." << endl;
 	string answer;
 	cin >> answer;
 	if (answer == "yes") {
