@@ -416,11 +416,11 @@ void TurnSummary::building() {
 					bool testEnoughElektro = true;
 
 					while (testEnoughElektro) {
-						if (p->hasEnoughtElektroFor((*costVector)[count])) {
+						if (p->hasEnoughtElektroFor(10 + (int)(*costVector)[count])) {
 							testEnoughElektro = false; //has enough money for at least 1 connection
 							break;
 						}
-						if (count == costVectorSize) {
+						if (count == (costVectorSize - 1)) {
 							break;
 						}
 						count++;
@@ -443,7 +443,7 @@ void TurnSummary::building() {
 							index = pleaseChooseIndexToBuildIn();
 							vector<int> findIndexVector = *(mapOfPlayersCity->getAvaiableIndices()); //used to find the index of the house the player wants to buy
 							pos = find(findIndexVector.begin(), findIndexVector.end(), index) - findIndexVector.begin(); //finds the index of the "index" in the avaiable indices
-							if (!p->hasEnoughtElektroFor(10 + (*costVector)[pos])) {
+							if (!p->hasEnoughtElektroFor(10 + (int)(*costVector)[pos])) {
 								cout << "You do not have enough elektro for this location" << endl;
 								continue;
 							}
@@ -453,7 +453,7 @@ void TurnSummary::building() {
 
 						p->getHouseManager()->addHouses(house);
 						mapOfPlayersCity->setPlayerHouse(index, p->getColor());
-						p->subtractMoney(10 + (*costVector)[pos]);//remove cost of purchase
+						p->subtractMoney( 10 + (int)(*costVector)[pos]);//remove cost of purchase
 						cout << endl << "Map presentation: " << endl;
 						mapOfPlayersCity->printPlayersCity();
 						cout << endl << "Purchase completed" << endl;
