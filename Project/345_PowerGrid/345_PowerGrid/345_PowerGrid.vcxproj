@@ -126,6 +126,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Powerplant.cpp" />
     <ClCompile Include="Powerplantmanager.cpp" />
+    <ClCompile Include="ResMarketSaveTest.cpp" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="ResourceMarket.cpp" />
