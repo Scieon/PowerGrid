@@ -363,6 +363,8 @@ void TurnSummary::building() {
 			cout << "Since this first round, you can only build houses on cities costing 10. The LAST PLAYER will begin again. " << endl;
 		}
 		*/
+		cout << endl << "Map presentation: " << endl;
+		mapOfPlayersCity->printPlayersCity();
 
 		cout << "Player " << p->getColor() << " it's your turn. Would you like to build a house?." << endl;
 		cout << "Type 'y' for yes or 'n' for no." << endl;
@@ -396,6 +398,8 @@ void TurnSummary::building() {
 					p->getHouseManager()->addHouses(house);
 					mapOfPlayersCity->setPlayerHouse(index, p->getColor());
 					p->subtractMoney(10);
+					cout << endl << "Map presentation: " << endl;
+					mapOfPlayersCity->printPlayersCity();
 					cout << endl << "Purchase completed" << endl;
 					cout << "You now have " << p->getElektro() << " elektro" << endl;
 					cout << "Player " << p->getColor() << " would you like to build a house?." << endl;
@@ -439,7 +443,7 @@ void TurnSummary::building() {
 							index = pleaseChooseIndexToBuildIn();
 							vector<int> findIndexVector = *(mapOfPlayersCity->getAvaiableIndices()); //used to find the index of the house the player wants to buy
 							pos = find(findIndexVector.begin(), findIndexVector.end(), index) - findIndexVector.begin(); //finds the index of the "index" in the avaiable indices
-							if (!p->hasEnoughtElektroFor((*costVector)[pos])) {
+							if (!p->hasEnoughtElektroFor(10 + (*costVector)[pos])) {
 								cout << "You do not have enough elektro for this location" << endl;
 								continue;
 							}
@@ -449,7 +453,9 @@ void TurnSummary::building() {
 
 						p->getHouseManager()->addHouses(house);
 						mapOfPlayersCity->setPlayerHouse(index, p->getColor());
-						p->subtractMoney((*costVector)[pos] + 10);//remove cost of purchase
+						p->subtractMoney(10 + (*costVector)[pos]);//remove cost of purchase
+						cout << endl << "Map presentation: " << endl;
+						mapOfPlayersCity->printPlayersCity();
 						cout << endl << "Purchase completed" << endl;
 						cout << "You now have " << p->getElektro() << " elektro" << endl;
 						cout << "Player " << p->getColor() << " would you like to build a house?." << endl;

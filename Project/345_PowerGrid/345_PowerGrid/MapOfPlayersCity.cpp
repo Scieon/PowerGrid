@@ -50,15 +50,22 @@ bool MapOfPlayersCity::isCityFree(int index){
 
 //Prints all the players city 
 void MapOfPlayersCity::printPlayersCity(){
-	cout << "Printing players in map..." << endl;
 	int i = 0;
 
 	for (vector<string> player : *player_houses){
-		if (player.size() == 1) {
-			cout << "Index: " << i << " Player Color: " << player[0] << endl;
+
+		if (!map->indexInGame(i)) {
+			i++;
+			continue;
+		}
+		else if (player.size() == 0) {
+			cout << "Index: " << i << " Name: " << city_manager.getName(i) << " -- Available"<< endl;
+		}
+		else if (player.size() == 1) {
+			cout << "Index: " << i <<  " Name: " << city_manager.getName(i) << " -- Player: " << player[0] << endl;
 		}
 		else if (player.size() == 2) {
-			cout << "Index: " << i << " Player Color 1: " << player[0] << " Player Color 2: " << player[1] << endl;
+			cout << "Index: " << i << " Name: " << city_manager.getName(i) << " -- Player1: " << player[0] << " -- Player2: " << player[1] << endl;
 		}
 		i++;
 	}
@@ -99,7 +106,7 @@ bool MapOfPlayersCity::isIndexAvailable(int index){
 	//check if the index is in the game
 	//Check if city is free
 	if (index < 0 || index > 41
-		|| !map->isIndexInGame(index)
+		|| !map->indexInGame(index)
 		|| !isCityFree(index)) {
 		return false;
 	}

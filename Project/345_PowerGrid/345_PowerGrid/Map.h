@@ -48,7 +48,7 @@ public:
 
 	void printMap();
 
-	bool isIndexInGame(int index);
+	bool indexInGame(int index);
 
 	vector<int>* getPlayedIndicesVector();
 

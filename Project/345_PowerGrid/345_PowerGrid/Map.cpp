@@ -246,7 +246,7 @@ void Map::printMap()
 }
 
 //checks if the size of the vertex is zero to see 
-bool Map::isIndexInGame(int index)
+bool Map::indexInGame(int index)
 {
 	return ((*map)[index].size() != 0);
 }
