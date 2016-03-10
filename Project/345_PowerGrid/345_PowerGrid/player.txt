@@ -1,6 +1,6 @@
 Player1
 Elektro=31
-Color=Red
+Color=Blue
 Coal=0
 Oil=2
 Garbage=0
@@ -13,7 +13,7 @@ Bid=3 Type=Oil Resource_required=2 Cities_powered=1
 End_Player_Powerplants
 Player2
 Elektro=34
-Color=Blue
+Color=Red
 Coal=2
 Oil=0
 Garbage=0
