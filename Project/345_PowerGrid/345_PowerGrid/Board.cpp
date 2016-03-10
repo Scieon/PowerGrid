@@ -249,7 +249,8 @@ void Board::buyRawMaterial() {
 		while (true) {
 			cout << endl << "Player " << p->getColor() << " turn, please choose what you want to buy: " << endl << "(coal, oil, uranium, or garbage)" << " When finished please type done. " << endl;
 			cout << "Enter 1 to see current resource market." << endl
-				<< "Enter 2 to see powerplants owned." << endl;
+				<< "Enter 2 to see powerplants owned." << endl
+				<< "Enter 3 to see resources owned." << endl;
 			cout << "Choice: ";
 			cin >> materialChoice; cout << endl;
 
@@ -261,6 +262,12 @@ void Board::buyRawMaterial() {
 
 			if (materialChoice == "2") {
 				p->showPlants();
+				system("pause");
+				continue;
+			}
+
+			if (materialChoice == "3") {
+				p->showInfo();
 				system("pause");
 				continue;
 			}
