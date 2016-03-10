@@ -199,12 +199,12 @@ void Player::showPlants() {
 //Display user possessions and characteristics
 void Player::showInfo() {
 
-	cout << "Here is the player " << playerNumber << " resources:" << endl;
-	cout << "P" << playerNumber << " Money:" << this->getElektro() << endl;
-	cout << "P" << playerNumber << " Resource Uranium: " << this->getResource("Uranium") << endl;
-	cout << "P" << playerNumber << "  Resource Garbage: " << this->getResource("Garbage") << endl;
-	cout << "P" << playerNumber << " Resource Coal: " << this->getResource("Coal") << endl;
-	cout << "P" << playerNumber << " Resource Oil: " << this->getResource("Oil") << endl << endl;
+	cout << "Player " << color << "'s resources:" << endl;
+	cout <<  "Elektro:" << this->getElektro() << endl;
+	cout <<  "Resource Coal: " << this->getResource("Coal") << endl;
+	cout <<  "Resource Oil: " << this->getResource("Oil") << endl << endl;
+	cout << "Resource Garbage: " << this->getResource("Garbage") << endl;
+	cout << "Resource Uranium: " << this->getResource("Uranium") << endl;
 }
 
 

@@ -50,10 +50,10 @@ int main(){
 
 		int y = 1;
 		while (y<CHANGETHISFORTURNS) {
-			turn->turnOrder();
-			turn->buyPowerPlant();
+			//turn->turnOrder();
+			//turn->buyPowerPlant();
 			turn->buyRawMaterial();
-			turn->building();
+			//turn->building();
 			//turn->bureaucracy();
 			turn->incrementTurnCounter(); //HAS BE REMOVED AFTER WE FINISH BUREACRACY
 

@@ -245,7 +245,7 @@ void Board::buyRawMaterial() {
 
 	for (Player* p : vector_player) {
 		cout << "Since we are starting with the last player to buy the raw material. Here is the STARTING PLAYER with the color: " << p->getColor() << endl << endl;
-
+		p->showInfo();
 		while (true) {
 			cout << endl << "Player " << p->getColor() << " turn, please choose what you want to buy: " << endl << "(coal, oil, uranium, or garbage)" << " When finished please type done. " << endl;
 			cout << "Enter 1 to see current resource market." << endl
