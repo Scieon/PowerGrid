@@ -202,9 +202,9 @@ void Player::showInfo() {
 	cout << "Player " << color << "'s resources:" << endl;
 	cout <<  "Elektro:" << this->getElektro() << endl;
 	cout <<  "Resource Coal: " << this->getResource("Coal") << endl;
-	cout <<  "Resource Oil: " << this->getResource("Oil") << endl << endl;
+	cout <<  "Resource Oil: " << this->getResource("Oil") << endl;
 	cout << "Resource Garbage: " << this->getResource("Garbage") << endl;
-	cout << "Resource Uranium: " << this->getResource("Uranium") << endl;
+	cout << "Resource Uranium: " << this->getResource("Uranium") << endl << endl;
 }
 
 
