@@ -1,14 +1,4 @@
 # Powergrid
-**Deliverable 1** 
-
-TODO
-- [ ] Put together resources, turn summary, player, and map parts
-- [ ] Auctioning Phase
-- [ ] Building Phase
-- [ ] Buying Resouces
-
-
-
 **Build 1**
 
 |Done| Requirement | Grade |
