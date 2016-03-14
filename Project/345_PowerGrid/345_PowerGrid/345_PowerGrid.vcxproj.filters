@@ -168,5 +168,6 @@
   <ItemGroup>
     <None Include="Project2.vcxproj" />
     <None Include="Project2.vcxproj.filters" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

@@ -158,6 +158,7 @@
     <ClInclude Include="Uranium.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="Project2.vcxproj" />
     <None Include="Project2.vcxproj.filters" />
   </ItemGroup>
