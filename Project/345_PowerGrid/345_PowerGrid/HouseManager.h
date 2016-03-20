@@ -19,6 +19,8 @@ public:
 
 	bool isHouseCountMax();
 
+	int getArea(int index);
+
 private:
 
 	const int MAX_HOUSE_COUNT = 22;
