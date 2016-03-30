@@ -263,7 +263,7 @@ void IOFile::loadPlayer(Player &player1, Player &player2) {
 
 bool IOFile::verifyMapCorrectness(MapOfPlayersCity *map)
 {
-	vector<int> game_indices = *(map->getMap()->getPlayedIndicesVector());
+	vector<int> game_indices = map->getMap()->getPlayedIndicesVector();
 	vector<vector<string> > * player_houses = map->getPlayerHousesVector();
 
 	vector<int> * indicesNotInGame = new vector<int>();

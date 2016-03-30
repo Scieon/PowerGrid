@@ -132,13 +132,8 @@ Map::~Map()
 // USA Map Initialization of areas played; see "PowerGridUsMap_nums.jpg"
 void Map::addEdge(int vertex1, int vertex2, double weight) {
 
-	//TODO:: initalize area_manager
-
 	int area1 = getArea(vertex1);
 	int area2 = getArea(vertex2);
-
-	
-	
 
 	vector<bool> * area_is_played = area_manager->getAreaPlayed();
 
@@ -254,14 +249,14 @@ bool Map::indexInGame(int index)
 }
 
 //returns the indices played in the game
-vector<int>* Map::getPlayedIndicesVector()
+vector<int> Map::getPlayedIndicesVector()
 {
-	vector<int> * indices = new vector<int>();
+	vector<int> indices = vector<int>();
 
 	int i = 0;
 	for (vector<neighbor> city : *map) {
 		if (city.size() != 0) {
-			indices->push_back(i);
+			indices.push_back(i);
 		}
 		i++;
 	}
@@ -278,4 +273,41 @@ vector<bool> * Map::getAreasPlayed()
 //returns the adjacency list (the hard-coded map)
 adjacency_list_t * Map::getMap() {
 	return map;
+}
+
+
+/*
+	Returns the adjacent indices to the houses owned
+	Does not include the index of the houses the player already owns
+*/
+vector<int>* Map::getAdjacentIndices(vector<int>* houses)
+{
+	vector<int> * adjacentIndices = new vector<int>();
+
+	for (int houseIndex : *houses) {
+		for (neighbor adjacents : (*map)[houseIndex]) {
+			std::vector<int>::iterator position = std::find(adjacentIndices->begin(), adjacentIndices->end(), adjacents.target);
+			//If the adjacentIndicies vector does not contain the city index, then add it
+			if (position == adjacentIndices->end())
+			{
+				// Element not in vector
+				adjacentIndices->push_back(adjacents.target);
+			}
+		}
+	}
+	
+	//remove indices of the houses the player already owns
+	for (int houseIndex : *houses) {
+		
+		std::vector<int>::iterator position = std::find(adjacentIndices->begin(), adjacentIndices->end(), houseIndex);
+		//If the adjacentIndicies vector contains the house, then remove it
+		if (position != adjacentIndices->end())
+		{
+			// Element in vector.
+			adjacentIndices->erase(position);
+		}
+
+	}
+
+	return adjacentIndices;
 }

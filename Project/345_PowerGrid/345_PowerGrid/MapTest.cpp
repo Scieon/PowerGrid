@@ -65,13 +65,13 @@ int main() {
 
 	Board * turn = new Board(vector_player, gameMap);
 
-	std::vector<weight_t> min_distance;
-	std::vector<vertex_t> previous;
+	std::vector<double> min_distance;
+	std::vector<int> previous;
 	gameMap->DijkstraComputePaths(0, *(gameMap->getMap()), min_distance, previous);
 	std::cout << "Distance from 0 to 20: " << min_distance[20] << std::endl;
-	std::list<vertex_t> path = gameMap->DijkstraGetShortestPathTo(20, previous);
+	std::list<int> path = gameMap->DijkstraGetShortestPathTo(20, previous);
 	std::cout << "Path : ";
-	std::copy(path.begin(), path.end(), std::ostream_iterator<vertex_t>(std::cout, " "));
+	std::copy(path.begin(), path.end(), std::ostream_iterator<int>(std::cout, " "));
 	std::cout << std::endl;
 
 	system("pause");

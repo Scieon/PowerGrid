@@ -19,6 +19,8 @@ Board::Board() {
 	turnCounter = 1; //keep track round number
 	nbOfPlayer = 0; //how many people are playing in this game. for now we will have 2 only.
 	market = new ResourceMarket();
+	step2 = false;
+	step3 = false;
 }
 
 //Constructor
@@ -31,6 +33,8 @@ Board::Board(std::vector<Player*> vector_player, Map *map) {
 	nbOfPlayer = vector_player.size();
 	powerplants_Vector = new PowerplantManager();
 	mapOfPlayersCity = new MapOfPlayersCity(map);
+	step2 = false;
+	step3 = false;
 }
 
 //Destructor
@@ -360,6 +364,22 @@ void Board::building() {
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	cout << " THIS IS FOURTH STEP TO BUILD HOUSES" << endl;
 	cout << " ///////////////////////////////////////////////////////" << endl;
+
+
+	/*
+	TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+	EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+	SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+	TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+	
+
+	mapOfPlayersCity->setStep2(true);
+	mapOfPlayersCity->setStep3(true);
+
+	vector_player[0]->subtractMoney(-200);
+	vector_player[1]->subtractMoney(-200);
+	*/
+
 	for (Player* p : vector_player) {
 
 		cout << "*****************************************************************" << endl;
@@ -382,7 +402,7 @@ void Board::building() {
 
 				int houseCount = p->getHouseManager()->getHouseCount();
 
-				//if player does not have enough electro to purchase 1 house
+				//if player does not have enough electro to purchase 1 house of 10 elektro
 				if (!p->hasEnoughtElektroFor(10)) {
 					cout << "Player " << p->getColor() << " You do not have enough elektro to place a house" << endl;
 					break;
@@ -415,51 +435,50 @@ void Board::building() {
 				else 
 				{
 
-					vector<double> * costVector = mapOfPlayersCity->getAvailableIndicesCost(p->getHouseManager()->getHouseIndices());
-
-					int costVectorSize = costVector->size();
-					int count = 0;
-					bool testEnoughElektro = true;
-
-					while (testEnoughElektro) {
-						if (p->hasEnoughtElektroFor(10 + (int)(*costVector)[count])) {
-							testEnoughElektro = false; //has enough money for at least 1 connection
-							break;
-						}
-						if (count == (costVectorSize - 1)) {
-							break;
-						}
-						count++;
-					}
-
-					int pos; //used to find the index of the location the wants to purchase
-
-					//if testEnoughElektro is unchanged
-					if (testEnoughElektro) {
-						cout << "Player " << p->getColor() << "You do not have enough elektro to place a house" << endl;
+					pair<vector<double>, vector<list<int> > > costAndPath = mapOfPlayersCity->getAvailableIndicesCost(p->getHouseManager()->getHouseIndices(), p->getElektro());
+					vector<double> costVector = costAndPath.first;
+					vector<list<int> > pathVector = costAndPath.second;
+					
+					//If there is no free city to put a house in
+					if (costAndPath == pair<vector<double>, vector<list<int> > >()) {
+						cout << "Player " << p->getColor() << "There is no city in that map that is free to play." << endl;
 						break;
 					}
-					else {
-						cout << "These are the houses you can purchase: " << endl;
-						mapOfPlayersCity->printAvailableIndicesCost(p->getHouseManager()->getHouseIndices()); //print indices
-						cout << endl << "You currently have " << p->getElektro() << " elektro" << endl;
-						cout << "Please take into account that you need 10 additonal electro to purchase that house at that location" << endl;
-						int index = 0;
-						while (true) {
-							index = pleaseChooseIndexToBuildIn();
-							vector<int> findIndexVector = *(mapOfPlayersCity->getAvaiableIndices()); //used to find the index of the house the player wants to buy
-							pos = find(findIndexVector.begin(), findIndexVector.end(), index) - findIndexVector.begin(); //finds the index of the "index" in the avaiable indices
-							if (!p->hasEnoughtElektroFor(10 + (int)(*costVector)[pos])) {
-								cout << "You do not have enough elektro for this location" << endl;
-								continue;
-							}
-							break;
-						}
-						House house(index, mapOfPlayersCity->getIndexName(index));
 
-						p->getHouseManager()->addHouses(house);
-						mapOfPlayersCity->setPlayerHouse(index, p->getColor());
-						p->subtractMoney( 10 + (int)(*costVector)[pos]);//remove cost of purchase
+					else {
+						cout << endl << "You currently have " << p->getElektro() << " elektro" << endl;
+						cout << "These are the houses you can purchase: " << endl;
+
+						//print indices
+						mapOfPlayersCity->printAvailableIndicesCost(p->getHouseManager()->getHouseIndices(), p->getElektro()); 
+
+						//Get input from player and get the position of the index in the vector
+						pair<int, int> indexPositionPair = pleaseChooseIndexToBuildIn(pathVector);
+						int playerIndex = indexPositionPair.first;
+						int indexPosition = indexPositionPair.second;
+
+						cout << "You are purchasing the house at Index " + playerIndex << endl;
+
+						
+						//Go from the shortest path and build houses that the player 
+						//does not currently own and have an empty space
+						for (int index : pathVector[indexPosition]) {
+
+							//if the player does not currently own the house and the city is free to build then build house
+							if (mapOfPlayersCity->playerOwnsHouseAndCityHasEmptySpace(p->getHouseManager()->getHouseIndices(), index)) {
+
+								House house(index, mapOfPlayersCity->getIndexName(index)); //create house
+								p->getHouseManager()->addHouses(house); //add house to player
+								mapOfPlayersCity->setPlayerHouse(index, p->getColor()); //add house in map
+								cout << "House index " << index << " name: " << mapOfPlayersCity->getIndexName(index) << " purchased" << endl;
+							}
+							
+						}
+						
+						//Get cost of purchase of the index the player wants to purchase
+						int costOfPurchase = (int)costVector[indexPosition];
+						p->subtractMoney(costOfPurchase); //substract elektro
+
 						cout << endl << "Map presentation: " << endl;
 						mapOfPlayersCity->printPlayersCity();
 						cout << endl << "Purchase completed" << endl;
@@ -480,6 +499,7 @@ void Board::building() {
 		}
 	}
 
+	//Get each player house size and activate step2 if conditions are met
 }
 
 /* Step 5 - Bureaucracy. Use bought resources to power electricity to how many houses. Those resources go back in the market.
@@ -572,6 +592,55 @@ void Board::houseScoringTrack() {
 
 
 //Prompt asking you to choose the index you want to build in. Used in building phase
+pair<int,int> Board::pleaseChooseIndexToBuildIn(vector<list<int> > vectorListOfPaths) {
+
+	pair<int, int> indexPositionPair;
+	int index;
+	int positionOfIndex;
+
+	cout << endl << "Please choose an Index you want to build in" << endl;
+	cout << "Index: ";
+	cin >> index;
+
+	//check if user put anything other than integer
+	while (std::cin.fail()) {
+		cout << "Invalid input. Please enter an integer: ";
+		cin.clear();
+		cin.ignore(256, '\n');
+		cin >> index;
+	}
+
+	//Gets all the possible destination indices from the vectorlist
+	vector<int> destinationIndices;
+	for (list<int> listPath : vectorListOfPaths) {
+		destinationIndices.push_back(listPath.back());
+	}
+
+	//Gets the index the player wants to build (checks if the index is valid also)
+	while (true) {
+		std::vector<int>::iterator position = std::find(destinationIndices.begin(), destinationIndices.end(), index);
+		//If the vector does not contain the city index, then ask player to enter an index again
+		if (position == destinationIndices.end())
+		{
+			// Element not in vector
+			cout << "Invalid integer.. Please enter a valid index: ";
+			cin >> index;
+			continue;
+		}
+		//The index is valid
+		else {
+			positionOfIndex = position - destinationIndices.begin(); //index of the iterator
+
+			indexPositionPair.first = index; //set map index
+			indexPositionPair.second = positionOfIndex; //set position or the index in the vectorList
+			break;  
+		}
+	}
+
+	return indexPositionPair;
+}
+
+//Prompt asking you to choose the index you want to build in. Used in building phase
 int Board::pleaseChooseIndexToBuildIn() {
 	cout << endl << "Please choose an Index you want to build in" << endl;
 	cout << "Index: ";
@@ -594,4 +663,3 @@ int Board::pleaseChooseIndexToBuildIn() {
 
 	return index;
 }
-

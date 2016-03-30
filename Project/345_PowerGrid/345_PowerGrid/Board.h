@@ -19,7 +19,12 @@ public:
 	void building();
 	void bureaucracy();
 	void houseScoringTrack();
-	int pleaseChooseIndexToBuildIn(); //prompt player to purchase index
+
+	//prompt player to purchase index
+	pair<int, int> pleaseChooseIndexToBuildIn(vector<list<int>> vectorListOfPaths);
+	int pleaseChooseIndexToBuildIn();
+	
+
 	void resourcePurchase(string materialType); //Not used for now
 
 	void loadGame();
@@ -35,6 +40,9 @@ private:
 	PowerplantManager * powerplants_Vector;
 	ResourceMarket * market;
 	MapOfPlayersCity * mapOfPlayersCity;
+
+	bool step2;
+	bool step3;
 
 
 	

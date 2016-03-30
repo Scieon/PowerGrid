@@ -16,13 +16,16 @@ public:
 	void setPlayerHouse(int index, string name);
 	void loadPlayerHouses(vector<vector<string> > set);
 
+	void setStep2(bool);
+	void setStep3(bool);
+
 	bool isCityFree(int index);
 
 	void printPlayersCity();
 
 	void printAvailableIndices();
 
-	vector<int>* getAvaiableIndices();
+	vector<int> getAvaiableIndices();
 
 	bool isIndexAvailable(int index);
 
@@ -32,9 +35,13 @@ public:
 
 	void setMap(Map * map);
 
-	void printAvailableIndicesCost(vector<int>* houses);
+	void printAvailableIndicesCost(vector<int>* houses, int playerElektro);
 
-	vector<double>* getAvailableIndicesCost(vector<int>* houses);
+	pair<vector<double>, vector<list<int> > > getAvailableIndicesCost(vector<int>* houses, int playerElektro);
+
+	int costToBuildHouse(int index);
+
+	bool playerOwnsHouseAndCityHasEmptySpace(vector<int>* houses, int houseIndex);
 
 private:
 	//Player's houses location (holds names)
@@ -42,6 +49,7 @@ private:
 	CityManager city_manager;
 	Map *map;
 
-	const bool STEP2 = false; //MUST REMOVE FOR FINAL BUILD
+	bool step2;
+	bool step3;
 };
 
