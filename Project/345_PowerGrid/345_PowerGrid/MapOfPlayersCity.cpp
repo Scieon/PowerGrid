@@ -103,7 +103,16 @@ void MapOfPlayersCity::printAvailableIndices() {
 	int i = 0;
 	for (int index : indices) {
 		if ((*player_houses)[index].size() == 0) {
-			cout << "Index: " << index << " Name: " << city_manager.getName(index) << endl;
+			cout << "Index: " << index << " Name: " << city_manager.getName(index) << "Cost: 10" << endl;
+		}
+		else if ((*player_houses)[index].size() == 1) {
+			cout << "Index: " << index << " Name: " << city_manager.getName(index) << "Cost: 15" << endl;
+		}
+		else if ((*player_houses)[index].size() == 2) {
+			cout << "Index: " << index << " Name: " << city_manager.getName(index) << "Cost: 20" << endl;
+		}
+		else  {
+			cout << "Index: " << index << " Name: " << city_manager.getName(index) << "Not available" << endl;
 		}
 		i++;
 	}

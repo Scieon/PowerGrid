@@ -14,9 +14,9 @@ using namespace std;
 
 int main(){
 
-	/*
-		Hello corrector. We do not use any libraries so you can run the game as is...
-	*/
+	
+	//Hello corrector. We do not use any libraries so you can run the game as is...
+	
 	
 	int CHANGETHISFORTURNS = 4; //number of turns to play
 
@@ -54,7 +54,7 @@ int main(){
 			turn->buyPowerPlant();
 			turn->buyRawMaterial();
 			turn->building();
-			turn->bureaucracy();
+			//turn->bureaucracy();
 			turn->incrementTurnCounter(); //HAS BE REMOVED AFTER WE FINISH BUREACRACY
 
 			if (turn->checkMapCorrectness()) {
