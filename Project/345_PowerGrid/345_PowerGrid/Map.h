@@ -56,7 +56,7 @@ public:
 
 	adjacency_list_t * getMap(); //returns map
 
-	vector<int> * getAdjacentIndices(vector<int> * houses);
+	vector<int> getAdjacentIndices(vector<int> * houses);
 
 private:
 

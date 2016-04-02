@@ -43,6 +43,8 @@ public:
 
 	bool playerOwnsHouseAndCityHasEmptySpace(vector<int>* houses, int houseIndex);
 
+	vector<int> getAdjacentAvailableIndices(vector<int> * houses);
+
 private:
 	//Player's houses location (holds names)
 	vector<vector<string> > * player_houses;

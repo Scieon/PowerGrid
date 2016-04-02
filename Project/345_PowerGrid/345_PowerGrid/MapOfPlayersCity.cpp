@@ -372,3 +372,16 @@ bool MapOfPlayersCity::playerOwnsHouseAndCityHasEmptySpace(vector<int>* houses, 
 
 	return false;
 }
+
+vector<int> MapOfPlayersCity::getAdjacentAvailableIndices(vector<int>* houses)
+{
+	vector<int> values = map->getAdjacentIndices(houses);
+
+	//removes indices that are already full in players
+	for (int i = 0; i < values.size(); i++) {
+		if (!isCityFree(values[i])) {
+			values.erase(values.begin() + i);
+		}
+	}
+	return values;
+}

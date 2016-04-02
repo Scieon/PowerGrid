@@ -280,18 +280,18 @@ adjacency_list_t * Map::getMap() {
 	Returns the adjacent indices to the houses owned
 	Does not include the index of the houses the player already owns
 */
-vector<int>* Map::getAdjacentIndices(vector<int>* houses)
+vector<int> Map::getAdjacentIndices(vector<int>* houses)
 {
-	vector<int> * adjacentIndices = new vector<int>();
+	vector<int> adjacentIndices = vector<int>();
 
 	for (int houseIndex : *houses) {
 		for (neighbor adjacents : (*map)[houseIndex]) {
-			std::vector<int>::iterator position = std::find(adjacentIndices->begin(), adjacentIndices->end(), adjacents.target);
+			std::vector<int>::iterator position = std::find(adjacentIndices.begin(), adjacentIndices.end(), adjacents.target);
 			//If the adjacentIndicies vector does not contain the city index, then add it
-			if (position == adjacentIndices->end())
+			if (position == adjacentIndices.end())
 			{
 				// Element not in vector
-				adjacentIndices->push_back(adjacents.target);
+				adjacentIndices.push_back(adjacents.target);
 			}
 		}
 	}
@@ -299,12 +299,12 @@ vector<int>* Map::getAdjacentIndices(vector<int>* houses)
 	//remove indices of the houses the player already owns
 	for (int houseIndex : *houses) {
 		
-		std::vector<int>::iterator position = std::find(adjacentIndices->begin(), adjacentIndices->end(), houseIndex);
+		std::vector<int>::iterator position = std::find(adjacentIndices.begin(), adjacentIndices.end(), houseIndex);
 		//If the adjacentIndicies vector contains the house, then remove it
-		if (position != adjacentIndices->end())
+		if (position != adjacentIndices.end())
 		{
 			// Element in vector.
-			adjacentIndices->erase(position);
+			adjacentIndices.erase(position);
 		}
 
 	}
