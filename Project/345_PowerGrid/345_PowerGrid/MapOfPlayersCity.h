@@ -21,6 +21,8 @@ public:
 
 	bool isCityFree(int index);
 
+	bool ownsHouse(string playerName, int index);
+
 	void printPlayersCity();
 
 	void printAvailableIndices();

@@ -72,6 +72,19 @@ bool MapOfPlayersCity::isCityFree(int index) {
 	return false; //city not free
 }
 
+//returns true if the player owns a house at the index 
+bool MapOfPlayersCity::ownsHouse(string playerName, int index)
+{
+	std::vector<string>::iterator position = std::find((*player_houses)[index].begin(), (*player_houses)[index].end(), playerName);
+
+	//if the player has been found to own a house in the index
+	if (position != (*player_houses)[index].end()) {
+		return true;
+	}
+
+	return false;
+}
+
 //Prints all the players city 
 void MapOfPlayersCity::printPlayersCity() {
 	int i = 0;
@@ -356,15 +369,15 @@ int MapOfPlayersCity::costToBuildHouse(int index)
 	}
 }
 
-bool MapOfPlayersCity::playerOwnsHouseAndCityHasEmptySpace(vector<int>* houses, int houseIndex)
+bool MapOfPlayersCity::playerOwnsHouseAndCityHasEmptySpace(vector<int>* pathOfHouses, int houseIndex)
 {
 	//Goes through each index in the path
-	for (int index : *houses) {
+	for (int index : *pathOfHouses) {
 
-		std::vector<int>::iterator position = std::find(houses->begin(), houses->end(), houseIndex);
+		std::vector<int>::iterator position = std::find(pathOfHouses->begin(), pathOfHouses->end(), houseIndex);
 
 		//if the city has a free space and if the player does not currently own a house in that city
-		if (isCityFree(houseIndex) && position == houses->end()) {
+		if (isCityFree(houseIndex) && position == pathOfHouses->end()) {
 			return true;
 		}
 	}
@@ -373,6 +386,7 @@ bool MapOfPlayersCity::playerOwnsHouseAndCityHasEmptySpace(vector<int>* houses, 
 	return false;
 }
 
+//Returns the indicies that are ajacent to us and that have free space
 vector<int> MapOfPlayersCity::getAdjacentAvailableIndices(vector<int>* houses)
 {
 	vector<int> values = map->getAdjacentIndices(houses);
