@@ -15,7 +15,7 @@ using namespace std;
 int main(){
 
 	
-	//Hello corrector. We do not use any libraries so you can run the game as is...
+	cout << "Testing branch" << endl;
 	
 	
 	int CHANGETHISFORTURNS = 4; //number of turns to play
