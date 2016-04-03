@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <string>
 #include <vector>
+#include <time.h>
 
 #include "Board.h"
 #include "PowerPlant.h"
@@ -371,7 +372,7 @@ void Board::building() {
 	EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 	SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 	TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-	
+
 
 	mapOfPlayersCity->setStep2(true);
 	mapOfPlayersCity->setStep3(true);
@@ -431,14 +432,14 @@ void Board::building() {
 					cout << "Player " << p->getColor() << " would you like to build a house?." << endl;
 					cout << "Type 'y' for yes or 'n' for no." << endl;
 					cin >> buildOption;
-				} 
-				else 
+				}
+				else
 				{
 
 					pair<vector<double>, vector<list<int> > > costAndPath = mapOfPlayersCity->getAvailableIndicesCost(p->getHouseManager()->getHouseIndices(), p->getElektro());
 					vector<double> costVector = costAndPath.first;
 					vector<list<int> > pathVector = costAndPath.second;
-					
+
 					//If there is no free city to put a house in
 					if (costAndPath == pair<vector<double>, vector<list<int> > >()) {
 						cout << "Player " << p->getColor() << "There is no city in that map that is free to play." << endl;
@@ -450,7 +451,7 @@ void Board::building() {
 						cout << "These are the houses you can purchase: " << endl;
 
 						//print indices
-						mapOfPlayersCity->printAvailableIndicesCost(p->getHouseManager()->getHouseIndices(), p->getElektro()); 
+						mapOfPlayersCity->printAvailableIndicesCost(p->getHouseManager()->getHouseIndices(), p->getElektro());
 
 						//Get input from player and get the position of the index in the vector
 						pair<int, int> indexPositionPair = pleaseChooseIndexToBuildIn(pathVector);
@@ -459,7 +460,7 @@ void Board::building() {
 
 						cout << "You are purchasing the house at Index " + playerIndex << endl;
 
-						
+
 						//Go from the shortest path and build houses that the player 
 						//does not currently own and have an empty space
 						for (int index : pathVector[indexPosition]) {
@@ -472,9 +473,9 @@ void Board::building() {
 								mapOfPlayersCity->setPlayerHouse(index, p->getColor()); //add house in map
 								cout << "House index " << index << " name: " << mapOfPlayersCity->getIndexName(index) << " purchased" << endl;
 							}
-							
+
 						}
-						
+
 						//Get cost of purchase of the index the player wants to purchase
 						int costOfPurchase = (int)costVector[indexPosition];
 						p->subtractMoney(costOfPurchase); //substract elektro
@@ -501,6 +502,212 @@ void Board::building() {
 
 	//Get each player house size and activate step2 if conditions are met
 }
+
+void Board::strategies()
+{
+
+	//PART 1 START
+
+	Player * pAI = vector_player[2]; //AI player?
+
+
+	//returns all the adjacent indices that the player pAI has (no duplicates, no houses the AI currently owns, only adjacent indices to all houses)
+	vector<int> pAIAllAdjacentIndices = mapOfPlayersCity->getMap()->getAdjacentIndices(pAI->getHouseManager()->getHouseIndices());
+
+
+	vector<string> playerNames;
+
+	for (int index : pAIAllAdjacentIndices) {
+		//if there is at least 1 player in that location
+		if (mapOfPlayersCity->getHouseCount(index) > 1) {
+			playerNames = mapOfPlayersCity->getPlayerNames(index);
+			break;
+		}
+	}
+
+	if (playerNames.size() == 0) {
+		//There are no adjacent players close to the AI
+		//Maybe skip his turn? I dunno lol
+	}
+	else {
+		//get the player with the least # of houses (from get player.getHousemanager.getHouseCount) 
+		//depending on the names in playerNames.
+		//if there is only 1 name then find which player has this name and get him
+	}
+
+	//suppose player0 has less houses
+	Player * p0 = vector_player[0];
+
+	//get all adjacent indices that p0 has
+	vector<int> p0AllAdjacentIndices = mapOfPlayersCity->getMap()->getAdjacentIndices(p0->getHouseManager()->getHouseIndices());
+
+	//Go into every house the AI owns, and see if they have common houses with the player
+	//if they do then remove it
+	//At the end, p0AllAdjacentIndices will own all the potential houses we can build in
+	//which is all the adjacent indices of p0 minus the indices that the AI already owns
+	for (int AIHouse : pAIAllAdjacentIndices) {
+		std::vector<int>::iterator position = std::find(p0AllAdjacentIndices.begin(), p0AllAdjacentIndices.end(), AIHouse);
+		//if they own the same house then erase that house
+		if (position != p0AllAdjacentIndices.end()) {
+			p0AllAdjacentIndices.erase(position);
+		}
+	}
+
+	//From all the potential locations to place a house
+	//Check is there is space to put a house in there
+	//If there is space then add a house there
+	for (int HouseIndex : p0AllAdjacentIndices) {
+		//if there is space then add house
+		if (mapOfPlayersCity->isCityFree(HouseIndex)) {
+			House house(HouseIndex, mapOfPlayersCity->getIndexName(HouseIndex)); //create house
+			pAI->getHouseManager()->addHouses(house); //add house to AI
+			mapOfPlayersCity->setPlayerHouse(HouseIndex, pAI->getColor()); //add house in map
+		}
+	}
+
+
+	//Recap of what we did:
+	//1.We got all the Adjacent incides from the AI
+	//2.We went to through each AIAdjacentIncides and found 1 player we are adjacent to
+	//3.We check through each of his adjacent indices and removed the common houses that we had with the AI
+	//4.We added house for the AI surrounding p0
+
+	//END PART 1
+
+	//PART 2 START
+
+	Player * pAI2 = vector_player[2]; //AI player?
+
+	int indexToBuy = -1; //contains the index to buy a house in
+	vector<int> pAIHouseIndices = *(pAI2->getHouseManager()->getHouseIndices()); //player house vertices
+
+	//This loop checks every the hard coded adjacent indices to see if AI has all of the 
+	//adjacent indices, but not the index that is adjacent to them all
+	int mapsize = 42;
+	for (int i = 0; i < mapsize; i++) {
+		vector<int> adjacentIndices = mapOfPlayersCity->getMap()->getAdjacentIndices(i); //hard coded adjacent indices to index i
+		bool notFound = false; //used if 1 adjacent vertex is not found, to skip to the next index
+
+		//if the player already own a house at index i, then skip
+		if (mapOfPlayersCity->ownsHouse(pAI2->getColor(), i)) {
+			continue;
+		}
+
+		//This loop checks if the player owns all the adjacent indices to an index
+		//it stops when if the player does not own one of adjacent indices
+		for (int index : adjacentIndices) {
+			//find index in the houses
+			std::vector<int>::iterator position = std::find(pAIHouseIndices.begin(), pAIHouseIndices.end(), index);
+			if (position == pAIHouseIndices.end()) {
+				notFound == true;
+				break;
+			}	
+		}
+		//one of them was not found, then go to the next index in the map
+		if (notFound) {
+			continue; //goto next index in the map
+		}
+		else {
+			//index was found
+			indexToBuy = i;
+			break; //get out of loop to buy house
+		}
+	}
+
+	if (indexToBuy == -1) {
+		cout << "THERE IS NO INDEX THAT IS ADJACENT TO ALL OF THE OTHER INDICES" << endl;
+	}
+	else {
+		double shorestPathCost = 99999; //set to very big value
+
+		//get the shorest path from all the owned house indices to the index to buy to
+		for (int houseIndex : pAIHouseIndices) {
+			//get cost of path to buy to index
+			double costToIndex = mapOfPlayersCity->getMap()->getCostTo(indexToBuy); 
+
+			//if we find a lower cost, then change the cost
+			if (costToIndex < shorestPathCost) {
+				shorestPathCost = costToIndex;
+			}
+		}
+
+
+		//Add house section
+		pAI2->subtractMoney((int)shorestPathCost + mapOfPlayersCity->costToBuildHouse(indexToBuy)); //substract shortest path cost + house cost
+		House house(indexToBuy, mapOfPlayersCity->getIndexName(indexToBuy)); //create house
+		p0->getHouseManager()->addHouses(house); //add house to player
+		mapOfPlayersCity->setPlayerHouse(indexToBuy, pAI2->getColor()); //add house in map
+	}
+
+	//END OF PART 2
+
+
+	//PART 3 START
+
+	Player * pAI3 = vector_player[2]; //AI player?
+
+	//RANDOMLY CHOOSE IF THE AI IS GOING TO BUY OR NOT
+
+
+	pair<vector<double>, vector<list<int> > > costAndPath = mapOfPlayersCity->getAvailableIndicesCost(pAI3->getHouseManager()->getHouseIndices(), pAI3->getElektro());
+	vector<double> costVector = costAndPath.first;
+	vector<list<int> > pathVector = costAndPath.second;
+
+	//If there is no free city to put a house in
+	if (costAndPath == pair<vector<double>, vector<list<int> > >()) {
+		cout << "Player " << pAI3->getColor() << "There is no city in that map that is free to play." << endl;
+		break;
+	}
+
+	else {
+		cout << endl << "You currently have " << pAI3->getElektro() << " elektro" << endl;
+		cout << "These are the houses you can purchase: " << endl;
+
+		//print indices
+		mapOfPlayersCity->printAvailableIndicesCost(pAI3->getHouseManager()->getHouseIndices(), pAI3->getElektro());
+
+		//I DID THE RANDOMLY GENERATED INDEX
+		//Get input from the AI
+		
+		srand(time(NULL)); //initialize the random number generator to so it is truly random. Source: http://www.cplusplus.com/forum/beginner/26611/
+		int RandIndex = rand() % costVector.size(); //generates a random number between 0 and size of available indices
+
+		cout << "You are purchasing the house at Index " << RandIndex << endl;
+
+
+		//Go from the shortest path and build houses that the player 
+		//does not currently own and have an empty space
+		for (int index : pathVector[RandIndex]) {
+
+			//if the player does not currently own the house and the city is free to build then build house
+			if (mapOfPlayersCity->playerOwnsHouseAndCityHasEmptySpace(pAI3->getHouseManager()->getHouseIndices(), index)) {
+
+				House house(index, mapOfPlayersCity->getIndexName(index)); //create house
+				pAI3->getHouseManager()->addHouses(house); //add house to player
+				mapOfPlayersCity->setPlayerHouse(index, pAI3->getColor()); //add house in map
+				cout << "House index " << index << " name: " << mapOfPlayersCity->getIndexName(index) << " purchased" << endl;
+			}
+
+		}
+
+		//Get cost of purchase of the index the player wants to purchase
+		int costOfPurchase = (int)costVector[RandIndex];
+		pAI3->subtractMoney(costOfPurchase); //substract elektro
+
+		cout << endl << "Map presentation: " << endl;
+		mapOfPlayersCity->printPlayersCity();
+		cout << endl << "Purchase completed" << endl;
+		cout << "You now have " << pAI3->getElektro() << " elektro" << endl;
+		cout << "Player " << pAI3->getColor() << " would you like to build a house?." << endl;
+		cout << "Type 'y' for yes or 'n' for no." << endl;
+		cin >> buildOption;
+	}
+
+	//END OF PART 3
+
+}
+
+
 
 /* Step 5 - Bureaucracy. Use bought resources to power electricity to how many houses. Those resources go back in the market.
   Depending on how many houses they've powered, they will generate a certain amount of money.
@@ -583,6 +790,7 @@ bool Board::checkMapCorrectness() {
 	return false;
 }
 
+
 //Keeps track of the number of houses each player has (the scoring track on top of the board game)
 void Board::houseScoringTrack() {
 	for (Player* p : vector_player) {
@@ -592,7 +800,7 @@ void Board::houseScoringTrack() {
 
 
 //Prompt asking you to choose the index you want to build in. Used in building phase
-pair<int,int> Board::pleaseChooseIndexToBuildIn(vector<list<int> > vectorListOfPaths) {
+pair<int, int> Board::pleaseChooseIndexToBuildIn(vector<list<int> > vectorListOfPaths) {
 
 	pair<int, int> indexPositionPair;
 	int index;
@@ -633,7 +841,7 @@ pair<int,int> Board::pleaseChooseIndexToBuildIn(vector<list<int> > vectorListOfP
 
 			indexPositionPair.first = index; //set map index
 			indexPositionPair.second = positionOfIndex; //set position or the index in the vectorList
-			break;  
+			break;
 		}
 	}
 

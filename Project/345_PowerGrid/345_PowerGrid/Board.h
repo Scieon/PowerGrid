@@ -33,6 +33,8 @@ public:
 
 	bool checkMapCorrectness();
 
+	void strategies();
+
 private:
 	int turnCounter;
 	int nbOfPlayer = 0;

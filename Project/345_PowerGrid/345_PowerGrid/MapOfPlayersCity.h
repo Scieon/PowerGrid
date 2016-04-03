@@ -23,6 +23,10 @@ public:
 
 	bool ownsHouse(string playerName, int index);
 
+	int getHouseCount(int index);
+
+	vector<string> getPlayerNames(int index);
+
 	void printPlayersCity();
 
 	void printAvailableIndices();

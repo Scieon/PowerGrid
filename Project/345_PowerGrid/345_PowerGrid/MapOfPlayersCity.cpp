@@ -85,6 +85,22 @@ bool MapOfPlayersCity::ownsHouse(string playerName, int index)
 	return false;
 }
 
+int MapOfPlayersCity::getHouseCount(int index)
+{
+	return (*player_houses)[index].size();
+}
+
+vector<string> MapOfPlayersCity::getPlayerNames(int index)
+{
+	vector<string> playerNames = vector<string>();
+
+	for (string name : (*player_houses)[index]) {
+		playerNames.push_back(name);
+	}
+
+	return playerNames;
+}
+
 //Prints all the players city 
 void MapOfPlayersCity::printPlayersCity() {
 	int i = 0;
