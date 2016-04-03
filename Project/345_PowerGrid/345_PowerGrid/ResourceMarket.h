@@ -18,12 +18,12 @@ public:
 
 	void saveMarket(); // Saves ResourceMarket to resourcemarket.txt file 
 	void loadMarket(); // Loads ResourceMarket from resourcemarket.txt file
-	void removeOneUnit(string resource); //Removes one unit of any resource at any index
 	void updateMarket(string resource, int quantity); //Removes resources purchased by players during phase 3
 	void showInfo();
 	
-private:
+public:
 	ResourceManager * market[12];
+
 	//Internal Behaviour Methods that should not be accessed outside of class
 	void refill(int step, int players); //Refills the resource market according to step and number of players
 	int findEmpty(string resource); //Finds the last index that is empty, this will be the index used to refill the resource

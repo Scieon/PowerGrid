@@ -12,10 +12,39 @@
 
 using namespace std;
 
-int main(){
+void pause() {
+	system("pause");
+	cout << endl << endl << endl;
+
+}
+int main() {
+
+	ResourceMarket * r = new ResourceMarket();
+	r->showInfo();
+
+	string resource; int qty;
+	cout << "Enter resource: ";
+	cin >> resource;
+	cout << "\nEnter Quantity: ";
+	cin >> qty;
+
+
+	r->updateMarket(resource, qty);
+	pause();
+
+	r->showInfo();
+	pause();
+
+	cout << endl << endl << endl;
+	r->replenish(resource, 3);
+	r->showInfo();
+
+	system("pause");
+}
+
+int x(){
 
 	
-	cout << "Testing branch" << endl;
 	
 	
 	int CHANGETHISFORTURNS = 4; //number of turns to play

@@ -118,4 +118,23 @@ void ResourceManager::removeOneUnit(string resource) {
 	}
 }
 
+//Need multiple ifs in order to catch an error
+void ResourceManager::addOneUnit(string resource) {
 
+	if (resource == "Coal") {
+		coal->addQuantity(1);
+	}
+
+	if (resource == "Oil") {
+		oil->addQuantity(1);
+	}
+
+	if (resource == "Garbage") {
+		garbage->addQuantity(1);
+	}
+
+	if (resource == "Uranium") {
+		uranium->addQuantity(1);
+	}
+
+}

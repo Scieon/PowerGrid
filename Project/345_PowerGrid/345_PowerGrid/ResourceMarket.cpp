@@ -155,10 +155,7 @@ void ResourceMarket::updateMarket(string resource, int quantity) {
 
 }
 
-//void removeOneUnit(string resource); //Removes one unit of any resource at any index
-void ResourceMarket::removeOneUnit(string resource) {
 
-}
 
 //Return total quantity of resource in market
 int ResourceMarket::getMarketQuantity(string resource) {
@@ -179,19 +176,25 @@ void ResourceMarket::refill(int step, int players) {
 
 	case 2:
 		if (step == 1) {
-
-			// Replenish("Coal",3);
-			// Replenish("Oil",2);
-			// Replenish("Garbage,1);
-			// Replenish("Uranium,1);
-
+			 replenish("Coal",3);
+			 replenish("Oil",2);
+			 replenish("Garbage",1);
+			 replenish("Uranium",1);
 		}
 
 		if (step == 2) {
-			//Do refill right to left
+			replenish("Coal", 4);
+			replenish("Oil", 2);
+			replenish("Garbage", 2);
+			replenish("Uranium", 1);
+			
 		}
 
 		if (step == 3) {
+			replenish("Coal", 3);
+			replenish("Oil", 4);
+			replenish("Garbage", 3);
+			replenish("Uranium", 1);
 
 		}
 
@@ -223,50 +226,40 @@ void ResourceMarket::refill(int step, int players) {
 //Replenish resources at any quantity
 void ResourceMarket::replenish(string resource, int quantity) {
 
-	//Quantity could be 9 should loop until quantity = 0 storing resources accordingly
-	int emptyCoal = this->findEmpty("Coal");
-	int emptyOil = this->findEmpty("Oil");
-	int emptyGarbage = this->findEmpty("Garbage");
-	int emptyUranium = this->findEmpty("Uranium");
+	if (resource == "Coal" || resource == "Oil" || resource == "Garbage") {
 
-	int partialCoal = this->findPartial("Coal");
-	int partialOil = this->findPartial("Oil");
-	int partialGarbage = this->findPartial("Garbage");
+		for (int i = 7; i >= 0; i--) {
 
-	/*
-	if (emptyCoal != -1) {
-		market[emptyCoal]->edit("Coal", 3, emptyCoal + 1); //(Coal,qty,cost)
-	}
-
-	if (emptyOil != -1) {
-		market[emptyOil]->edit("Oil", 2, emptyOil + 1);
-	}
-
-	if (emptyGarbage != -1) {
-		market[emptyGarbage]->edit("Garbage", 1, emptyGarbage + 1);
-	}
-
-	if (partialCoal != -1) {
-
-		//Case 1 : Market index has 2 Coal
-		if (market[partialCoal]->getResourceQuantity("Coal") == 2) {
-			market[partialCoal]->edit("Coal", 3, partialCoal + 1); //Add one more
-			if (partialCoal != 0)
-				market[partialCoal - 1]->edit("Coal", 2, partialCoal); //Add remaining 2
+			//If index has less than 3
+			while (market[i]->getResourceQuantity(resource) < 3) {
+				market[i]->addOneUnit(resource);
+				quantity--;
+				cout << "Refilling " <<i << endl;
+				if (quantity == 0)
+					break;
+			}
+			if (quantity == 0)
+				break;
 		}
+	}
+	//-------------------------------------------------------------
+	if (resource == "Uranium") {
 
-		//Case 2 : Market index has 1 Coal
-		if (market[partialCoal]->getResourceQuantity("Coal") == 1) {
-			market[partialCoal]->edit("Coal", 3, partialCoal + 1); //Add 2 more
-			if (partialCoal != 0)
-				market[partialCoal - 1]->edit("Coal", 1, partialCoal); //Add remaining 1
+		for (int i = 11; i >= 0; i--) {
+
+			//If index has less than 1
+			while (market[i]->getResourceQuantity(resource) < 1) {
+				market[i]->addOneUnit(resource);
+				quantity--;
+				cout << "Refilling " << i << endl;
+				if (quantity == 0)
+					break;
+			}
+			if (quantity == 0)
+				break;
 		}
-
 	}
 
-	Do 2 cases for garbage and oil
-
-	*/
 }
 
 //Return -1 if no empty cells
@@ -376,7 +369,7 @@ void ResourceMarket::loadMarket() {
 
 void ResourceMarket::showInfo() {
 
-	for (int i = 0; i <= 11; i++) {
+	for (int i = 6; i <= 11; i++) {
 
 		cout << "Slot[" << i << "]: " << "Coal, Oil, Garbage, Uranium" << endl << "Quantity: " <<
 			market[i]->getResourceQuantity("Coal") << ",  " <<
