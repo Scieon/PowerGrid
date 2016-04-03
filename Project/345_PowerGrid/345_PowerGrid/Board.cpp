@@ -525,11 +525,8 @@ void Board::strategies()
 		}
 	}
 
-	if (playerNames.size() == 0) {
-		//There are no adjacent players close to the AI
-		//Maybe skip his turn? I dunno lol
-	}
-	else {
+	//TODO
+	if(true) {
 		//get the player with the least # of houses (from get player.getHousemanager.getHouseCount) 
 		//depending on the names in playerNames.
 		//if there is only 1 name then find which player has this name and get him
