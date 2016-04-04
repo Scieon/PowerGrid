@@ -206,9 +206,65 @@ void ResourceMarket::refill(int step, int players) {
 		break;
 
 	case 3:
+		if (step == 1) {
+			replenish("Coal", 4);
+			replenish("Oil", 2);
+			replenish("Garbage", 1);
+			replenish("Uranium", 1);
+		}
+
+		if (step == 2) {
+			replenish("Coal", 5);
+			replenish("Oil", 3);
+			replenish("Garbage", 2);
+			replenish("Uranium", 1);
+
+		}
+
+		if (step == 3) {
+			replenish("Coal", 3);
+			replenish("Oil", 4);
+			replenish("Garbage", 3);
+			replenish("Uranium", 1);
+
+		}
+
+		else if (step != 1 && step != 2 && step != 3) {
+			cout << "Error not step 1,2,3" << endl;
+			system("pause");
+		}
 		break;
+
 	case 4:
+		if (step == 1) {
+			replenish("Coal", 5);
+			replenish("Oil", 3);
+			replenish("Garbage", 2);
+			replenish("Uranium", 1);
+		}
+
+		if (step == 2) {
+			replenish("Coal", 6);
+			replenish("Oil", 4);
+			replenish("Garbage", 3);
+			replenish("Uranium", 2);
+
+		}
+
+		if (step == 3) {
+			replenish("Coal", 4);
+			replenish("Oil", 5);
+			replenish("Garbage", 4);
+			replenish("Uranium", 2);
+
+		}
+
+		else if (step != 1 && step != 2 && step != 3) {
+			cout << "Error not step 1,2,3" << endl;
+			system("pause");
+		}
 		break;
+
 	case 5:
 		break;
 	case 6:
@@ -242,7 +298,8 @@ void ResourceMarket::replenish(string resource, int quantity) {
 				break;
 		}
 	}
-	//-------------------------------------------------------------
+	
+	//Replenishing Uranium occurs at the last index
 	if (resource == "Uranium") {
 
 		for (int i = 11; i >= 0; i--) {
