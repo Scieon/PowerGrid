@@ -12,6 +12,7 @@
 
 using namespace std;
 
+/* Testing for resource replenish
 void pause() {
 	system("pause");
 	cout << endl << endl << endl;
@@ -41,8 +42,8 @@ int main() {
 
 	system("pause");
 }
-
-int x(){
+*/
+int main(){
 
 	
 	
