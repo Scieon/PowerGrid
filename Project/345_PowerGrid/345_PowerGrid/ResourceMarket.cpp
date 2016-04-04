@@ -426,7 +426,7 @@ void ResourceMarket::loadMarket() {
 
 void ResourceMarket::showInfo() {
 
-	for (int i = 6; i <= 11; i++) {
+	for (int i = 0; i <= 11; i++) {
 
 		cout << "Slot[" << i << "]: " << "Coal, Oil, Garbage, Uranium" << endl << "Quantity: " <<
 			market[i]->getResourceQuantity("Coal") << ",  " <<

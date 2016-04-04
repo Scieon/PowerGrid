@@ -21,7 +21,7 @@ public:
 	void updateMarket(string resource, int quantity); //Removes resources purchased by players during phase 3
 	void showInfo();
 	
-public:
+private:
 	ResourceManager * market[12];
 
 	//Internal Behaviour Methods that should not be accessed outside of class
