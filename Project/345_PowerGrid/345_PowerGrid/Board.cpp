@@ -653,66 +653,114 @@ void Board::strategies()
 	else {
 		cout << "The AI will not play" << endl;
 	}
-
-	//if start == 0, then play, else don't play
 	while (enoughMoney && start == 0) {
 
-		pair<vector<double>, vector<list<int> > > costAndPath = mapOfPlayersCity->getAvailableIndicesCost(pAI3->getHouseManager()->getHouseIndices(), pAI3->getElektro());
-		vector<double> costVector = costAndPath.first;
-		vector<list<int> > pathVector = costAndPath.second;
+		int houseCount = pAI3->getHouseManager()->getHouseCount();
 
-		//If there is no free city to put a house in
-		if (costAndPath == pair<vector<double>, vector<list<int> > >()) {
-			cout << "Player " << pAI3->getColor() << "There is no city in that map that is free to play." << endl;
+		//if player does not have enough electro to purchase 1 house of 10 elektro
+		if (!pAI3->hasEnoughtElektroFor(10)) {
+			cout << "Player " << pAI3->getColor() << " You do not have enough elektro to place a house" << endl;
 			enoughMoney = false;
 			break;
 		}
 
-		else {
-			cout << endl << "You currently have " << pAI3->getElektro() << " elektro" << endl;
-			cout << "These are the houses you can purchase: " << endl;
+		//if player has no houses yet
+		if (houseCount == 0) {
+			cout << "You can build in these Cities:" << endl;
 
-			//print indices
-			mapOfPlayersCity->printAvailableIndicesCost(pAI3->getHouseManager()->getHouseIndices(), pAI3->getElektro());
+			//print free locations
+			mapOfPlayersCity->printAvailableIndices();
 
-			//I DID THE RANDOMLY GENERATED INDEX
-			//Get input from the AI
-			int RandIndex = rand() % costVector.size(); //generates a random number between 0 and size of available indices
+			cout << "You currently have " << pAI3->getElektro() << " elektro" << endl;
 
-			cout << "You are purchasing the house at Index " << RandIndex << endl;
+			vector<int> availableIndices = mapOfPlayersCity->getAvaiableIndices();
 
+			int index = rand() % availableIndices.size(); //generates a random number between 0 and size of available indices
 
-			//Go from the shortest path and build houses that the player 
-			//does not currently own and have an empty space
-			for (int index : pathVector[RandIndex]) {
+			House house(index, mapOfPlayersCity->getIndexName(index));
 
-				//if the player does not currently own the house and the city is free to build then build house
-				if (mapOfPlayersCity->playerOwnsHouseAndCityHasEmptySpace(pAI3->getHouseManager()->getHouseIndices(), index)) {
-
-					House house(index, mapOfPlayersCity->getIndexName(index)); //create house
-					pAI3->getHouseManager()->addHouses(house); //add house to player
-					mapOfPlayersCity->setPlayerHouse(index, pAI3->getColor()); //add house in map
-					cout << "House index " << index << " name: " << mapOfPlayersCity->getIndexName(index) << " purchased" << endl;
-				}
-
-			}
-
-			//Get cost of purchase of the index the player wants to purchase
-			int costOfPurchase = (int)costVector[RandIndex];
-			pAI3->subtractMoney(costOfPurchase); //substract elektro
-
+			pAI3->subtractMoney(mapOfPlayersCity->costToBuildHouse(index));
+			pAI3->getHouseManager()->addHouses(house);
+			mapOfPlayersCity->setPlayerHouse(index, pAI3->getColor());
 			cout << endl << "Map presentation: " << endl;
 			mapOfPlayersCity->printPlayersCity();
 			cout << endl << "Purchase completed" << endl;
 			cout << "You now have " << pAI3->getElektro() << " elektro" << endl;
 
 			start = rand() % 2; //generates a random number between 0 and 1, 50% chance to start
-			cout << "The AI will try to replay" << endl;
+			if (start == 0) {
+				cout << "The AI will try to replay" << endl;
+			}
+			else {
+				cout << "The AI will not play" << endl;
+			}
 		}
+		else {
+			//if start == 0, then play, else don't play
+			while (start == 0) {
+
+				pair<vector<double>, vector<list<int> > > costAndPath = mapOfPlayersCity->getAvailableIndicesCost(pAI3->getHouseManager()->getHouseIndices(), pAI3->getElektro());
+				vector<double> costVector = costAndPath.first;
+				vector<list<int> > pathVector = costAndPath.second;
+
+				//If there is no free city to put a house in
+				if (costAndPath == pair<vector<double>, vector<list<int> > >()) {
+					cout << "Player " << pAI3->getColor() << "There is no city in that map that is free to play." << endl;
+					enoughMoney = false;
+					break;
+				}
+
+				else {
+					cout << endl << "You currently have " << pAI3->getElektro() << " elektro" << endl;
+					cout << "These are the houses you can purchase: " << endl;
+
+					//print indices
+					mapOfPlayersCity->printAvailableIndicesCost(pAI3->getHouseManager()->getHouseIndices(), pAI3->getElektro());
+
+					//I DID THE RANDOMLY GENERATED INDEX
+					//Get input from the AI
+					int RandIndex = rand() % costVector.size(); //generates a random number between 0 and size of available indices
+
+					cout << "You are purchasing the house at Index " << RandIndex << endl;
+
+
+					//Go from the shortest path and build houses that the player 
+					//does not currently own and have an empty space
+					for (int index : pathVector[RandIndex]) {
+
+						//if the player does not currently own the house and the city is free to build then build house
+						if (mapOfPlayersCity->playerOwnsHouseAndCityHasEmptySpace(pAI3->getHouseManager()->getHouseIndices(), index)) {
+
+							House house(index, mapOfPlayersCity->getIndexName(index)); //create house
+							pAI3->getHouseManager()->addHouses(house); //add house to player
+							mapOfPlayersCity->setPlayerHouse(index, pAI3->getColor()); //add house in map
+							cout << "House index " << index << " name: " << mapOfPlayersCity->getIndexName(index) << " purchased" << endl;
+						}
+
+					}
+
+					//Get cost of purchase of the index the player wants to purchase
+					int costOfPurchase = (int)costVector[RandIndex];
+					pAI3->subtractMoney(costOfPurchase); //substract elektro
+
+					cout << endl << "Map presentation: " << endl;
+					mapOfPlayersCity->printPlayersCity();
+					cout << endl << "Purchase completed" << endl;
+					cout << "You now have " << pAI3->getElektro() << " elektro" << endl;
+
+					start = rand() % 2; //generates a random number between 0 and 1, 50% chance to start
+					if (start == 0) {
+						cout << "The AI will try to replay" << endl;
+					}
+					else {
+						cout << "The AI will not play" << endl;
+					}
+				}
+			}
+		}
+
+		//END OF PART 3
 	}
-
-	//END OF PART 3
-
 }
 
 
