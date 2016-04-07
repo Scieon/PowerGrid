@@ -43,12 +43,32 @@ int main() {
 	system("pause");
 }
 */
+
+/* Testing for turnOrder() 
+AreaManager * area_manager = new AreaManager();
+	Map *gameMap = new Map(area_manager);
+	std::vector<Player*> vector_player;
+	Player* player1 = new Player("ROB");
+	Player* player2 = new Player("DANVI");
+	Player* player3 = new Player("KHOI");
+	Powerplant* p1 = new Powerplant(3, "coal", 3, 2);
+	Powerplant* p2 = new Powerplant(4, "coal", 3, 2);
+	Powerplant* p3 = new Powerplant(5, "coal", 3, 2);
+	player1->addPlant(p1);
+	player2->addPlant(p2);
+	player3->addPlant(p3);
+	player1->getHouseManager()->setHouseCount(3);
+	player2->getHouseManager()->setHouseCount(2);
+	player3->getHouseManager()->setHouseCount(2);
+	vector_player.push_back(player1);
+	vector_player.push_back(player2);
+	vector_player.push_back(player3);
+	Board* b1 = new Board(vector_player, gameMap);
+	b1->getHighestNumHouse();
+	*/
+	
 int main(){
 
-	//testing for turnOrder()
-	
-	
-	
 	int CHANGETHISFORTURNS = 4; //number of turns to play
 
 	cout << "Welcome to Funkenschlag" << endl;
