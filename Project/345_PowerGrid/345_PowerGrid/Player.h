@@ -36,7 +36,8 @@ public:
 	void showPlants(); //Displays all powerplant characteristics that a player owns
 	void showInfo(); //Display user possessions
 	bool isPowerplantsFull(); //Checks if powerplant vector is full
-	bool hasEnoughtElektroFor(int amount); 
+	bool hasEnoughtElektroFor(int amount);
+	int getHouseCount();
 	void addPlant(Powerplant * p1); //Adds a powerplant object to player's powerplant vector if it is not full
 	int getHighestMinBid(); //Return the highest costing power plant that a player owns
 

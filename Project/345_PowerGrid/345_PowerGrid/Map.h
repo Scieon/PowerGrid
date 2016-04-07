@@ -58,6 +58,10 @@ public:
 
 	vector<int> getAdjacentIndices(vector<int> * houses);
 
+	vector<int> getAdjacentIndices(int index);
+
+	double getCostTo(int index);
+
 private:
 
 	//Connected graph of map

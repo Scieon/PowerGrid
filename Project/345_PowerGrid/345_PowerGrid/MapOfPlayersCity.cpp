@@ -235,6 +235,12 @@ void MapOfPlayersCity::printAvailableIndicesCost(vector<int> * houses, int playe
 	}
 }
 
+//returns the map's house count
+int MapOfPlayersCity::getHouseCount(int index)
+{
+	return (*player_houses)[index].size();
+}
+
 /*
 	This function returns a pair of values that have the cost to each available city
 	and the path to that available city.
@@ -398,4 +404,64 @@ vector<int> MapOfPlayersCity::getAdjacentAvailableIndices(vector<int>* houses)
 		}
 	}
 	return values;
+}
+
+bool MapOfPlayersCity::verifyPlayerHasAnotherPlayerNextToHim(vector<int>* playerHouses)
+{
+
+	//returns all the adjacent indices that the player has (no duplicates, no houses the AI currently owns, only adjacent indices to all houses)
+	vector<int> pAIAllAdjacentIndices = getMap()->getAdjacentIndices(playerHouses);
+
+	//for each adjacent index
+	for (int index : pAIAllAdjacentIndices) {
+		//if there is at least 1 player in that location
+		if (getHouseCount(index) > 1) {
+			return true;
+		}
+	}
+
+	return false; //no adjacent player
+}
+
+//returns -1 if the index is not found
+int MapOfPlayersCity::defensiveStrategyIndexToBuy(string playerColor, vector<int>* playerHouses)
+{
+	int indexToBuy = -1; //contains the index to buy a house in
+
+
+	//This loop checks every the hard coded adjacent indices to see if AI has all of the 
+	//adjacent indices, but not the index that is adjacent to them all
+	int mapsize = 42;
+	for (int i = 0; i < mapsize; i++) {
+		vector<int> adjacentIndices = getMap()->getAdjacentIndices(i); //hard coded adjacent indices to index i
+		bool notFound = false; //used if 1 adjacent vertex is not found, to skip to the next index
+
+							   //if the player already own a house at index i, then skip
+		if (ownsHouse(playerColor, i)) {
+			continue;
+		}
+
+		//This loop checks if the player owns all the adjacent indices to an index
+		//it stops when if the player does not own one of adjacent indices
+		for (int index : adjacentIndices) {
+			//find index in the houses
+			std::vector<int>::iterator position = std::find(playerHouses->begin(), playerHouses->end(), index);
+			if (position == playerHouses->end()) {
+				notFound == true;
+				break;
+			}
+		}
+		//one of them was not found, then go to the next index in the map
+		if (!notFound) {
+			continue; //goto next index in the map
+		}
+		else {
+			//index was found
+			indexToBuy = i;
+			return i; //returns index if found
+		}
+	}
+
+	//returns -1 if index was not found
+	return indexToBuy;
 }

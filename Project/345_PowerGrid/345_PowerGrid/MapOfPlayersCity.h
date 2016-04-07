@@ -39,6 +39,8 @@ public:
 
 	void printAvailableIndicesCost(vector<int>* houses, int playerElektro);
 
+	int getHouseCount(int index);
+
 	pair<vector<double>, vector<list<int> > > getAvailableIndicesCost(vector<int>* houses, int playerElektro);
 
 	int costToBuildHouse(int index);
@@ -46,6 +48,11 @@ public:
 	bool playerOwnsHouseAndCityHasEmptySpace(vector<int>* houses, int houseIndex);
 
 	vector<int> getAdjacentAvailableIndices(vector<int> * houses);
+
+	bool verifyPlayerHasAnotherPlayerNextToHim(vector<int>* playerHouses);
+
+	int defensiveStrategyIndexToBuy(string playerColor, vector<int>* playerHouses);
+
 
 private:
 	//Player's houses location (holds names)

@@ -27,15 +27,15 @@ void RandomStrategy::execute(Player* current_player, MapOfPlayersCity* mapOfPlay
 	//Player* current_player = vector_player[2]; //AI player? 
 	//RANDOMLY CHOOSE IF THE AI IS GOING TO BUY OR NOT
 
-	srand(time(NULL)); //initialize the random number generator so it is truly random. Source: http://www.cplusplus.com/forum/beginner/26611/
+	
 	int start = rand() % 2; //generates a random number between 0 and 1, 50% chance to start
 	bool enoughMoney = true;
 
 	if (start == 0) {
-		cout << "The AI will play." << endl;
+		cout << "The AI will play (Randomly decide to play)" << endl;
 	}
 	else {
-		cout << "The AI will not play." << endl;
+		cout << "The AI will not play (Randomly decided not to play)" << endl;
 	}
 
 	while (enoughMoney && start == 0) {
@@ -81,10 +81,10 @@ void RandomStrategy::execute(Player* current_player, MapOfPlayersCity* mapOfPlay
 			start = rand() % 2; //generates a random number between 0 and 1, 50% chance to start
 
 			if (start == 0) {
-				cout << "The AI will try to replay" << endl;
+				cout << "The AI will try to replay (after the first buy)" << endl;
 			}
 			else {
-				cout << "The AI will not play" << endl;
+				cout << "The AI decided not to replay (after the first buy)" << endl;
 			}
 		}
 
@@ -142,10 +142,10 @@ void RandomStrategy::execute(Player* current_player, MapOfPlayersCity* mapOfPlay
 
 					start = rand() % 2; //generates a random number between 0 and 1, 50% chance to start
 					if (start == 0) {
-						cout << "The AI will try to replay" << endl;
+						cout << "The AI will try to replay (already has house)" << endl;
 					}
 					else {
-						cout << "The AI will not play" << endl;
+						cout << "The AI will not play (already has house)" << endl;
 					}
 				}
 			}

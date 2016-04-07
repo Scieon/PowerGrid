@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <time.h>
 
 #include "House.h"
 #include "Player.h"
@@ -209,17 +210,45 @@ int main(){
 	Board* b1 = new Board(vector_player, gameMap);
 	b1->getHighestNumHouse();
 	*/
-	AreaManager * area_manager = new AreaManager();
-	Map *gameMap = new Map(area_manager);
+	srand(time(NULL)); //initialize the random number generator so it is truly random. Source: http://www.cplusplus.com/forum/beginner/26611/
 	std::vector<Player*> vector_player;
+
+	//Now we have to get the areas played from players
+	//create area and city manager
+	AreaManager * area_manager = new AreaManager();
+	int a1 = 0;
+	int a2 = 1;
+	int a3 = 2;
+	vector<Area> * areas = new vector<Area>();
+	//creating areas
+	Area area1(a1);
+	Area area2(a2);
+	Area area3(a3);
+	//create areaVector
+	areas->push_back(area1);
+	areas->push_back(area2);
+	areas->push_back(area3);
+	//Set areas
+	area_manager->setGameAreas(*areas);
+
+	//Create game map according to areas
+	Map * gameMap = new Map(area_manager); //do not delete
 
 
 	Player* p1 = new Player("red");
 	Player* p2 = new Player("blue");
 	vector_player.push_back(p1);
 	vector_player.push_back(p2);
+
+	vector_player[0]->subtractMoney(-300);
+	vector_player[1]->subtractMoney(-300);
 	Board* board = new Board(vector_player, gameMap);
-	board->performStrategy();
+
+	//run game X amount of times
+	int NBOFTIMES = 40;
+	for (int i = 0; i < NBOFTIMES; i++) {
+		board->performStrategy();
+	}
 	system("pause");
 	return 0;
 

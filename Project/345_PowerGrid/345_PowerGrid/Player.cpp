@@ -247,6 +247,11 @@ bool Player::hasEnoughtElektroFor(int amount) {
 	return false;
 }
 
+//returns player's house count
+int Player::getHouseCount() {
+	return getHouseManager()->getHouseCount();
+}
+
 //Strategy Pattern
 
 Player::Player(AStrategy* initStrategy) {

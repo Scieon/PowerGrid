@@ -311,3 +311,23 @@ vector<int> Map::getAdjacentIndices(vector<int>* houses)
 
 	return adjacentIndices;
 }
+
+vector<int> Map::getAdjacentIndices(int index)
+{
+	vector<int> adjacentIndices = vector<int>();
+
+	for (neighbor adjacents : (*map)[index]) {
+		adjacentIndices.push_back(adjacents.target);
+	}
+
+	//Sort Adjacent indices
+	return adjacentIndices;
+}
+
+double Map::getCostTo(int index)
+{
+	vector<double> min_distance;
+	vector<int> previous;
+	DijkstraComputePaths(index, *map, min_distance, previous);
+	return min_distance[index];
+}

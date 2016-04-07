@@ -717,12 +717,11 @@ void Board::swapValues(Player& p1, Player& p2) {
 	p2 = temp;
 }
 
-//bool Board::verifyIfEnemiesHaveHouseNextToMe()
-//{
+bool Board::verifyIfEnemiesHaveHouseNextToMe(Player* p)
+{
 	//if the person has a house close to me return true
-
-	//else return false
-//}
+	return mapOfPlayersCity->verifyPlayerHasAnotherPlayerNextToHim(p->getHouseManager()->getHouseIndices());
+}
 
 void Board::performStrategy()
 {
@@ -730,11 +729,17 @@ void Board::performStrategy()
 	for (Player* p : vector_player) {
 		cout << "We are playing for " << p->getColor() << endl; 
 		//if the other players have house close to you then perform the aggressive strategy
-		if (true) { //condition to go inside the aggressive(if lplayer has a house near you)
+
+		int houseCount = p->getHouseCount();
+		bool atLeast1House = houseCount > 0;
+		int indexToBuyDefensiveStrategy = mapOfPlayersCity->defensiveStrategyIndexToBuy(p->getColor(), p->getHouseManager()->getHouseIndices());
+		/*
+		if (verifyIfEnemiesHaveHouseNextToMe(p) && atLeast1House) { //condition to go inside the aggressive(if lplayer has a house near you)
 			p->setStrategy(new AggressiveStrategy());
 			p->executeStrategy(mapOfPlayersCity);//aggressive buying the house in between us
 		}
-		else if (true) {//conditino to go inside defensive (if the opponent doesn't have a hosue near you)
+		*/
+		if (indexToBuyDefensiveStrategy != -1 && atLeast1House) {//conditino to go inside defensive (if the opponent doesn't have a hosue near you)
 			p->setStrategy(new DefensiveStrategy());
 			p->executeStrategy(mapOfPlayersCity); // defensive strategy buying a house close to myself
 		}
