@@ -421,9 +421,9 @@ void Board::building() {
 
 					House house(index, mapOfPlayersCity->getIndexName(index));
 
+					p->subtractMoney(mapOfPlayersCity->costToBuildHouse(index)); //remove money depending on the cost to build the house
 					p->getHouseManager()->addHouses(house);
 					mapOfPlayersCity->setPlayerHouse(index, p->getColor());
-					p->subtractMoney(10);
 					cout << endl << "Map presentation: " << endl;
 					mapOfPlayersCity->printPlayersCity();
 					cout << endl << "Purchase completed" << endl;
