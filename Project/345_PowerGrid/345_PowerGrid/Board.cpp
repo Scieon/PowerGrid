@@ -72,6 +72,7 @@ void Board::turnOrder() {
 		//the turn order will be determined by the highest power plant number
 
 
+		/*
 		int player1HouseCount = vector_player.at(0)->getHouseManager()->getHouseCount();
 		int player2HouseCount = vector_player.at(1)->getHouseManager()->getHouseCount();
 
@@ -93,7 +94,10 @@ void Board::turnOrder() {
 		else
 			cout << "We are keeping the order" << endl;
 		cout << "The player with the most houses will start. If tied, biggest powerplant number will go. " << endl;
-
+		*/
+		
+		cout << "The player with the most houses will start. If tied, biggest powerplant number will go. " << endl;
+		void getHighestNumHouse();
 
 	}
 }
@@ -662,4 +666,52 @@ int Board::pleaseChooseIndexToBuildIn() {
 	}
 
 	return index;
+}
+
+// Selection sort function that re-orders the players with the highest number of houses
+void Board::getHighestNumHouse() {
+	int indexOfNextHighest = 0; //default
+	int index = 0; //default
+	indexOfHighest(vector_player, index);
+	for (Player* p : vector_player) {
+		indexOfNextHighest = indexOfHighest(vector_player, index);
+		swapValues(*vector_player[index], *vector_player[indexOfNextHighest]);
+		index++;
+	}
+
+	for (Player* p : vector_player) {
+		cout << "PLAYER " << p->getColor() << " has " << p->getHouseManager()->getHouseCount() << " number of house(s)." << endl;
+	}
+}
+
+// Follows the getHighestNumHouse() to find the highest index
+int Board::indexOfHighest(vector<Player*> vector, int startIndex) {
+	int maxHouse = vector[startIndex]->getHouseManager()->getHouseCount();
+	int maxPowerplant = vector[startIndex]->getHighestMinBid();
+	int indexOfMax = startIndex;
+
+	for (int index = startIndex + 1; index < vector.size(); index++) {
+
+		if (vector[index]->getHouseManager()->getHouseCount() > maxHouse) {
+			maxHouse = vector[index]->getHouseManager()->getHouseCount();
+			indexOfMax = index;
+		}
+
+		else if (vector[index]->getHouseManager()->getHouseCount() == maxHouse) {
+
+			if (vector[index]->getHighestMinBid() > maxPowerplant) {
+				maxPowerplant = vector[index]->getHighestMinBid();
+				indexOfMax = index;
+			}
+		}
+	}
+	return indexOfMax;
+}
+
+// Follows the getHighestNumHouse() to swap the players in the proper order
+void Board::swapValues(Player& p1, Player& p2) {
+	Player temp;
+	temp = p1;
+	p1 = p2;
+	p2 = temp;
 }
