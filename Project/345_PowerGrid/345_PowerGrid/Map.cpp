@@ -17,7 +17,7 @@
 using std::get;
 
 typedef std::vector<std::vector<neighbor> > adjacency_list_t;
-const weight_t max_weight = std::numeric_limits<double>::infinity();
+const double max_weight = std::numeric_limits<double>::infinity();
 
 //HardCoded values of Map
 Map::Map() {
@@ -132,13 +132,8 @@ Map::~Map()
 // USA Map Initialization of areas played; see "PowerGridUsMap_nums.jpg"
 void Map::addEdge(int vertex1, int vertex2, double weight) {
 
-	//TODO:: initalize area_manager
-
 	int area1 = getArea(vertex1);
 	int area2 = getArea(vertex2);
-
-	
-	
 
 	vector<bool> * area_is_played = area_manager->getAreaPlayed();
 
@@ -153,6 +148,7 @@ void Map::addEdge(int vertex1, int vertex2, double weight) {
 	
 }
 
+//returns area
 int Map::getArea(int index)
 {
 	//check vertex1 area
@@ -181,10 +177,10 @@ int Map::getArea(int index)
 
 //Shortest length from source to all other vertices
 //Output in vector min_distance
-void Map::DijkstraComputePaths(vertex_t source,
+void Map::DijkstraComputePaths(int source,
 	const adjacency_list_t &adjacency_list,
-	std::vector<weight_t> &min_distance,
-	std::vector<vertex_t> &previous)
+	std::vector<double> &min_distance,
+	std::vector<int> &previous)
 {
 	int n = adjacency_list.size();
 	min_distance.clear();
@@ -192,13 +188,13 @@ void Map::DijkstraComputePaths(vertex_t source,
 	min_distance[source] = 0;
 	previous.clear();
 	previous.resize(n, -1);
-	std::set<std::pair<weight_t, vertex_t> > vertex_queue;
+	std::set<std::pair<double, int> > vertex_queue;
 	vertex_queue.insert(std::make_pair(min_distance[source], source));
 
 	while (!vertex_queue.empty())
 	{
-		weight_t dist = vertex_queue.begin()->first;
-		vertex_t u = vertex_queue.begin()->second;
+		double dist = vertex_queue.begin()->first;
+		int u = vertex_queue.begin()->second;
 		vertex_queue.erase(vertex_queue.begin());
 
 		// Visit each edge exiting u
@@ -207,9 +203,9 @@ void Map::DijkstraComputePaths(vertex_t source,
 		neighbor_iter != neighbors.end();
 			neighbor_iter++)
 		{
-			vertex_t v = neighbor_iter->target;
-			weight_t weight = neighbor_iter->weight;
-			weight_t distance_through_u = dist + weight;
+			int v = neighbor_iter->target;
+			double weight = neighbor_iter->weight;
+			double distance_through_u = dist + weight;
 			if (distance_through_u < min_distance[v]) {
 				vertex_queue.erase(std::make_pair(min_distance[v], v));
 
@@ -225,15 +221,16 @@ void Map::DijkstraComputePaths(vertex_t source,
 
 //Shortest path (s->v2->v3->...->d) from source vertex to destination
 //Retruns path as a list of indices of vertices
-std::list<vertex_t> Map::DijkstraGetShortestPathTo(
-	vertex_t vertex, const std::vector<vertex_t> &previous)
+std::list<int> Map::DijkstraGetShortestPathTo(
+	int vertex, const std::vector<int> &previous)
 {
-	std::list<vertex_t> path;
+	std::list<int> path;
 	for (; vertex != -1; vertex = previous[vertex])
 		path.push_front(vertex);
 	return path;
 }
 
+//prints map
 void Map::printMap()
 {
 	int i = 0;
@@ -246,20 +243,20 @@ void Map::printMap()
 }
 
 //checks if the size of the vertex is zero to see 
-bool Map::isIndexInGame(int index)
+bool Map::indexInGame(int index)
 {
 	return ((*map)[index].size() != 0);
 }
 
 //returns the indices played in the game
-vector<int>* Map::getPlayedIndicesVector()
+vector<int> Map::getPlayedIndicesVector()
 {
-	vector<int> * indices = new vector<int>();
+	vector<int> indices = vector<int>();
 
 	int i = 0;
 	for (vector<neighbor> city : *map) {
 		if (city.size() != 0) {
-			indices->push_back(i);
+			indices.push_back(i);
 		}
 		i++;
 	}
@@ -267,8 +264,50 @@ vector<int>* Map::getPlayedIndicesVector()
 	return indices;
 }
 
+//returns an the area_manager
 vector<bool> * Map::getAreasPlayed()
 {
 	return area_manager->getAreaPlayed();
 }
 
+//returns the adjacency list (the hard-coded map)
+adjacency_list_t * Map::getMap() {
+	return map;
+}
+
+
+/*
+	Returns the adjacent indices to the houses owned
+	Does not include the index of the houses the player already owns
+*/
+vector<int> Map::getAdjacentIndices(vector<int>* houses)
+{
+	vector<int> adjacentIndices = vector<int>();
+
+	for (int houseIndex : *houses) {
+		for (neighbor adjacents : (*map)[houseIndex]) {
+			std::vector<int>::iterator position = std::find(adjacentIndices.begin(), adjacentIndices.end(), adjacents.target);
+			//If the adjacentIndicies vector does not contain the city index, then add it
+			if (position == adjacentIndices.end())
+			{
+				// Element not in vector
+				adjacentIndices.push_back(adjacents.target);
+			}
+		}
+	}
+	
+	//remove indices of the houses the player already owns
+	for (int houseIndex : *houses) {
+		
+		std::vector<int>::iterator position = std::find(adjacentIndices.begin(), adjacentIndices.end(), houseIndex);
+		//If the adjacentIndicies vector contains the house, then remove it
+		if (position != adjacentIndices.end())
+		{
+			// Element in vector.
+			adjacentIndices.erase(position);
+		}
+
+	}
+
+	return adjacentIndices;
+}

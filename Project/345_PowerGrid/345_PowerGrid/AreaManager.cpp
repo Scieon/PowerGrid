@@ -28,6 +28,7 @@ void AreaManager::setGameAreas(vector<Area> colors) {
 	}
 }
 
+//returns area played
 vector<bool> * AreaManager::getAreaPlayed()
 {
 	return area_is_played;

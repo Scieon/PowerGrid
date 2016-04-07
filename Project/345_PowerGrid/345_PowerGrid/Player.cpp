@@ -3,8 +3,7 @@
 #include "House.h" 
 #include "Resource.h"
 #include "Powerplant.h"
-#include "TurnSummary.h"
-
+#include "Board.h"
 
 using namespace std;
 
@@ -29,6 +28,7 @@ Player::Player(string color) {
 	powerplants = new vector<Powerplant>();
 
 	powerplants->clear(); //clears default initialization
+	this->strategy = new RandomStrategy();
 }
 
 Player::Player(string color, int elektro, HouseManager * hm, vector<Powerplant> * pp, ResourceManager * rm)
@@ -74,22 +74,15 @@ HouseManager* Player::getHouseManager() {
 	return houseManager;
 }
 
+//returns the powerplant vector
 vector<Powerplant>* Player::getPowerplantsVector(){
 	return powerplants;
 }
 
+//returns the resource quantity
 int Player::getResource(string type) {
-	if (type == "Coal")
-		return resources->getResourceQuantity(type);
 
-	if (type == "Oil")
-		return resources->getResourceQuantity(type);
-
-	if (type == "Garbage")
-		return resources->getResourceQuantity(type);
-
-	if (type == "Uranium")
-		return resources->getResourceQuantity(type);
+	return resources->getResourceQuantity(type);
 }
 
 //Adds a powerplant to a players possessions
@@ -105,6 +98,7 @@ void Player::addPlant(Powerplant * p1) {
 	}
 }
 
+//validates the resources that we purchased
 bool Player::validateResourcePurchase(int cost, int quantity, string type) {
 	
 	if (this->getElektro() < cost) {
@@ -186,28 +180,11 @@ int Player::getResourceStorage(string resource) {
 
 //This function adds a selected amount of a resource into a players resource possessions
 void Player::addResource(string type, int quantity) {
-	if (type == "Coal") {
-		resources->addResourceQuantity("Coal", quantity);
-		return;
-	}
 
-	if (type == "Oil") {
-		resources->addResourceQuantity("Oil", quantity);
-		return;
-	}
+	resources->addResourceQuantity(type, quantity);
+	return;
 
-	if (type == "Garbage") {
-		resources->addResourceQuantity("Garbage", quantity);
-		return;
-	}
-
-	if (type == "Uranium") {
-		resources->addResourceQuantity("Uranium", quantity);
-		return;
-	}
-
-	else
-		cout << "Error in adding resource quantity" << endl;
+	cout << "Error in adding resource quantity" << endl;
 }
 
 
@@ -222,12 +199,12 @@ void Player::showPlants() {
 //Display user possessions and characteristics
 void Player::showInfo() {
 
-	cout << "Here is the player " << playerNumber << " resources:" << endl;
-	cout << "P" << playerNumber << " Money:" << this->getElektro() << endl;
-	cout << "P" << playerNumber << " Resource Uranium: " << this->getResource("Uranium") << endl;
-	cout << "P" << playerNumber << "  Resource Garbage: " << this->getResource("Garbage") << endl;
-	cout << "P" << playerNumber << " Resource Coal: " << this->getResource("Coal") << endl;
-	cout << "P" << playerNumber << " Resource Oil: " << this->getResource("Oil") << endl << endl;
+	cout << "Player " << color << "'s resources:" << endl;
+	cout <<  "Elektro:" << this->getElektro() << endl;
+	cout <<  "Resource Coal: " << this->getResource("Coal") << endl;
+	cout <<  "Resource Oil: " << this->getResource("Oil") << endl;
+	cout << "Resource Garbage: " << this->getResource("Garbage") << endl;
+	cout << "Resource Uranium: " << this->getResource("Uranium") << endl << endl;
 }
 
 
@@ -247,6 +224,7 @@ bool Player::comparePlayer(Player* pp) {
 	}
 }
 
+//Need to see which player has the highest powerplant number and iterate through their maximum of 3 powerplants possession
 int Player::getHighestMinBid() {
 	int highest = 0; //By default
 	for (Powerplant pp : *powerplants) {
@@ -259,7 +237,7 @@ int Player::getHighestMinBid() {
 	return highest;
 }
 
-
+//Check if the player has enough money to buy
 bool Player::hasEnoughtElektroFor(int amount) {
 
 	int temp = elektro;
@@ -269,4 +247,16 @@ bool Player::hasEnoughtElektroFor(int amount) {
 	return false;
 }
 
+//Strategy Pattern
 
+Player::Player(AStrategy* initStrategy) {
+	this->strategy = initStrategy;
+}
+
+void Player::setStrategy(AStrategy* newStrategy) {
+	this->strategy = newStrategy;
+}
+
+void Player::executeStrategy(MapOfPlayersCity* map_of_player_city) {
+	this->strategy->execute(this, map_of_player_city);
+}

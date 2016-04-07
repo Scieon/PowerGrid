@@ -12,11 +12,14 @@ public:
 	~HouseManager();
 	void setHouseCount(int houseCount);
 	void addHouses(House house);
+	vector<int>* getHouseIndices();
 	int getHouseCount();
 
 	vector <House> getHouseVector();
 
 	bool isHouseCountMax();
+
+	int getArea(int index);
 
 private:
 

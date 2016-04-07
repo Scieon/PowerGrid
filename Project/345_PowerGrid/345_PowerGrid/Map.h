@@ -19,13 +19,11 @@ using std::vector;
 /*
 Structures used to find shorest path
 */
-typedef int vertex_t;
-typedef double weight_t;
 
 struct neighbor {
-	vertex_t target;
-	weight_t weight;
-	neighbor(vertex_t arg_target, weight_t arg_weight)
+	int target;
+	double weight;
+	neighbor(int arg_target, double arg_weight)
 		: target(arg_target), weight(arg_weight) { }
 };
 
@@ -39,22 +37,26 @@ public:
 	~Map();
 
 
-	std::list<vertex_t> DijkstraGetShortestPathTo(
-		vertex_t vertex, 
-		const std::vector<vertex_t> &previous);
+	std::list<int> DijkstraGetShortestPathTo(
+		int vertex, 
+		const std::vector<int> &previous);
 
-	void DijkstraComputePaths(vertex_t source,
+	void DijkstraComputePaths(int source,
 		const adjacency_list_t &adjacency_list,
-		std::vector<weight_t> &min_distance,
-		std::vector<vertex_t> &previous);
+		std::vector<double> &min_distance,
+		std::vector<int> &previous);
 
 	void printMap();
 
-	bool isIndexInGame(int index);
+	bool indexInGame(int index);
 
-	vector<int>* getPlayedIndicesVector();
+	vector<int> getPlayedIndicesVector();
 
 	vector<bool> * getAreasPlayed();
+
+	adjacency_list_t * getMap(); //returns map
+
+	vector<int> getAdjacentIndices(vector<int> * houses);
 
 private:
 

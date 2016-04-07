@@ -130,6 +130,7 @@ PowerplantManager::~PowerplantManager() {
 
 }
 
+//Print the powerplant market
 void PowerplantManager::printMarket() {
 
 	/*

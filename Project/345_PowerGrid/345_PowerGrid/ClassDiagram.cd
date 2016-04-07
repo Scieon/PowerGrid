@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="House">
+    <Position X="19" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAEAADACAAAAAAAAIAAAABAAA=</HashCode>
+      <FileName>House.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HouseManager">
+    <Position X="20.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BBAAAACAAAAIAIAAAAgAAgAAAAAAAQAAQAAAAAAAQAA=</HashCode>
+      <FileName>HouseManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IOFile">
+    <Position X="4.25" Y="8" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAIAEiABACAAKEAAABAAAAAAAAAIQAAAA=</HashCode>
+      <FileName>IOFile.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player">
+    <Position X="17.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAiCAQAUAACgACAACAAABAQAAAAwCASUQJAAgQAIABo=</HashCode>
+      <FileName>Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Powerplant">
+    <Position X="19" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIIAAJAAAAAAAgAAgCCgAAAAQBAAAAIgAAiAAAAAAA=</HashCode>
+      <FileName>Powerplant.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PowerplantManager">
+    <Position X="20.75" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAEQEAAAAQAAIAAEgABAAAAAAgACAAAAAAA=</HashCode>
+      <FileName>PowerplantManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Resource">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAMQIAAAAAAAAAAAAAAAAQASACCAAAAAggAIAAA=</HashCode>
+      <FileName>Resource.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Board">
+    <Position X="6.75" Y="8" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>kBRAARAAACBIAABFEEAABABAAAAIAAAAAAIAACAABAA=</HashCode>
+      <FileName>Board.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Coal">
+    <Position X="5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAQABAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Coal.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Garbage">
+    <Position X="0.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAQABAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Garbage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Oil">
+    <Position X="2.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAAAAAAAAQABAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Oil.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResourceManager">
+    <Position X="2.25" Y="8" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAACAAAAACEAAAAFAQAgAAAEAAAgAIAAA=</HashCode>
+      <FileName>ResourceManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResourceMarket">
+    <Position X="0.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEBAAAAAADAAAABAAAAAAQAAAgRBAAAAgAAAAACCAA=</HashCode>
+      <FileName>ResourceMarket.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Uranium">
+    <Position X="7.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAQABAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Uranium.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Area">
+    <Position X="9.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAgAAIAAAAAAEAABAgAAAgCAEAAggQApAAA=</HashCode>
+      <FileName>Area.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AreaManager">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAgAABAAAAAAAAAAAAAAAAAgEAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>AreaManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="City">
+    <Position X="13.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAABAAIAAAAEAAAAAAEAAAAAAAEAAABAAE=</HashCode>
+      <FileName>City.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CityManager">
+    <Position X="15" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAACAAEQAAAAAAAAAAAAAAAAAAAAIAEAAAAAAA=</HashCode>
+      <FileName>CityManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Map">
+    <Position X="11.5" Y="3.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAkIAQABAIAAAAAAAAIAAAAAQAAAACAAAIAABAAJA=</HashCode>
+      <FileName>Map.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapOfPlayersCity">
+    <Position X="13.75" Y="3.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AABQkAAQAAAABIAgAAAAAAAAARABpCAAAgIACAAAAAE=</HashCode>
+      <FileName>MapOfPlayersCity.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="neighbor">
+    <Position X="9.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAgAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Map.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="adjacency_list_t" Collapsed="true">
+    <Position X="9.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Map.cpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

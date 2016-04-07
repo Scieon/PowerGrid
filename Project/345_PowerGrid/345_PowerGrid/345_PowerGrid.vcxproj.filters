@@ -28,6 +28,12 @@
     <Filter Include="Source Files\Test">
       <UniqueIdentifier>{abf9fe21-4811-4c76-982a-62291e453593}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Strategy">
+      <UniqueIdentifier>{4c7559b1-d155-49ef-a5c8-4f737847f9ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Strategy">
+      <UniqueIdentifier>{e60a9d6a-2070-421b-99d0-2ff786678667}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="House.cpp">
@@ -43,9 +49,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Resource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TurnSummary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Powerplant.cpp">
@@ -96,6 +99,24 @@
     <ClCompile Include="TestIOLoad.cpp">
       <Filter>Source Files\Test</Filter>
     </ClCompile>
+    <ClCompile Include="MapTest.cpp">
+      <Filter>Source Files\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="ResMarketSaveTest.cpp">
+      <Filter>Source Files\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Board.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomStrategy.cpp">
+      <Filter>Source Files\Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="DefensiveStrategy.cpp">
+      <Filter>Source Files\Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="AggressiveStrategy.cpp">
+      <Filter>Source Files\Strategy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="House.h">
@@ -108,9 +129,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TurnSummary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Powerplant.h">
@@ -158,9 +176,25 @@
     <ClInclude Include="MapOfPlayersCity.h">
       <Filter>Header Files\Map</Filter>
     </ClInclude>
+    <ClInclude Include="Board.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AStrategy.h">
+      <Filter>Header Files\Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="AggressiveStrategy.h">
+      <Filter>Header Files\Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="DefensiveStrategy.h">
+      <Filter>Header Files\Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomStrategy.h">
+      <Filter>Header Files\Strategy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Project2.vcxproj" />
     <None Include="Project2.vcxproj.filters" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

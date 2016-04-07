@@ -155,10 +155,7 @@ void ResourceMarket::updateMarket(string resource, int quantity) {
 
 }
 
-//void removeOneUnit(string resource); //Removes one unit of any resource at any index
-void ResourceMarket::removeOneUnit(string resource) {
 
-}
 
 //Return total quantity of resource in market
 int ResourceMarket::getMarketQuantity(string resource) {
@@ -179,19 +176,25 @@ void ResourceMarket::refill(int step, int players) {
 
 	case 2:
 		if (step == 1) {
-
-			// Replenish("Coal",3);
-			// Replenish("Oil",2);
-			// Replenish("Garbage,1);
-			// Replenish("Uranium,1);
-
+			 replenish("Coal",3);
+			 replenish("Oil",2);
+			 replenish("Garbage",1);
+			 replenish("Uranium",1);
 		}
 
 		if (step == 2) {
-			//Do refill right to left
+			replenish("Coal", 4);
+			replenish("Oil", 2);
+			replenish("Garbage", 2);
+			replenish("Uranium", 1);
+			
 		}
 
 		if (step == 3) {
+			replenish("Coal", 3);
+			replenish("Oil", 4);
+			replenish("Garbage", 3);
+			replenish("Uranium", 1);
 
 		}
 
@@ -203,9 +206,65 @@ void ResourceMarket::refill(int step, int players) {
 		break;
 
 	case 3:
+		if (step == 1) {
+			replenish("Coal", 4);
+			replenish("Oil", 2);
+			replenish("Garbage", 1);
+			replenish("Uranium", 1);
+		}
+
+		if (step == 2) {
+			replenish("Coal", 5);
+			replenish("Oil", 3);
+			replenish("Garbage", 2);
+			replenish("Uranium", 1);
+
+		}
+
+		if (step == 3) {
+			replenish("Coal", 3);
+			replenish("Oil", 4);
+			replenish("Garbage", 3);
+			replenish("Uranium", 1);
+
+		}
+
+		else if (step != 1 && step != 2 && step != 3) {
+			cout << "Error not step 1,2,3" << endl;
+			system("pause");
+		}
 		break;
+
 	case 4:
+		if (step == 1) {
+			replenish("Coal", 5);
+			replenish("Oil", 3);
+			replenish("Garbage", 2);
+			replenish("Uranium", 1);
+		}
+
+		if (step == 2) {
+			replenish("Coal", 6);
+			replenish("Oil", 4);
+			replenish("Garbage", 3);
+			replenish("Uranium", 2);
+
+		}
+
+		if (step == 3) {
+			replenish("Coal", 4);
+			replenish("Oil", 5);
+			replenish("Garbage", 4);
+			replenish("Uranium", 2);
+
+		}
+
+		else if (step != 1 && step != 2 && step != 3) {
+			cout << "Error not step 1,2,3" << endl;
+			system("pause");
+		}
 		break;
+
 	case 5:
 		break;
 	case 6:
@@ -223,50 +282,41 @@ void ResourceMarket::refill(int step, int players) {
 //Replenish resources at any quantity
 void ResourceMarket::replenish(string resource, int quantity) {
 
-	//Quantity could be 9 should loop until quantity = 0 storing resources accordingly
-	int emptyCoal = this->findEmpty("Coal");
-	int emptyOil = this->findEmpty("Oil");
-	int emptyGarbage = this->findEmpty("Garbage");
-	int emptyUranium = this->findEmpty("Uranium");
+	if (resource == "Coal" || resource == "Oil" || resource == "Garbage") {
 
-	int partialCoal = this->findPartial("Coal");
-	int partialOil = this->findPartial("Oil");
-	int partialGarbage = this->findPartial("Garbage");
+		for (int i = 7; i >= 0; i--) {
 
-	/*
-	if (emptyCoal != -1) {
-		market[emptyCoal]->edit("Coal", 3, emptyCoal + 1); //(Coal,qty,cost)
-	}
-
-	if (emptyOil != -1) {
-		market[emptyOil]->edit("Oil", 2, emptyOil + 1);
-	}
-
-	if (emptyGarbage != -1) {
-		market[emptyGarbage]->edit("Garbage", 1, emptyGarbage + 1);
-	}
-
-	if (partialCoal != -1) {
-
-		//Case 1 : Market index has 2 Coal
-		if (market[partialCoal]->getResourceQuantity("Coal") == 2) {
-			market[partialCoal]->edit("Coal", 3, partialCoal + 1); //Add one more
-			if (partialCoal != 0)
-				market[partialCoal - 1]->edit("Coal", 2, partialCoal); //Add remaining 2
+			//If index has less than 3
+			while (market[i]->getResourceQuantity(resource) < 3) {
+				market[i]->addOneUnit(resource);
+				quantity--;
+				cout << "Refilling " <<i << endl;
+				if (quantity == 0)
+					break;
+			}
+			if (quantity == 0)
+				break;
 		}
+	}
+	
+	//Replenishing Uranium occurs at the last index
+	if (resource == "Uranium") {
 
-		//Case 2 : Market index has 1 Coal
-		if (market[partialCoal]->getResourceQuantity("Coal") == 1) {
-			market[partialCoal]->edit("Coal", 3, partialCoal + 1); //Add 2 more
-			if (partialCoal != 0)
-				market[partialCoal - 1]->edit("Coal", 1, partialCoal); //Add remaining 1
+		for (int i = 11; i >= 0; i--) {
+
+			//If index has less than 1
+			while (market[i]->getResourceQuantity(resource) < 1) {
+				market[i]->addOneUnit(resource);
+				quantity--;
+				cout << "Refilling " << i << endl;
+				if (quantity == 0)
+					break;
+			}
+			if (quantity == 0)
+				break;
 		}
-
 	}
 
-	Do 2 cases for garbage and oil
-
-	*/
 }
 
 //Return -1 if no empty cells
@@ -329,7 +379,8 @@ void ResourceMarket::saveMarket() {
 }
 void ResourceMarket::loadMarket() {
 
-	int coal_amt,oil_amt,garbage_amt,uranium_amt, i = 0;
+	int coal_amt,oil_amt,garbage_amt,uranium_amt,i=0,k = 10;
+	
 
 	// Opening "resourcemarket.txt"
 	ifstream input("resourcemarket.txt");
@@ -337,18 +388,32 @@ void ResourceMarket::loadMarket() {
 	cout << "Loading ResourceMarket" << endl << "-------------------------" << endl;
 
 	// Reads each int one by one in line (left to right) coal->oil->garbage->uranium...nextline
-	while (input >> coal_amt >> oil_amt >> garbage_amt >> uranium_amt){
-		
-		market[i]->edit("Coal", coal_amt, i + 1);
-		market[i]->edit("Oil", oil_amt, i + 1);
-		market[i]->edit("Garbage", garbage_amt, i + 1);
-		market[i]->edit("Uranium", uranium_amt, i + 1);
-		i++;
+	while (input >> coal_amt >> oil_amt >> garbage_amt >> uranium_amt) {
 
+
+		if (i < 8) {
+
+			market[i]->edit("Coal", coal_amt, i + 1);
+			market[i]->edit("Oil", oil_amt, i + 1);
+			market[i]->edit("Garbage", garbage_amt, i + 1);
+			market[i]->edit("Uranium", uranium_amt, i + 1);
+		}
+			
+	
+		// Handles prices 10,12,14,16
+		if (i >= 8) {
+			
+			market[i]->edit("Coal", coal_amt, k);
+			market[i]->edit("Oil", oil_amt, k);
+			market[i]->edit("Garbage", garbage_amt, k);
+			market[i]->edit("Uranium", uranium_amt, k);
+			k = k + 2;
+		}
+			i++;
 
 		/*
-		// IGNORE:: checking if right amounts are implemented 
-			cout << "Coal" << coal_amt << endl; 
+		// IGNORE:: checking if right amounts are implemented
+			cout << "Coal" << coal_amt << endl;
 			cout << "Oil" << oil_amt << endl;
 			cout << "Garbage" << garbage_amt << endl;
 			cout << "Uranium" << uranium_amt << endl;

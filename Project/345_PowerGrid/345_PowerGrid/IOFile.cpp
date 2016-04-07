@@ -263,7 +263,7 @@ void IOFile::loadPlayer(Player &player1, Player &player2) {
 
 bool IOFile::verifyMapCorrectness(MapOfPlayersCity *map)
 {
-	vector<int> game_indices = *(map->getMap()->getPlayedIndicesVector());
+	vector<int> game_indices = map->getMap()->getPlayedIndicesVector();
 	vector<vector<string> > * player_houses = map->getPlayerHousesVector();
 
 	vector<int> * indicesNotInGame = new vector<int>();
@@ -381,7 +381,7 @@ void IOFile::saveAreas(MapOfPlayersCity *map) {
 	// Create/open a file
 	output.open("area.txt");
 
-	output << "Areas";
+	output << "Areas" << endl;
 	//Save map areas
 	vector<bool> values(*(map->getMap()->getAreasPlayed())); //shallow copy
 	int i = 0;//counter

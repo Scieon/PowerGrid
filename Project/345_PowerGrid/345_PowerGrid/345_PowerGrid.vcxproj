@@ -110,11 +110,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AggressiveStrategy.cpp" />
     <ClCompile Include="Area.cpp" />
     <ClCompile Include="AreaManager.cpp" />
     <ClCompile Include="City.cpp" />
     <ClCompile Include="CityManager.cpp" />
     <ClCompile Include="Coal.cpp" />
+    <ClCompile Include="DefensiveStrategy.cpp" />
     <ClCompile Include="Garbage.cpp" />
     <ClCompile Include="House.cpp" />
     <ClCompile Include="HouseManager.cpp" />
@@ -126,19 +128,25 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Powerplant.cpp" />
     <ClCompile Include="Powerplantmanager.cpp" />
+    <ClCompile Include="RandomStrategy.cpp" />
+    <ClCompile Include="ResMarketSaveTest.cpp" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="ResourceMarket.cpp" />
+    <ClCompile Include="MapTest.cpp" />
     <ClCompile Include="TestIOLoad.cpp" />
-    <ClCompile Include="TurnSummary.cpp" />
+    <ClCompile Include="Board.cpp" />
     <ClCompile Include="Uranium.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AggressiveStrategy.h" />
     <ClInclude Include="Area.h" />
     <ClInclude Include="AreaManager.h" />
+    <ClInclude Include="AStrategy.h" />
     <ClInclude Include="City.h" />
     <ClInclude Include="CityManager.h" />
     <ClInclude Include="Coal.h" />
+    <ClInclude Include="DefensiveStrategy.h" />
     <ClInclude Include="Garbage.h" />
     <ClInclude Include="House.h" />
     <ClInclude Include="HouseManager.h" />
@@ -149,13 +157,15 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Powerplant.h" />
     <ClInclude Include="PowerplantManager.h" />
+    <ClInclude Include="RandomStrategy.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="ResourceMarket.h" />
-    <ClInclude Include="TurnSummary.h" />
+    <ClInclude Include="Board.h" />
     <ClInclude Include="Uranium.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="Project2.vcxproj" />
     <None Include="Project2.vcxproj.filters" />
   </ItemGroup>
