@@ -33,9 +33,18 @@ public:
 
 	int getPlantReq(int index);
 
+	bool getStep3Trigger();
+
+	void setStep3(bool value);
+
+	void setStep3Trigger(bool value);
+
+	void buildingPhaseReorder(int highestNumberOfHouses);
 	
 private:
 	vector<Powerplant> * powerplantsVector;
+	bool step3trigger;
+	bool step3;
 };
 
 #endif

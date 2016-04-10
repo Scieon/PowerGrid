@@ -97,7 +97,7 @@ void Board::turnOrder() {
 		*/
 		
 		cout << "The player with the most houses will start. If tied, biggest powerplant number will go. " << endl;
-		void getHighestNumHouse();
+		void reorderPlayersHighestNumHouses();
 
 	}
 }
@@ -226,6 +226,14 @@ void Board::buyPowerPlant() {
 				p = getNextPlayer(*p);
 				break;
 			}
+		}
+
+		//if step3 card has been found
+		if (powerplants_Vector->getStep3Trigger()) {
+			cout << "Step 3 has started" << endl;
+			powerplants_Vector->getAndRemoveSpecificPowerplant(999999);
+			setStep3(); 
+			powerplants_Vector->setStep3Trigger(false);//to avoid conflict if it stays true
 		}
 	}
 
@@ -504,6 +512,15 @@ void Board::building() {
 	}
 
 	//Get each player house size and activate step2 if conditions are met
+	powerplants_Vector->buildingPhaseReorder(getHighestNumHousesOfPlayers());
+
+	//if step3 has been triggered then set step3 to all and put the trigger back to false
+	if (powerplants_Vector->getStep3Trigger()) {
+		cout << "Step 3 has started..." << endl;
+		setStep3();
+		powerplants_Vector->setStep3Trigger(false);//to avoid conflict if it stays true
+	}
+
 }
 
 /* Step 5 - Bureaucracy. Use bought resources to power electricity to how many houses. Those resources go back in the market.
@@ -717,7 +734,7 @@ int Board::pleaseChooseIndexToBuildIn() {
 }
 
 // Selection sort function that re-orders the players with the highest number of houses
-void Board::getHighestNumHouse() {
+void Board::reorderPlayersHighestNumHouses() {
 	int indexOfNextHighest = 0; //default
 	int index = 0; //default
 	indexOfHighest(vector_player, index);
@@ -732,7 +749,9 @@ void Board::getHighestNumHouse() {
 	}
 }
 
-// Follows the getHighestNumHouse() to find the highest index
+
+
+// Follows the reorderPlayersHighestNumHouses() to find the highest index
 int Board::indexOfHighest(vector<Player*> vector, int startIndex) {
 	int maxHouse = vector[startIndex]->getHouseManager()->getHouseCount();
 	int maxPowerplant = vector[startIndex]->getHighestMinBid();
@@ -756,10 +775,34 @@ int Board::indexOfHighest(vector<Player*> vector, int startIndex) {
 	return indexOfMax;
 }
 
-// Follows the getHighestNumHouse() to swap the players in the proper order
+// Follows the reorderPlayersHighestNumHouses() to swap the players in the proper order
 void Board::swapValues(Player& p1, Player& p2) {
 	Player temp;
 	temp = p1;
 	p1 = p2;
 	p2 = temp;
+}
+
+//Sets step3 to true to all classes that need it
+void Board::setStep3() {
+	step3 = true;
+	mapOfPlayersCity->setStep3(true);
+	powerplants_Vector->setStep3(true);
+}
+
+//returns highest number of houses of a player
+int Board::getHighestNumHousesOfPlayers()
+{
+	int maxHouse = -1;
+	
+	for (Player* player : vector_player) {
+		int houseCount = player->getNumberHouses();
+
+		if (houseCount > maxHouse) {
+			maxHouse = houseCount;
+		}
+	}
+
+	return maxHouse;
+
 }

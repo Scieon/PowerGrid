@@ -58,7 +58,7 @@ PowerplantManager::PowerplantManager() {
 	Powerplant eco44(44, "Eco", 0, 5);
 	Powerplant eco50(50, "Eco", 0, 6);
 
-	//Powerplant step3(-1, "Step 3", -1, -1);
+	Powerplant step3(-1, "Step 3", -1, -1);
 
 
 	powerplantsVector = new vector<Powerplant>();
@@ -115,7 +115,7 @@ PowerplantManager::PowerplantManager() {
 	powerplantsVector->push_back(eco50);
 
 	//Step 3 at the end
-	//powerplantsVector->push_back(step3);
+	powerplantsVector->push_back(step3);
 
 	//Used to make random_shuffle random
 	//See:https://stackoverflow.com/questions/13459953/random-shuffle-not-really-random
@@ -136,24 +136,56 @@ void PowerplantManager::printMarket() {
 	/*
 	TODO:: Case where market is < 8 ppcards
 	*/
-	for (int i = 0; i < 8; i++) {
-		if (i == 0) {
+
+	if (step3) {
+
+		//print only the first 6 houses
+		if (powerplantsVector->size() > 6) {
+			for (int i = 0; i < 6; i++) {
+				if (i == 0) {
+					cout << endl;
+					cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
+					cout << "@@@@@  Actual Market  @@@@@" << endl;
+					cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
+					cout << endl;
+				}
+				(*powerplantsVector)[i].showPlantInfo();
+			}
+		}
+		//print the rest if we have less than 6
+		else {
 			cout << endl;
 			cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
 			cout << "@@@@@  Actual Market  @@@@@" << endl;
 			cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
 			cout << endl;
+			for (Powerplant pp : *powerplantsVector) {
+				pp.showPlantInfo();
+			}
 		}
-		if (i == 4) {
-			cout << endl;
-			cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
-			cout << "@@@@@  Future Market  @@@@@" << endl;
-			cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
-			cout << endl;
-		}
-
-		(*powerplantsVector)[i].showPlantInfo();
 	}
+	else {
+		//in step1 and step2 we still have more than 8 houses
+		for (int i = 0; i < 8; i++) {
+			if (i == 0) {
+				cout << endl;
+				cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
+				cout << "@@@@@  Actual Market  @@@@@" << endl;
+				cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
+				cout << endl;
+			}
+			if (i == 4) {
+				cout << endl;
+				cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
+				cout << "@@@@@  Future Market  @@@@@" << endl;
+				cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
+				cout << endl;
+			}
+
+			(*powerplantsVector)[i].showPlantInfo();
+		}
+	}
+	
 
 }
 
@@ -239,6 +271,15 @@ Powerplant* PowerplantManager::getAndRemoveSpecificPowerplant(int powerPlantBid)
 	}
 	powerplantsVector->erase(powerplantsVector->begin() + count);
 	sortMarket();
+	
+	//if step3 is found set the step3 card as the highest big
+	if ((*powerplantsVector)[0].getBid() == -1) {
+		cout << "Step 3 card found. Setting it to 999999 as the highest bid, and shuffling the draw pile" << endl;
+		(*powerplantsVector)[0].setBid(999999); //set step3 card as the highest bid
+		sortMarket(); //resort market
+		random_shuffle(powerplantsVector->begin() + 8, powerplantsVector->end()); //shuffling the draw pile (cards after step3 card)
+		step3trigger = true;
+	}
 	return pwpdummy;
 
 }
@@ -267,4 +308,42 @@ int PowerplantManager::getPlantReq(int index) {
 
 	return (*powerplantsVector)[index].getResourceReq();
 
+}
+
+bool PowerplantManager::getStep3Trigger() {
+	return getStep3Trigger;
+}
+
+void PowerplantManager::setStep3(bool value)
+{
+	step3 = value;
+}
+
+void PowerplantManager::setStep3Trigger(bool value)
+{
+	step3trigger = value;
+}
+
+void PowerplantManager::buildingPhaseReorder(int highestNumberOfHouses)
+{
+	int count = 0;
+	for (int i = 0; i < 8; i++) {
+		if ((*powerplantsVector)[i].getBid() == -1) {
+			step3trigger = true;
+			continue;
+		}
+		else if ((*powerplantsVector)[i].getBid() <= highestNumberOfHouses) {
+			powerplantsVector->erase(powerplantsVector->begin() + i);
+			sortMarket();
+			i = 0; //reset i=0 so it rechecks if a smaller pp is found
+			continue;
+		}
+	}
+
+	if (step3trigger) {
+		cout << "Step 3 card found in building phase. Deleting step3 card, lowest powerplant card and shuffling the drawing deck" << endl;
+		powerplantsVector->erase(powerplantsVector->begin()); //delete the step3 card
+		powerplantsVector->erase(powerplantsVector->begin() + 1); //delete the lowest powerplant
+		random_shuffle(powerplantsVector->begin() + 8, powerplantsVector->end()); //shuffling the draw pile
+	}
 }

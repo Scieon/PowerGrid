@@ -64,7 +64,7 @@ AreaManager * area_manager = new AreaManager();
 	vector_player.push_back(player2);
 	vector_player.push_back(player3);
 	Board* b1 = new Board(vector_player, gameMap);
-	b1->getHighestNumHouse();
+	b1->reorderPlayersHighestNumHouses();
 	*/
 	
 int main() {

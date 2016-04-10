@@ -19,9 +19,11 @@ public:
 	void building();
 	void bureaucracy();
 	void houseScoringTrack();
-	void getHighestNumHouse();
+	void reorderPlayersHighestNumHouses();
+	int getHighestNumHousesOfPlayers();
 	int indexOfHighest(vector<Player*> vector, int index);
 	void swapValues(Player& p1, Player& p2);
+	void setStep3();
 	int getNumberOfPlayers();
 
 	//prompt player to purchase index
