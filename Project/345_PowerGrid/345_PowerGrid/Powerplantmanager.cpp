@@ -311,7 +311,7 @@ int PowerplantManager::getPlantReq(int index) {
 }
 
 bool PowerplantManager::getStep3Trigger() {
-	return getStep3Trigger;
+	return step3trigger;
 }
 
 void PowerplantManager::setStep3(bool value)
