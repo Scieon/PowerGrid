@@ -528,7 +528,7 @@ void Board::bureaucracy() {
 		cin >> decisionToPower; cout << endl;
 
 		//Player chooses to power cities
-		if (decisionToPower == "Yes" || decisionToPower == "yes" || decisionToPower == "YES" || decisionToPower = "y") {
+		if (decisionToPower == "Yes" || decisionToPower == "yes" || decisionToPower == "YES" || decisionToPower == "y") {
 			int choice = -1;
 			int nbCitiesPowered = 0;
 			
