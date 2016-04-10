@@ -452,7 +452,7 @@ int MapOfPlayersCity::defensiveStrategyIndexToBuy(string playerColor, vector<int
 			}
 		}
 		//one of them was not found, then go to the next index in the map
-		if (!notFound) {
+		if (notFound) {
 			continue; //goto next index in the map
 		}
 		else {

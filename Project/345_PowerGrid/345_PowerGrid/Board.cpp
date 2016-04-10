@@ -750,3 +750,9 @@ void Board::performStrategy()
 			
 	}
 }
+
+MapOfPlayersCity* Board::getMapOfPlayerCity() {
+
+	return mapOfPlayersCity;
+
+}

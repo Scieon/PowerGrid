@@ -15,7 +15,7 @@
 void DefensiveStrategy::execute(Player* current_player, MapOfPlayersCity* mapOfPlayersCity) {
 	//House house;
 	//current_player->getHouseManager()->addHouses(house);
-	cout << "HERE I AM INSIDE THE DEFENSIVE STRATEGY BUYIGN SOME HOUSE TOO" << endl;
+	cout << endl << "HERE I AM INSIDE THE DEFENSIVE STRATEGY BUYIGN SOME HOUSE TOO" << endl;
 
 	int indexToBuy = -1; //contains the index to buy a house in
 	vector<int> pAIHouseIndices = *(current_player->getHouseManager()->getHouseIndices()); //player house vertices
@@ -43,7 +43,7 @@ void DefensiveStrategy::execute(Player* current_player, MapOfPlayersCity* mapOfP
 			}
 		}
 		//one of them was not found, then go to the next index in the map
-		if (!notFound) {
+		if (notFound) {
 			continue; //goto next index in the map
 		}
 		else {
@@ -70,12 +70,13 @@ void DefensiveStrategy::execute(Player* current_player, MapOfPlayersCity* mapOfP
 			}
 		}
 
-
+		cout << endl << "Buying house with index " << indexToBuy << " in the defensive strategy" << endl;
 		//Add house section
 		current_player->subtractMoney((int)shorestPathCost + mapOfPlayersCity->costToBuildHouse(indexToBuy)); //substract shortest path cost + house cost
 		House house(indexToBuy, mapOfPlayersCity->getIndexName(indexToBuy)); //create house
 		current_player->getHouseManager()->addHouses(house); //add house to player
 		mapOfPlayersCity->setPlayerHouse(indexToBuy, current_player->getColor()); //add house in map
+		cout << "House with index " << indexToBuy << " bought!" << endl <<endl;
 	}
 
 

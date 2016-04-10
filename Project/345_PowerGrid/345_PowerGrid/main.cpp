@@ -244,8 +244,33 @@ int main(){
 	vector_player[1]->subtractMoney(-300);
 	Board* board = new Board(vector_player, gameMap);
 
+	
+	//testing the defensive strategy
+	//Adding houses that will surround a city and see if the
+	//defensive strategy will purchase that house
+	{ 
+		
+		int index1 = 1;
+		House house1(index1, "Portland");
+		vector_player[0]->getHouseManager()->addHouses(house1);
+		board->getMapOfPlayerCity()->setPlayerHouse(index1, vector_player[0]->getColor());
+
+		int index2 = 2;
+		House house2(index2, "Boise");
+		vector_player[0]->getHouseManager()->addHouses(house2);
+		board->getMapOfPlayerCity()->setPlayerHouse(index2, vector_player[0]->getColor());
+
+		int index3 = 3;
+		House house3(index3, "Bilings");
+		vector_player[0]->getHouseManager()->addHouses(house3);
+		board->getMapOfPlayerCity()->setPlayerHouse(index3, vector_player[0]->getColor());
+
+	}
+	
+
+
 	//run game X amount of times
-	int NBOFTIMES = 40;
+	int NBOFTIMES = 1;
 	for (int i = 0; i < NBOFTIMES; i++) {
 		board->performStrategy();
 	}

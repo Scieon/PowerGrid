@@ -42,6 +42,8 @@ public:
 
 	void performStrategy();
 
+	MapOfPlayersCity * getMapOfPlayerCity();
+
 private:
 	int turnCounter;
 	int nbOfPlayer = 0;
