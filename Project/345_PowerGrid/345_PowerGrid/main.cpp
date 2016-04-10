@@ -67,7 +67,70 @@ AreaManager * area_manager = new AreaManager();
 	b1->getHighestNumHouse();
 	*/
 	
-int main(){
+int main() {
+	
+	int CHANGETHISFORTURNS = 4; //number of turns to play
+
+	cout << "Welcome to Funkenschlag" << endl;
+
+
+	string color;
+	std::vector<Player*> vector_player;
+
+	//Add the number of players in the vector collection
+	for (int i = 1; i < 3; i++)
+	{
+		cout << "\nPlayer " << i << endl << "Please insert your color: ";
+		cin >> color;
+		Player* p = new Player(color);
+		vector_player.push_back(p);
+	}
+
+	//Now we have to get the areas played from players
+	//create area and city manager
+	AreaManager * area_manager = new AreaManager();
+	vector<Area> * areas = new vector<Area>();
+
+	//creating areas
+	Area area1(1);
+	Area area2(2);
+	Area area3(3);
+
+	//create areaVector
+	areas->push_back(area1);
+	areas->push_back(area2);
+	areas->push_back(area3);
+
+
+
+	//Set areas
+	area_manager->setGameAreas(*areas);
+
+	//Create game map according to areas
+	Map * gameMap = new Map(area_manager); //do not delete
+
+	Board * turn = new Board(vector_player, gameMap);
+
+	//turns
+	int y = 1;
+	while (y < CHANGETHISFORTURNS) {
+
+		turn->turnOrder();
+		turn->buyPowerPlant();
+	    turn->buyRawMaterial();
+		turn->building();
+		turn->bureaucracy();
+		turn->incrementTurnCounter(); //HAS BE REMOVED AFTER WE FINISH BUREACRACY
+
+
+		y++;
+	}
+
+	return 0;
+}
+
+
+int x(){
 
 	int CHANGETHISFORTURNS = 4; //number of turns to play
 

@@ -29,6 +29,8 @@ public:
 
 	void setPowerplantVector(vector<Powerplant> * pp_vector);
 
+	string getPlantType(int index);
+
 	
 private:
 	vector<Powerplant> * powerplantsVector;

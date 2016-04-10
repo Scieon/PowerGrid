@@ -20,12 +20,13 @@ public:
 	void loadMarket(); // Loads ResourceMarket from resourcemarket.txt file
 	void updateMarket(string resource, int quantity); //Removes resources purchased by players during phase 3
 	void showInfo();
+
+	void refill(int step, int players); //Refills the resource market according to step and number of players
 	
 private:
 	ResourceManager * market[12];
 
 	//Internal Behaviour Methods that should not be accessed outside of class
-	void refill(int step, int players); //Refills the resource market according to step and number of players
 	int findEmpty(string resource); //Finds the last index that is empty, this will be the index used to refill the resource
 	int findPartial(string resource); //Finds the last index that is not full but not empty
 	void replenish(string resource, int quantity); //Quantity to be filled  

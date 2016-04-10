@@ -254,3 +254,11 @@ void PowerplantManager::setPowerplantVector(vector<Powerplant>* pp_vector)
 {
 	powerplantsVector = pp_vector;
 }
+
+//Returns type of powerplant
+string PowerplantManager::getPlantType(int index) {
+
+	return (*powerplantsVector)[index].getType();
+
+
+}

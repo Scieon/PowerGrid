@@ -24,15 +24,19 @@ public:
 	void setColor(string color);
 	void setElektro(int elektros);
 	void subtractMoney(int elektros);
+	void getPaid(int houses); //Player gets paid according to number of cities they supply
 
 	//Accessor functions
 	string getColor();
 	int getElektro();
 	HouseManager* getHouseManager();
 	vector<Powerplant>* getPowerplantsVector();
+	int getNumberHouses();
 	
 	//Powerplants
 	void showPlants(); //Displays all powerplant characteristics that a player owns
+	void showPlantsToPower(); //Displays plants that can be powered
+	void powerCity(int index); //Selects powerplant to power
 	void showInfo(); //Display user possessions
 	bool isPowerplantsFull(); //Checks if powerplant vector is full
 	bool hasEnoughtElektroFor(int amount); 
@@ -46,6 +50,7 @@ public:
 	int getTotalStorage(); //Returns total amount of resources stored across all possible power plants
 	int getResourceStorage(string resource); //Returns total amount of specific resource that can be stored
 
+	
 	//Overload
 	bool comparePlayer(Player* pp);
 

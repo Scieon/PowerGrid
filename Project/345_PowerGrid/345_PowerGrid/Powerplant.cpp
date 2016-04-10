@@ -59,6 +59,15 @@ int Powerplant::getStorage() {
 void Powerplant::showPlantInfo() {
 	string type = resource_type;
 
+	if (resource_type == "Eco") {
+		cout << resource_type << " Power Plant" << endl
+			<< "-----------------------------------------" << endl
+			<< "Minimum Price: " << min_bid << " elektros" << endl
+			<< "Operation Cost: None" << endl
+			<< "Number of powered cities:  " << num_cities_powered << endl << endl;
+		return;
+	}
+
 	if (resource_type == "Hybrid")
 		type = "Coal or Oil";
 	cout << resource_type << " Power Plant" << endl

@@ -22,14 +22,13 @@ public:
 	void getHighestNumHouse();
 	int indexOfHighest(vector<Player*> vector, int index);
 	void swapValues(Player& p1, Player& p2);
-	
+	int getNumberOfPlayers();
 
 	//prompt player to purchase index
 	pair<int, int> pleaseChooseIndexToBuildIn(vector<list<int>> vectorListOfPaths);
 	int pleaseChooseIndexToBuildIn();
 	
 
-	void resourcePurchase(string materialType); //Not used for now
 
 	void loadGame();
 	void saveGame();

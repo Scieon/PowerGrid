@@ -514,21 +514,34 @@ void Board::bureaucracy() {
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	cout << " THIS IS FIFTH STEP THE BUREAUCRACY" << endl;
 	cout << " ///////////////////////////////////////////////////////" << endl;
+
 	int nbHousePower;
-	int paymentTable[21] = { 10, 22, 33, 44, 54, 64, 73, 82, 90, 98, 105, 112, 118, 124, 129, 134, 138, 142, 145, 148, 150 };
+
 	reverse(vector_player.begin(), vector_player.end());
 	for (Player* p : vector_player) {
 		//player gets the money depending on how many houses they have powered. Even if they don't power any houses, they will automatically get 10 elektro.
 		//Not going to power every single house they have bought, but in this case we will leave it as it is. They should be able to choose how many houses 
 		//they are going to power based on their resources.
 		cout << "*****************************************************************" << endl;
-		cout << "How many houses would PLAYER " << p->getColor() << " like to power?" << endl;
 		cout << "PLAYER " << p->getColor() << " has " << p->getHouseManager()->getHouseCount() << " houses." << endl;
-		cin >> nbHousePower;
+		cout << "How many houses would PLAYER " << p->getColor() << " like to power? ";
+		cin >> nbHousePower; cout << endl;
 
 		//The number of houses that the player chooses to power must be less than or equal to the amount of houses they bought.
 		if (nbHousePower <= (p->getHouseManager()->getHouseCount())) {
-			p->setElektro(p->getElektro() + (paymentTable[nbHousePower]));
+			string choice;
+			
+			while (choice != "Done" && choice != "done") {
+				p->showPlantsToPower();
+				cout << "Please select a plant to power (Enter done if finished): ";
+				cin >> choice;
+				cout << endl;
+
+				validatePlant(choice) //checks if plant is in user possesion returns the number if it is.
+				if(choice == "1")
+					p->powerCity(choice);
+				p->getPaid(p->getNumberHouses());
+			}
 		}
 		else {
 			while (nbHousePower > (p->getHouseManager()->getHouseCount())) {
@@ -536,15 +549,30 @@ void Board::bureaucracy() {
 				cout << "How many houses would PLAYER " << p->getColor() << " like to power?";
 				cin >> nbHousePower;
 			}
-			p->setElektro(p->getElektro() + (paymentTable[nbHousePower]));
+			p->getPaid(p->getNumberHouses());
 		}
 	}
+	
+	//Replenish Resource Market according to step
+	if(step2==true)
+		market->refill(2, getNumberOfPlayers());
+
+	else if (step3 == true)
+		market->refill(3, getNumberOfPlayers());
+
+	else if (step2 == false && step3 == false)
+		market->refill(1, getNumberOfPlayers());
+	else {
+		cout << "Error what step are we in??";
+		system("pause");
+		system("EXIT");
+	}
+
 	turnCounter++; //the first round going through this will be different then afterwards it will become the same
 }
 
-
-void Board::resourcePurchase(string materialType) {
-
+int Board::getNumberOfPlayers() {
+	return nbOfPlayer;
 }
 
 //Returns next player
