@@ -344,6 +344,30 @@ void PowerplantManager::buildingPhaseReorder(int highestNumberOfHouses)
 		cout << "Step 3 card found in building phase. Deleting step3 card, lowest powerplant card and shuffling the drawing deck" << endl;
 		powerplantsVector->erase(powerplantsVector->begin()); //delete the step3 card
 		powerplantsVector->erase(powerplantsVector->begin() + 1); //delete the lowest powerplant
-		random_shuffle(powerplantsVector->begin() + 8, powerplantsVector->end()); //shuffling the draw pile
+		random_shuffle(powerplantsVector->begin() + 6, powerplantsVector->end()); //shuffling the draw pile
 	}
+}
+
+void PowerplantManager::bureaucracyPhaseReorder()
+{
+	Powerplant highestplant( 
+		(*powerplantsVector)[8].getBid(),
+		(*powerplantsVector)[8].getType(), 
+		(*powerplantsVector)[8].getResourceReq(), 
+		(*powerplantsVector)[8].getCitiesPowered());
+	powerplantsVector->erase(powerplantsVector->begin() + 8); //delete the highest powerplant
+	powerplantsVector->push_back(highestplant);
+	sortMarket();
+
+	if ((*powerplantsVector)[0].getBid() == -1) {
+		step3trigger = true;
+		cout << "Step 3 card found in bureaucracy phase. Deleting step3 card, lowest powerplant card and shuffling the drawing deck" << endl;
+		powerplantsVector->erase(powerplantsVector->begin()); //delete the step3 card
+		powerplantsVector->erase(powerplantsVector->begin() + 1); //delete the lowest powerplant
+		random_shuffle(powerplantsVector->begin() + 6, powerplantsVector->end()); //shuffling the draw pile
+	}
+}
+
+void PowerplantManager::removeLowestPowerplant() {
+	powerplantsVector->erase(powerplantsVector->begin());
 }

@@ -40,6 +40,10 @@ public:
 	void setStep3Trigger(bool value);
 
 	void buildingPhaseReorder(int highestNumberOfHouses);
+
+	void bureaucracyPhaseReorder();
+
+	void removeLowestPowerplant();
 	
 private:
 	vector<Powerplant> * powerplantsVector;
