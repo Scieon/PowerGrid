@@ -19,9 +19,9 @@ void AggressiveStrategy::execute(Player* current_player, MapOfPlayersCity* mapOf
 	//current_player->getHouseManager()->addHouses(house);
 	cout << "Here we are inside the AGGRESSIVE STRATEGY; I AM BUYING A HOUSE DUDE " << endl;
 
-	/*
+	
 	//returns all the adjacent indices that the player pAI has (no duplicates, no houses the AI currently owns, only adjacent indices to all houses)
-	vector<int> pAIAllAdjacentIndices = mapOfPlayersCity->getMap()->getAdjacentIndices(pAI->getHouseManager()->getHouseIndices());
+	vector<int> pAIAllAdjacentIndices = mapOfPlayersCity->getMap()->getAdjacentIndices(current_player->getHouseManager()->getHouseIndices());
 
 	
 	vector<string> playerNames;
@@ -34,7 +34,7 @@ void AggressiveStrategy::execute(Player* current_player, MapOfPlayersCity* mapOf
 		}
 	}
 
-	//TODO
+	//NEED TO ACCESS THE OTHER PLAYERS HOUSES
 	if (true) {
 		//get the player with the least # of houses (from get player.getHousemanager.getHouseCount) 
 		//depending on the names in playerNames.
@@ -66,11 +66,10 @@ void AggressiveStrategy::execute(Player* current_player, MapOfPlayersCity* mapOf
 		//if there is space then add house
 		if (mapOfPlayersCity->isCityFree(HouseIndex)) {
 			House house(HouseIndex, mapOfPlayersCity->getIndexName(HouseIndex)); //create house
-			pAI->getHouseManager()->addHouses(house); //add house to AI
-			mapOfPlayersCity->setPlayerHouse(HouseIndex, pAI->getColor()); //add house in map
+			current_player->getHouseManager()->addHouses(house); //add house to AI
+			mapOfPlayersCity->setPlayerHouse(HouseIndex, current_player->getColor()); //add house in map
 		}
 	}
 
 
-	*/
 };

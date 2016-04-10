@@ -53,6 +53,8 @@ public:
 
 	int defensiveStrategyIndexToBuy(string playerColor, vector<int>* playerHouses);
 
+	vector<string> getPlayerNames(int index);
+
 
 private:
 	//Player's houses location (holds names)

@@ -465,3 +465,15 @@ int MapOfPlayersCity::defensiveStrategyIndexToBuy(string playerColor, vector<int
 	//returns -1 if index was not found
 	return indexToBuy;
 }
+
+
+vector<string> MapOfPlayersCity::getPlayerNames(int index)
+{
+	vector<string> playerNames = vector<string>();
+
+	for (string name : (*player_houses)[index]) {
+		playerNames.push_back(name);
+	}
+
+	return playerNames;
+}
