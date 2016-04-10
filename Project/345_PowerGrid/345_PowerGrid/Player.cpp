@@ -212,10 +212,10 @@ void Player::showPlants() {
 void Player::showPlantsToPower() {
 	//int i = 1;
 	for (Powerplant pp : *powerplants) {
-
+	
 		//Checking if player has enough resources to power given plant
 
-		if (this->getResource(pp.getType()) > pp.getResourceReq()) {
+		if (this->getResource(pp.getType()) >= pp.getResourceReq()) {
 			cout << "Powerplant " << pp.getBid() << " can power " << pp.getCitiesPowered() << " cities at a cost of ";
 
 			if (pp.getType() == "Hybrid")

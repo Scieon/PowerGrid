@@ -519,34 +519,50 @@ void Board::bureaucracy() {
 
 	reverse(vector_player.begin(), vector_player.end());
 	for (Player* p : vector_player) {
+
+		int poweredPlants[3] = { -1,-1,-1 }; //No powered plants initially
 		//player gets the money depending on how many houses they have powered. Even if they don't power any houses, they will automatically get 10 elektro.
 		//Not going to power every single house they have bought, but in this case we will leave it as it is. They should be able to choose how many houses 
 		//they are going to power based on their resources.
 		cout << "*****************************************************************" << endl;
 		cout << "PLAYER " << p->getColor() << " has " << p->getHouseManager()->getHouseCount() << " houses." << endl;
-		cout << "Do you wish to power any cities(Yes/No): ";
+		cout << "Do you wish to power any cities(Yes/No): "; 
 		cin >> decisionToPower; cout << endl;
 
+
+		//NEED TO FORCE TO 0 CITIES IF OWNS 0 PLANTS OR CANNOT POWER ANY OF THEM
+
 		//Player chooses to power cities
-		if (decisionToPower == "Yes" || decisionToPower == "yes" || decisionToPower == "YES" || decisionToPower = "y") {
+		if (decisionToPower == "Yes" || decisionToPower == "yes" || decisionToPower == "YES" || decisionToPower == "y") {
 			int choice = -1;
 			int nbCitiesPowered = 0;
-			
+
 			while (choice != 0) {
 				p->showInfo();
 				p->showPlantsToPower();
-				cout << "Please select a plant to power (Enter 0 if finished): ";
+				cout << "Please select a plant to power (Enter 0 if finished): "; //Need to have something if no plants shown immediately break
 				cin >> choice;
 				cout << endl;
 
 				if (p->validatePlantPossession(choice) == true) {
-					p->powerCity(choice);
-					nbCitiesPowered++; //Increment number of cities player has powered this turn
-					cout << "You have powered " << nbCitiesPowered << " cities so far." << endl;
-				}
+
+					for (int i = 0; i <= 2; i++) {
+						if (poweredPlants[i] == -1) {
+							poweredPlants[i] = choice;
+							p->powerCity(choice);
+							nbCitiesPowered++; //Increment number of cities player has powered this turn
+							cout << "You have powered " << nbCitiesPowered << " cities so far." << endl << endl;
+							break;
+						}
+						else {
+							cout <<"You have already powered that plant!" << endl << endl;
+							break;
+						}
+					}//End of for
+				}///End of if
 				
 				else {
-					cout << "Invalid choice" << endl;
+					cout << "Invalid choice" << endl << endl;
 				}
 			}
 			p->getPaid(nbCitiesPowered);
