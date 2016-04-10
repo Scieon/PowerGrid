@@ -214,7 +214,8 @@ void Player::showPlantsToPower() {
 	for (Powerplant pp : *powerplants) {
 
 		//Checking if player has enough resources to power given plant
-		if (this->getResourceStorage(pp.getType()) > pp.getResourceReq()) {
+
+		if (this->getResource(pp.getType()) > pp.getResourceReq()) {
 			cout << "Powerplant " << pp.getBid() << " can power " << pp.getCitiesPowered() << " cities at a cost of ";
 
 			if (pp.getType() == "Hybrid")
@@ -231,15 +232,25 @@ void Player::showPlantsToPower() {
 	}
 }
 
-void Player::powerCity(int amount) {
+//Checks if player owns certain powerplant
+bool Player::validatePlantPossession(int plantNumber) {
+	for (Powerplant pp : *powerplants) {
+		if (pp.getBid() == plantNumber) {
+			return true;
+		}
+	}
+	return false;
+}
+void Player::powerCity(int plantNumber) {
 	PowerplantManager * pp = new PowerplantManager();
 
-	int index = pp->findPowerplantIndexInActualMarket(amount);
+	int index = pp->findPowerplantIndexInActualMarket(plantNumber);
 	string type = pp->getPlantType(index);
+	int amount = pp->getPlantReq(index);
 	this->resources->remove(type, amount);
 
 	cout << "Removed " << amount << " units of " << type << endl;
-	system("pause");
+	
 }
 
 	//Display user possessions and characteristics

@@ -515,7 +515,7 @@ void Board::bureaucracy() {
 	cout << " THIS IS FIFTH STEP THE BUREAUCRACY" << endl;
 	cout << " ///////////////////////////////////////////////////////" << endl;
 
-	int nbHousePower;
+	string decisionToPower;
 
 	reverse(vector_player.begin(), vector_player.end());
 	for (Player* p : vector_player) {
@@ -524,32 +524,36 @@ void Board::bureaucracy() {
 		//they are going to power based on their resources.
 		cout << "*****************************************************************" << endl;
 		cout << "PLAYER " << p->getColor() << " has " << p->getHouseManager()->getHouseCount() << " houses." << endl;
-		cout << "How many houses would PLAYER " << p->getColor() << " like to power? ";
-		cin >> nbHousePower; cout << endl;
+		cout << "Do you wish to power any cities(Yes/No): ";
+		cin >> decisionToPower; cout << endl;
 
-		//The number of houses that the player chooses to power must be less than or equal to the amount of houses they bought.
-		if (nbHousePower <= (p->getHouseManager()->getHouseCount())) {
-			string choice;
+		//Player chooses to power cities
+		if (decisionToPower == "Yes" || decisionToPower == "yes" || decisionToPower == "YES" || decisionToPower = "y") {
+			int choice = -1;
+			int nbCitiesPowered = 0;
 			
-			while (choice != "Done" && choice != "done") {
+			while (choice != 0) {
+				p->showInfo();
 				p->showPlantsToPower();
-				cout << "Please select a plant to power (Enter done if finished): ";
+				cout << "Please select a plant to power (Enter 0 if finished): ";
 				cin >> choice;
 				cout << endl;
 
-				validatePlant(choice) //checks if plant is in user possesion returns the number if it is.
-				if(choice == "1")
+				if (p->validatePlantPossession(choice) == true) {
 					p->powerCity(choice);
-				p->getPaid(p->getNumberHouses());
+					nbCitiesPowered++; //Increment number of cities player has powered this turn
+					cout << "You have powered " << nbCitiesPowered << " cities so far." << endl;
+				}
+				
+				else {
+					cout << "Invalid choice" << endl;
+				}
 			}
+			p->getPaid(nbCitiesPowered);
 		}
+		//Player chooses to power no cities
 		else {
-			while (nbHousePower > (p->getHouseManager()->getHouseCount())) {
-				cout << "Please insert the appropriate number of houses PLAYER " << p->getColor() << " wish to power.";
-				cout << "How many houses would PLAYER " << p->getColor() << " like to power?";
-				cin >> nbHousePower;
-			}
-			p->getPaid(p->getNumberHouses());
+			p->getPaid(0);
 		}
 	}
 	

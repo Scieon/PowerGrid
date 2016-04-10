@@ -31,6 +31,8 @@ public:
 
 	string getPlantType(int index);
 
+	int getPlantReq(int index);
+
 	
 private:
 	vector<Powerplant> * powerplantsVector;

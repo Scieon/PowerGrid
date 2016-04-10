@@ -260,5 +260,11 @@ string PowerplantManager::getPlantType(int index) {
 
 	return (*powerplantsVector)[index].getType();
 
+}
+
+//Returns resources requireed of powerplant
+int PowerplantManager::getPlantReq(int index) {
+
+	return (*powerplantsVector)[index].getResourceReq();
 
 }
