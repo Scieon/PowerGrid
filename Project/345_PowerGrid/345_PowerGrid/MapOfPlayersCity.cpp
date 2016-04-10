@@ -124,7 +124,7 @@ void MapOfPlayersCity::printAvailableIndices() {
 		else if ((*player_houses)[index].size() == 2) {
 			cout << "Index: " << index << " Name: " << city_manager.getName(index) << "Cost: 20" << endl;
 		}
-		else  {
+		else {
 			cout << "Index: " << index << " Name: " << city_manager.getName(index) << "Not available" << endl;
 		}
 		i++;
@@ -135,7 +135,7 @@ void MapOfPlayersCity::printAvailableIndices() {
 //gets the vertices that are free to put a player in (empty) and are in game
 vector<int> MapOfPlayersCity::getAvaiableIndices() {
 	vector<int> indices = map->getPlayedIndicesVector();
-	vector<int> emptyIndices =  vector<int>();
+	vector<int> emptyIndices = vector<int>();
 
 	//check if there is at least 1 empty space for each city
 	if (step3) {
@@ -209,7 +209,7 @@ void MapOfPlayersCity::printAvailableIndicesCost(vector<int> * houses, int playe
 
 		int index = costAndPath.second.at(i).back(); //last element of the list holds the destination
 
-		cout << "Index: " << index << endl; 
+		cout << "Index: " << index << endl;
 		cout << "Name: " << city_manager.getName(index) << endl;
 
 		cout << "Path to take: ";
@@ -220,9 +220,9 @@ void MapOfPlayersCity::printAvailableIndicesCost(vector<int> * houses, int playe
 
 		cout << "Houses to purchase on path: " << endl;
 		for (int pathIndex : costAndPath.second.at(i)) {
-			
+
 			//used to find if the house  is already owned by the player
-			std::vector<int>::iterator position = std::find(houses->begin(), houses->end(), pathIndex); 
+			std::vector<int>::iterator position = std::find(houses->begin(), houses->end(), pathIndex);
 			//Print houses that have one empty space and that tha player does not already own
 			if (costToBuildHouse(pathIndex) != 0 && position == houses->end()) {
 				cout << "Index: " << pathIndex << " ";
@@ -230,7 +230,7 @@ void MapOfPlayersCity::printAvailableIndicesCost(vector<int> * houses, int playe
 				cout << "House cost: " << costToBuildHouse(pathIndex) << endl;
 			}
 		}
-			
+
 		cout << "Total Cost: " << (int)costAndPath.first.at(i) << endl << endl;
 	}
 }
@@ -244,14 +244,14 @@ int MapOfPlayersCity::getHouseCount(int index)
 /*
 	This function returns a pair of values that have the cost to each available city
 	and the path to that available city.
-	This function takes into account how much elektro the player has and returns only 
+	This function takes into account how much elektro the player has and returns only
 	cities that the player can purchase
 */
 pair<vector<double>, vector<list<int> > > MapOfPlayersCity::getAvailableIndicesCost(vector<int> * houses, int playerElektro) {
 
 	vector<int> availableIndices = getAvaiableIndices(); //gets indices with at least 1 free space available
 
-	
+
 	//For each index with an empty space, remove the indices that we already own 
 	for (int i = 0; i < availableIndices.size(); i++) {
 		std::vector<int>::iterator pos = std::find(houses->begin(), houses->end(), availableIndices[i]);
@@ -262,7 +262,7 @@ pair<vector<double>, vector<list<int> > > MapOfPlayersCity::getAvailableIndicesC
 	}
 
 	//size of avaiable indices vector
-	int size = availableIndices.size(); 
+	int size = availableIndices.size();
 
 
 	//IF availableIndicesSIZE == 0, then return an empty pair vector
@@ -270,8 +270,8 @@ pair<vector<double>, vector<list<int> > > MapOfPlayersCity::getAvailableIndicesC
 		return pair<vector<double>, vector<list<int> > >(); //Empty vector
 	}
 
-	vector<double> costOfEachAvaiableIndex =  vector<double>(size, 99999); //vector initalized to 99999 as placeholder
-	vector<list<int> > pathOfEachAvailableIndex =  vector<list<int> >(size); //holds shortest path to each available city
+	vector<double> costOfEachAvaiableIndex = vector<double>(size, 99999); //vector initalized to 99999 as placeholder
+	vector<list<int> > pathOfEachAvailableIndex = vector<list<int> >(size); //holds shortest path to each available city
 
 	pair<vector<double>, vector<list<int> > >  costAndPath = pair<vector<double>, vector<list<int> > >();
 
@@ -292,7 +292,7 @@ pair<vector<double>, vector<list<int> > > MapOfPlayersCity::getAvailableIndicesC
 			totalCost += min_distance[cities]; //Add cost of distance
 
 			//gets the path from house index to destination
-			list<int> path = map->DijkstraGetShortestPathTo(cities, previous); 
+			list<int> path = map->DijkstraGetShortestPathTo(cities, previous);
 
 			//Goes through each index in the path and add cost to build if the player does not own a house in the city
 			for (int houseIndex : path) {
@@ -364,7 +364,7 @@ int MapOfPlayersCity::costToBuildHouse(int index)
 	}
 
 	else {
-		
+
 		switch ((*player_houses)[index].size()) {
 		case 0:
 			return 10;
@@ -415,7 +415,7 @@ bool MapOfPlayersCity::verifyPlayerHasAnotherPlayerNextToHim(vector<int>* player
 	//for each adjacent index
 	for (int index : pAIAllAdjacentIndices) {
 		//if there is at least 1 player in that location
-		if (getHouseCount(index) > 1) {
+		if (getHouseCount(index) > 0) {
 			return true;
 		}
 	}
@@ -433,32 +433,34 @@ int MapOfPlayersCity::defensiveStrategyIndexToBuy(string playerColor, vector<int
 	//adjacent indices, but not the index that is adjacent to them all
 	int mapsize = 42;
 	for (int i = 0; i < mapsize; i++) {
-		vector<int> adjacentIndices = getMap()->getAdjacentIndices(i); //hard coded adjacent indices to index i
-		bool notFound = false; //used if 1 adjacent vertex is not found, to skip to the next index
+		if (getMap()->indexInGame(i)) {
+			vector<int> adjacentIndices = getMap()->getAdjacentIndices(i); //hard coded adjacent indices to index i
+			bool notFound = false; //used if 1 adjacent vertex is not found, to skip to the next index
 
-							   //if the player already own a house at index i, then skip
-		if (ownsHouse(playerColor, i)) {
-			continue;
-		}
-
-		//This loop checks if the player owns all the adjacent indices to an index
-		//it stops when if the player does not own one of adjacent indices
-		for (int index : adjacentIndices) {
-			//find index in the houses
-			std::vector<int>::iterator position = std::find(playerHouses->begin(), playerHouses->end(), index);
-			if (position == playerHouses->end()) {
-				notFound == true;
-				break;
+								   //if the player already own a house at index i, then skip
+			if (ownsHouse(playerColor, i)) {
+				continue;
 			}
-		}
-		//one of them was not found, then go to the next index in the map
-		if (notFound) {
-			continue; //goto next index in the map
-		}
-		else {
-			//index was found
-			indexToBuy = i;
-			return i; //returns index if found
+
+			//This loop checks if the player owns all the adjacent indices to an index
+			//it stops when if the player does not own one of adjacent indices
+			for (int index : adjacentIndices) {
+				//find index in the houses
+				std::vector<int>::iterator position = std::find(playerHouses->begin(), playerHouses->end(), index);
+				if (position == playerHouses->end()) {
+					notFound = true;
+					break;
+				}
+			}
+			//one of them was not found, then go to the next index in the map
+			if (notFound) {
+				continue; //goto next index in the map
+			}
+			else {
+				//index was found
+				indexToBuy = i;
+				return i; //returns index if found
+			}
 		}
 	}
 
@@ -476,4 +478,17 @@ vector<string> MapOfPlayersCity::getPlayerNames(int index)
 	}
 
 	return playerNames;
+}
+
+vector<int> MapOfPlayersCity::getPlayerHouses(string playerName) {
+	int size = 42;
+	vector<int> playerhouses;
+
+	for (int i = 0; i < 42; i++) {
+		if (ownsHouse(playerName, i)) {
+			playerhouses.push_back(i);
+		}
+	}
+
+	return playerhouses;
 }

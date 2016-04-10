@@ -55,6 +55,8 @@ public:
 
 	vector<string> getPlayerNames(int index);
 
+	vector<int> getPlayerHouses(string playerName);
+
 
 private:
 	//Player's houses location (holds names)

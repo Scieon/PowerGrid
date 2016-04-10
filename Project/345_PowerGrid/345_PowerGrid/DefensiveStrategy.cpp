@@ -20,37 +20,42 @@ void DefensiveStrategy::execute(Player* current_player, MapOfPlayersCity* mapOfP
 	int indexToBuy = -1; //contains the index to buy a house in
 	vector<int> pAIHouseIndices = *(current_player->getHouseManager()->getHouseIndices()); //player house vertices
 
-																				 //This loop checks every the hard coded adjacent indices to see if AI has all of the 
-																				 //adjacent indices, but not the index that is adjacent to them all
+	//This loop checks every the hard coded adjacent indices to see if AI has all of the 
+	//adjacent indices, but not the index that is adjacent to them all
 	int mapsize = 42;
 	for (int i = 0; i < mapsize; i++) {
-		vector<int> adjacentIndices = mapOfPlayersCity->getMap()->getAdjacentIndices(i); //hard coded adjacent indices to index i
-		bool notFound = false; //used if 1 adjacent vertex is not found, to skip to the next index
 
-							   //if the player already own a house at index i, then skip
-		if (mapOfPlayersCity->ownsHouse(current_player->getColor(), i)) {
-			continue;
-		}
+		if (mapOfPlayersCity->getMap()->indexInGame(i)) {
+			vector<int> adjacentIndices = mapOfPlayersCity->getMap()->getAdjacentIndices(i); //hard coded adjacent indices to index i
+			bool notFound = false; //used if 1 adjacent vertex is not found, to skip to the next index
 
-		//This loop checks if the player owns all the adjacent indices to an index
-		//it stops when if the player does not own one of adjacent indices
-		for (int index : adjacentIndices) {
-			//find index in the houses
-			std::vector<int>::iterator position = std::find(pAIHouseIndices.begin(), pAIHouseIndices.end(), index);
-			if (position == pAIHouseIndices.end()) {
-				notFound == true;
-				break;
+								   //if the player already own a house at index i, then skip
+			if (mapOfPlayersCity->ownsHouse(current_player->getColor(), i)) {
+				continue;
+			}
+
+			//This loop checks if the player owns all the adjacent indices to an index
+			//it stops when if the player does not own one of adjacent indices
+			for (int index : adjacentIndices) {
+				//find index in the houses
+				std::vector<int>::iterator position = std::find(pAIHouseIndices.begin(), pAIHouseIndices.end(), index);
+				if (position == pAIHouseIndices.end()) {
+					notFound = true;
+					break;
+				}
+			}
+			//one of them was not found, then go to the next index in the map
+			if (notFound) {
+				continue; //goto next index in the map
+			}
+			else {
+				//index was found
+				indexToBuy = i;
+				break; //get out of loop to buy house
 			}
 		}
-		//one of them was not found, then go to the next index in the map
-		if (notFound) {
-			continue; //goto next index in the map
-		}
-		else {
-			//index was found
-			indexToBuy = i;
-			break; //get out of loop to buy house
-		}
+
+
 	}
 
 	if (indexToBuy == -1) {
@@ -76,8 +81,10 @@ void DefensiveStrategy::execute(Player* current_player, MapOfPlayersCity* mapOfP
 		House house(indexToBuy, mapOfPlayersCity->getIndexName(indexToBuy)); //create house
 		current_player->getHouseManager()->addHouses(house); //add house to player
 		mapOfPlayersCity->setPlayerHouse(indexToBuy, current_player->getColor()); //add house in map
-		cout << "House with index " << indexToBuy << " bought!" << endl <<endl;
+		cout << "House with index " << indexToBuy << " bought!" << endl << endl;
 	}
+
+
 
 
 };

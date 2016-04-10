@@ -733,13 +733,12 @@ void Board::performStrategy()
 		int houseCount = p->getHouseCount();
 		bool atLeast1House = houseCount > 0;
 		int indexToBuyDefensiveStrategy = mapOfPlayersCity->defensiveStrategyIndexToBuy(p->getColor(), p->getHouseManager()->getHouseIndices());
-		/*
+
 		if (verifyIfEnemiesHaveHouseNextToMe(p) && atLeast1House) { //condition to go inside the aggressive(if lplayer has a house near you)
 			p->setStrategy(new AggressiveStrategy());
 			p->executeStrategy(mapOfPlayersCity);//aggressive buying the house in between us
 		}
-		*/
-		if (indexToBuyDefensiveStrategy != -1 && atLeast1House) {//conditino to go inside defensive (if the opponent doesn't have a hosue near you)
+		else if (indexToBuyDefensiveStrategy != -1 && atLeast1House) {//conditino to go inside defensive (if the opponent doesn't have a hosue near you)
 			p->setStrategy(new DefensiveStrategy());
 			p->executeStrategy(mapOfPlayersCity); // defensive strategy buying a house close to myself
 		}

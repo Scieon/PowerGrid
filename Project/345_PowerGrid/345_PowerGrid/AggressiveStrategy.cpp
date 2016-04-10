@@ -28,24 +28,39 @@ void AggressiveStrategy::execute(Player* current_player, MapOfPlayersCity* mapOf
 
 	for (int index : pAIAllAdjacentIndices) {
 		//if there is at least 1 player in that location
-		if (mapOfPlayersCity->getHouseCount(index) > 1) {
+		if (mapOfPlayersCity->getHouseCount(index) > 0) {
 			playerNames = mapOfPlayersCity->getPlayerNames(index);
 			break;
 		}
 	}
 
+	string playerNameWithLessHouses;
 	//NEED TO ACCESS THE OTHER PLAYERS HOUSES
-	if (true) {
-		//get the player with the least # of houses (from get player.getHousemanager.getHouseCount) 
-		//depending on the names in playerNames.
+	if (playerNames.size() == 1) {
 		//if there is only 1 name then find which player has this name and get him
+		playerNameWithLessHouses = playerNames[0];
+		
+		
+	}
+	else {
+		string player1 = playerNames[0];
+		string player2 = playerNames[1];
+		vector<int> player1Houses = mapOfPlayersCity->getPlayerHouses(player1);
+		vector<int> player2Houses = mapOfPlayersCity->getPlayerHouses(player2);
+
+		if (player1Houses.size() < player2Houses.size()) {
+			playerNameWithLessHouses = player1;
+		}
+		else {
+			playerNameWithLessHouses = player2;
+		}
 	}
 
-	//suppose player0 has less houses
-	Player * p0 = vector_player[0];
+	vector<int> * HousesOfPlayerWithLessHouses = new vector<int>(mapOfPlayersCity->getPlayerHouses(playerNameWithLessHouses));
+	
 
 	//get all adjacent indices that p0 has
-	vector<int> p0AllAdjacentIndices = mapOfPlayersCity->getMap()->getAdjacentIndices(p0->getHouseManager()->getHouseIndices());
+	vector<int> p0AllAdjacentIndices = mapOfPlayersCity->getMap()->getAdjacentIndices(HousesOfPlayerWithLessHouses);
 
 	//Go into every house the AI owns, and see if they have common houses with the player
 	//if they do then remove it
@@ -65,11 +80,14 @@ void AggressiveStrategy::execute(Player* current_player, MapOfPlayersCity* mapOf
 	for (int HouseIndex : p0AllAdjacentIndices) {
 		//if there is space then add house
 		if (mapOfPlayersCity->isCityFree(HouseIndex)) {
+			cout << "Aggresive strategy. Building at index " << HouseIndex << endl;
 			House house(HouseIndex, mapOfPlayersCity->getIndexName(HouseIndex)); //create house
 			current_player->getHouseManager()->addHouses(house); //add house to AI
 			mapOfPlayersCity->setPlayerHouse(HouseIndex, current_player->getColor()); //add house in map
 		}
 	}
 
+	delete HousesOfPlayerWithLessHouses;
+	HousesOfPlayerWithLessHouses = NULL;
 
 };
