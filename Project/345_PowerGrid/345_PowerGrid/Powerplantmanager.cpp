@@ -10,7 +10,7 @@ using namespace std;
 //Default constructor initializing all possible power plants
 PowerplantManager::PowerplantManager() {
 
-	Powerplant coal4(4, "Coal", 2, 1);
+	Powerplant coal4(4, "Coal", 2, 1); //(int min_bid, string resource_type, int resources_required, int num_cities_powered);
 	Powerplant coal8(8, "Coal", 3, 2);
 	Powerplant coal10(10, "Coal", 2, 2);
 	Powerplant coal15(15, "Coal", 2, 3);
@@ -218,6 +218,18 @@ int PowerplantManager::findPowerplantIndexInActualMarket(int bid) {
 	
 }
 
+int PowerplantManager::findPowerplant(int bid) {
+	int index = 0;
+
+	for (Powerplant pp : *powerplantsVector) {
+		if (pp.getBid() == bid) {
+			return index;
+		}
+		index++;
+	}
+
+	return -2; //Not real powerplant
+}
 //Checks if the powerplant is in the actual market
 bool PowerplantManager::isPowerplantInActualMarket(int bid) {
 
@@ -303,11 +315,17 @@ string PowerplantManager::getPlantType(int index) {
 
 }
 
-//Returns resources requireed of powerplant
+//Returns resources required of powerplant
 int PowerplantManager::getPlantReq(int index) {
 
 	return (*powerplantsVector)[index].getResourceReq();
 
+}
+
+//Returns number of cities powered by the plant
+int PowerplantManager::getCitiesPowered(int index) {
+
+	return (*powerplantsVector)[index].getCitiesPowered();
 }
 
 bool PowerplantManager::getStep3Trigger() {

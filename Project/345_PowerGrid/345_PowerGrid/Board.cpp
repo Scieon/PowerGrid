@@ -563,24 +563,28 @@ void Board::bureaucracy() {
 
 				if (p->validatePlantPossession(choice) == true) {
 
+					//Checking for unique plants
 					for (int i = 0; i <= 2; i++) {
 						if (poweredPlants[i] == -1) {
-							poweredPlants[i] = choice;
+							poweredPlants[i] = choice; 
+
 							p->powerCity(choice);
-							nbCitiesPowered++; //Increment number of cities player has powered this turn
+							nbCitiesPowered += p->getPowerplantPower(choice);
+							//nbCitiesPowered++; //Increment number of cities player has powered this turn
 							cout << "You have powered " << nbCitiesPowered << " cities so far." << endl << endl;
 							break;
 						}
-						else {
+						else if(poweredPlants[i] == choice){
 							cout <<"You have already powered that plant!" << endl << endl;
 							break;
 						}
 					}//End of for
 				}///End of if
 				
-				else {
+				else if(choice != 0){
 					cout << "Invalid choice" << endl << endl;
 				}
+				system("pause");
 			}
 			p->getPaid(nbCitiesPowered);
 		}

@@ -17,6 +17,8 @@ public:
 
 	int findPowerplantIndexInActualMarket(int bid);
 
+	int findPowerplant(int bid);
+
 	bool isPowerplantInActualMarket(int bid);
 
 	void sortMarket();
@@ -33,6 +35,8 @@ public:
 
 	int getPlantReq(int index);
 
+	int getCitiesPowered(int index);
+
 	bool getStep3Trigger();
 
 	void setStep3(bool value);
@@ -43,6 +47,7 @@ public:
 	
 private:
 	vector<Powerplant> * powerplantsVector;
+
 	bool step3trigger;
 	bool step3;
 };

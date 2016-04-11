@@ -212,21 +212,23 @@ void Player::showPlants() {
 void Player::showPlantsToPower() {
 	//int i = 1;
 	for (Powerplant pp : *powerplants) {
-	
+
 		//Checking if player has enough resources to power given plant
 
 		if (this->getResource(pp.getType()) >= pp.getResourceReq()) {
-			cout << "Powerplant " << pp.getBid() << " can power " << pp.getCitiesPowered() << " cities at a cost of ";
+			cout << "Powerplant " << pp.getBid() << " can power " << pp.getCitiesPowered() << " cities at a cost of " << pp.getResourceReq() << " units of " << pp.getType() << endl;
 
-			if (pp.getType() == "Hybrid")
-				cout << pp.getResourceReq() << " units of either Coal or Oil.";
-
-			if (pp.getType() == "Eco")
-				cout << " no resources.";
-
-			if (pp.getType() != "Eco" && pp.getType() != "Hybrid")
-				cout << pp.getResourceReq() << " units of " << pp.getType();
 		}
+
+		if (pp.getType() == "Hybrid") {
+
+			if (getResource("Coal") >= pp.getResourceReq() || getResource("Oil") >= pp.getResourceReq()) {
+				cout << "Powerplant " << pp.getBid() << " can power " << pp.getCitiesPowered() << " cities at a cost of " << pp.getResourceReq() << " units of either Coal or Oil." << endl;
+			}
+		}
+
+		if (pp.getType() == "Eco")
+			cout << "Powerplant " << pp.getBid() << " can power " << pp.getCitiesPowered() << " cities at not cost." << endl;
 
 		cout << endl;
 	}
@@ -244,64 +246,118 @@ bool Player::validatePlantPossession(int plantNumber) {
 void Player::powerCity(int plantNumber) {
 	PowerplantManager * pp = new PowerplantManager();
 
-	int index = pp->findPowerplantIndexInActualMarket(plantNumber);
+	int index = pp->findPowerplant(plantNumber);
 	string type = pp->getPlantType(index);
 	int amount = pp->getPlantReq(index);
-	this->resources->remove(type, amount);
+	if (type == "Hybrid") {
 
-	cout << "Removed " << amount << " units of " << type << endl;
-	
-}
+		string choice;
+		if (getResource("Coal") >= amount && getResource("Oil") >= amount) {
 
-	//Display user possessions and characteristics
-	void Player::showInfo() {
+			while (choice != "Oil" && choice != "oil" && choice != "Coal" && choice != "coal") {
+				cout << "Would you like to remove " << amount << " units of Coal or Oil? ";
+				cin >> choice;
 
-		cout << "Player " << color << "'s resources:" << endl;
-		cout << "Elektro:" << this->getElektro() << endl;
-		cout << "Resource Coal: " << this->getResource("Coal") << endl;
-		cout << "Resource Oil: " << this->getResource("Oil") << endl;
-		cout << "Resource Garbage: " << this->getResource("Garbage") << endl;
-		cout << "Resource Uranium: " << this->getResource("Uranium") << endl << endl;
-	}
+				if (choice == "Oil" || choice == "oil") {
+					this->resources->remove("Oil", amount);
+				}
 
-
-	//Checks if the player has 3 power plants
-	bool Player::isPowerplantsFull() {
-		return (powerplants->size() == 3);
-	}
-
-	//For simple use. Should do overload the equal operator instead
-	bool Player::comparePlayer(Player* pp) {
-		if (pp->getColor() == this->color) {
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	//Need to see which player has the highest powerplant number and iterate through their maximum of 3 powerplants possession
-	int Player::getHighestMinBid() {
-		int highest = 0; //By default
-		for (Powerplant pp : *powerplants) {
-
-			if (highest < pp.getBid()) {
-				highest = pp.getBid();
+				if (choice == "Coal" || choice == "coal") {
+					this->resources->remove("Coal", amount);
+				}
+				cout << endl;
 			}
 		}
 
-		return highest;
+		else if (getResource("Coal") >= amount) {
+			choice = "Coal";
+			this->resources->remove(choice, amount);
+		}
+
+		else if (getResource("Oil") >= amount) {
+			choice = "Oil";
+			this->resources->remove(choice, amount);
+		}
+
+		cout << "Removed(hybrid) " << amount << " units of " << choice << endl;
+		delete pp;
+		return;
 	}
 
-	//Check if the player has enough money to buy
-	bool Player::hasEnoughtElektroFor(int amount) {
+	if (type == "Eco") {
+		delete pp;
+		return;
+	}
 
-		int temp = elektro;
-		if ((temp - amount) >= 0) {
-			return true;
-		}
+
+	this->resources->remove(type, amount);
+
+	cout << "Removed " << amount << " units of " << type << endl;
+
+	delete pp; //Freeing heap
+
+}
+
+//Display user possessions and characteristics
+void Player::showInfo() {
+
+	cout << "Player " << color << "'s resources:" << endl;
+	cout << "Elektro:" << this->getElektro() << endl;
+	cout << "Resource Coal: " << this->getResource("Coal") << endl;
+	cout << "Resource Oil: " << this->getResource("Oil") << endl;
+	cout << "Resource Garbage: " << this->getResource("Garbage") << endl;
+	cout << "Resource Uranium: " << this->getResource("Uranium") << endl << endl;
+}
+
+
+//Checks if the player has 3 power plants
+bool Player::isPowerplantsFull() {
+	return (powerplants->size() == 3);
+}
+
+//For simple use. Should do overload the equal operator instead
+bool Player::comparePlayer(Player* pp) {
+	if (pp->getColor() == this->color) {
+		return true;
+	}
+	else
+	{
 		return false;
 	}
+}
+
+//Need to see which player has the highest powerplant number and iterate through their maximum of 3 powerplants possession
+int Player::getHighestMinBid() {
+	int highest = 0; //By default
+	for (Powerplant pp : *powerplants) {
+
+		if (highest < pp.getBid()) {
+			highest = pp.getBid();
+		}
+	}
+
+	return highest;
+}
+
+//Check if the player has enough money to buy
+bool Player::hasEnoughtElektroFor(int amount) {
+
+	int temp = elektro;
+	if ((temp - amount) >= 0) {
+		return true;
+	}
+	return false;
+}
 
 
+
+//Returns number of cities that players powerplant cant supply power to
+int Player::getPowerplantPower(int min_bid) {
+
+	PowerplantManager * pp = new PowerplantManager();
+
+	int index = pp->findPowerplant(min_bid);
+	return pp->getCitiesPowered(index);
+
+	delete pp; //Freeing heap
+}

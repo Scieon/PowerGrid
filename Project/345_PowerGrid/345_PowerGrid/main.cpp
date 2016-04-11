@@ -67,7 +67,7 @@ AreaManager * area_manager = new AreaManager();
 	b1->reorderPlayersHighestNumHouses();
 	*/
 	
-int main() {
+int test() {
 	
 	int CHANGETHISFORTURNS = 4; //number of turns to play
 
@@ -80,10 +80,32 @@ int main() {
 	//Add the number of players in the vector collection
 	for (int i = 1; i < 3; i++)
 	{
+		/*
 		cout << "\nPlayer " << i << endl << "Please insert your color: ";
 		cin >> color;
 		Player* p = new Player(color);
 		vector_player.push_back(p);
+
+		*/
+		Player* player1 = new Player("Red");
+		
+
+		Powerplant* p1 = new Powerplant(8, "Coal", 3, 2);
+	
+		Powerplant* pp1 = new Powerplant(12, "Hybrid", 2, 2);
+
+		Powerplant* pp21 = new Powerplant(13, "Eco", 0, 1);
+		player1->addResource("Coal", 6);
+		player1->addResource("Oil", 6);
+	
+
+		player1->addPlant(p1);
+
+		player1->addPlant(pp1);
+		player1->addPlant(pp21);
+
+		vector_player.push_back(player1);
+	
 	}
 
 	//Now we have to get the areas played from players
@@ -115,10 +137,14 @@ int main() {
 	int y = 1;
 	while (y < CHANGETHISFORTURNS) {
 
-		turn->turnOrder();
-		turn->buyPowerPlant();
-	    turn->buyRawMaterial();
+
+	
+
+		//turn->turnOrder();
+		//turn->buyPowerPlant();
+		// turn->buyRawMaterial();
 		//turn->building();
+
 		turn->bureaucracy();
 		turn->incrementTurnCounter(); //HAS BE REMOVED AFTER WE FINISH BUREACRACY
 
@@ -130,7 +156,7 @@ int main() {
 }
 
 
-int x(){
+int main(){
 
 	int CHANGETHISFORTURNS = 4; //number of turns to play
 

@@ -43,6 +43,7 @@ public:
 	void addPlant(Powerplant * p1); //Adds a powerplant object to player's powerplant vector if it is not full
 	int getHighestMinBid(); //Return the highest costing power plant that a player owns
 	bool validatePlantPossession(int plantNumber);
+	int getPowerplantPower(int min_bid);
 
 	//Resources
 	void addResource(string type, int quantity); //Adds a quantity of a resource to player's possessions
