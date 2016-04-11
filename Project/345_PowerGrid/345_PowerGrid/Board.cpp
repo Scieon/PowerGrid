@@ -554,8 +554,10 @@ void Board::bureaucracy() {
 			int nbCitiesPowered = 0;
 			
 			//If player has no houses than they just get 10 elektros
-			if (p->getNumberHouses() == 0)
+			if (p->getNumberHouses() == 0) {
 				choice = 0;
+				cout << "No cities to supply power to!" << endl;
+			}
 
 			while (choice != 0) {
 				p->showInfo();
@@ -602,6 +604,7 @@ void Board::bureaucracy() {
 		}
 	}
 	
+	system("pause");
 	//Replenish Resource Market according to step
 	if(step2==true)
 		market->refill(2, getNumberOfPlayers());

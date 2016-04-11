@@ -290,7 +290,6 @@ void ResourceMarket::replenish(string resource, int quantity) {
 			while (market[i]->getResourceQuantity(resource) < 3) {
 				market[i]->addOneUnit(resource);
 				quantity--;
-				cout << "Refilling " <<i << endl;
 				if (quantity == 0)
 					break;
 			}
@@ -308,7 +307,7 @@ void ResourceMarket::replenish(string resource, int quantity) {
 			while (market[i]->getResourceQuantity(resource) < 1) {
 				market[i]->addOneUnit(resource);
 				quantity--;
-				cout << "Refilling " << i << endl;
+			
 				if (quantity == 0)
 					break;
 			}

@@ -1,26 +1,24 @@
 Player1
-Elektro=53
-Color=red
-Coal=2
+Elektro=47
+Color=2
+Coal=0
 Oil=0
 Garbage=0
 Uranium=0
 Player_Houses:
-7,San_Francisco
-End_Player_Houses
-Player_Powerplants
-Bid=4 Type=Coal Resource_required=2 Cities_powered=1
-End_Player_Powerplants
-Player2
-Elektro=41
-Color=blue
-Coal=0
-Oil=2
-Garbage=0
-Uranium=0
-Player_Houses:
-22,Duluth
 End_Player_Houses
 Player_Powerplants
 Bid=3 Type=Oil Resource_required=2 Cities_powered=1
+End_Player_Powerplants
+Player2
+Elektro=46
+Color=1
+Coal=0
+Oil=0
+Garbage=0
+Uranium=0
+Player_Houses:
+End_Player_Houses
+Player_Powerplants
+Bid=4 Type=Coal Resource_required=2 Cities_powered=1
 End_Player_Powerplants

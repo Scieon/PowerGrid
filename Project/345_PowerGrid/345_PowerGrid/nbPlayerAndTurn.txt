@@ -1,2 +1,2 @@
 NbOfPlayers=2
-TurnCount=3
+TurnCount=2
