@@ -195,7 +195,7 @@ int main(){
 			turn->buyPowerPlant();
 			turn->buyRawMaterial();
 			turn->building();
-			turn->bureaucracy();
+			//turn->bureaucracy();
 			turn->incrementTurnCounter(); //HAS BE REMOVED AFTER WE FINISH BUREACRACY
 
 			if (turn->checkMapCorrectness()) {
@@ -285,7 +285,7 @@ int main(){
 			turn->buyPowerPlant();
 			turn->buyRawMaterial();
 			turn->building();
-			//turn->bureaucracy();
+			turn->bureaucracy();
 			turn->incrementTurnCounter(); //HAS BE REMOVED AFTER WE FINISH BUREACRACY
 
 			if (turn->checkMapCorrectness()) {

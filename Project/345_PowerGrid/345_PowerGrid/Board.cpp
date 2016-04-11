@@ -543,11 +543,10 @@ void Board::bureaucracy() {
 		//they are going to power based on their resources.
 		cout << "*****************************************************************" << endl;
 		cout << "PLAYER " << p->getColor() << " has " << p->getHouseManager()->getHouseCount() << " houses." << endl;
+		cout << "Please note you can only power as many cities as you own. Any exceeding that will be wasted resources." << endl;
 		cout << "Do you wish to power any cities(Yes/No): "; 
 		cin >> decisionToPower; cout << endl;
 
-
-		//NEED TO FORCE TO 0 CITIES IF OWNS 0 PLANTS OR CANNOT POWER ANY OF THEM
 
 		//Player chooses to power cities
 		if (decisionToPower == "Yes" || decisionToPower == "yes" || decisionToPower == "YES" || decisionToPower == "y") {
@@ -574,7 +573,7 @@ void Board::bureaucracy() {
 
 							p->powerCity(choice);
 							nbCitiesPowered += p->getPowerplantPower(choice);
-							//nbCitiesPowered++; //Increment number of cities player has powered this turn
+						
 							cout << "You have powered " << nbCitiesPowered << " cities so far." << endl << endl;
 							break;
 						}
@@ -589,6 +588,11 @@ void Board::bureaucracy() {
 					cout << "Invalid choice" << endl << endl;
 				}
 				system("pause");
+			}
+
+			if (nbCitiesPowered > p->getNumberHouses()) {
+				cout << "You can only power as many cities as you own." << endl;
+				nbCitiesPowered = p->getNumberHouses();
 			}
 			p->getPaid(nbCitiesPowered);
 		}
