@@ -110,159 +110,254 @@ void Board::buyPowerPlant() {
 	cout << " THIS IS SECOND STEP THE BUYING OF POWER PLANTS" << endl;
 	cout << " ///////////////////////////////////////////////////////" << endl;
 
-	bool * hasBought = new bool[getNumberOfPlayers()];
-	bool * hasAuction = new bool[getNumberOfPlayers()];
-	string * playerColors = new string[getNumberOfPlayers()];
-	bool checkPP = false;
-	bool checkElektro = false;
+
 
 	int winnerOfAuction;
+	int intialPlantValue;
 
 	for (int i = 0; i < getNumberOfPlayers(); i++) {
-		playerColors[i] = vector_player[i]->getColor();
-		hasBought[i] = false;
-		hasAuction[i] = false;
-		cout << getPosition(vector_player[i]->getColor()) << endl;
+		vector_player[i]->hasAuction = false;
+		vector_player[i]->hasBought = false;
 	}
 
-	system("pause");
+
 	//Looping through all players
 	for (int i = 0; i < getNumberOfPlayers(); i++) {
 
+		bool checkPP = false;
+		bool checkElektro = false;
+
 		//Resetting auctioning statuses
 		for (int i = 0; i < getNumberOfPlayers(); i++) {
-			hasAuction[i] = false;
-			hasAuction[i] = hasBought[i];
+			vector_player[i]->hasAuction = false; //Maybe delete this line
+			vector_player[i]->hasAuction = vector_player[i]->hasBought;
 		}
 
-		int tracker = i, plantBid;
+		int tracker = i;
+		int plantBid;
 		Player * p = vector_player[i];
 
-		if (hasBought[getPosition(p->getColor())] == false) {
+		//Skip player that has bought
+		if (vector_player[i]->hasBought == true) {
+			cout << vector_player[i]->getColor() << " has bought" << endl; system("pause");
+			continue;
+		}
 
-			cout << "Player with color " << p->getColor() << " can bid first " << endl;
-			powerplants_Vector->printMarket();
-			cout << "\nPlayer " << p->getColor() << endl;
+		cout << "Player with color " << p->getColor() << " can bid first " << endl;
+		powerplants_Vector->printMarket();
+		cout << "\nPlayer " << p->getColor() << endl;
 
-			//Making player bid
-			while (!checkPP || !checkElektro) {
+		string decisionToPurchase = "";
 
-				cout << "You currently have " << p->getElektro() << " elektros" << endl;
-				cout << "Please enter the minimum bid of the Power Plant you want from the Actual Market" << endl;
-				cout << "Power Plant minimum bid: " << endl;
-
-				cin >> plantBid;
-
-
-				checkPP = powerplants_Vector->isPowerplantInActualMarket(plantBid);
-				checkElektro = powerplants_Vector->hasEnoughElektroForMarket(p->getElektro());
-
-				if (!checkPP) {
-					cout << endl;
-					cout << "--ERROR-- This powerplant is not in the Actual Market --ERROR--" << endl << endl;
-				}
-				else if (!checkElektro) {
-					cout << endl;
-					cout << "--ERROR-- You do not have enough elektros for this Power Plant --ERROR--" << endl;
-				}
-
+		if (turnCounter > 1) {
+			while (decisionToPurchase != "y" && decisionToPurchase != "n") {
+				cout << "Do you wish to buy any powerplants (y/n): ";
+				cin >> decisionToPurchase; cout << endl;
 			}
 
-			//Skip player that has bought
-			if (hasBought[getPosition(p->getColor())] == true) {
+			if (decisionToPurchase == "n") {
+				cout << "Player " << p->getColor() << " is a rebel." << endl;
+				system("pause");
+				p->hasBought = true;
 				continue;
 			}
-			//Checking if other players have bought
+		}
+	
 
-			//Everyone after current player still auctioning
-			while (tracker != getNumberOfPlayers()) {
+		//Making player bid
+		while (checkPP == false || checkElektro == false) {
 
-				if (tracker == getNumberOfPlayers() - 1) {
-					int winnerIndex = 0;
-					for (int k = 0; k < getNumberOfPlayers(); k++) {
-						if (hasAuction[k] == false)
-							winnerOfAuction = winnerIndex;
-						winnerIndex++;
-					}
-					break;
-				}
-				cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
-				cout << "@@@@ Starting Auction @@@@" << endl;
-				cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
+			cout << "You currently have " << p->getElektro() << " elektros" << endl;
+			cout << "Please enter the minimum bid of the Power Plant you want from the Actual Market" << endl;
+			cout << "Power Plant minimum bid: " << endl;
 
-				string answer;
-				int playerBid;
+			cin >> plantBid;
 
-				p = getNextPlayer(*p);
-				while (hasAuction[getPosition(p->getColor())] == true) {
-					cout << "Player " << p->getColor() << " has given up auctioning" << endl; system("pause");
-					p = getNextPlayer(*p);
-				}
+			intialPlantValue = plantBid;
+		
+
+			checkPP = powerplants_Vector->isPowerplantInActualMarket(plantBid);
+			checkElektro = p->getElektro() > plantBid;
+
+			if (checkPP == false) {
 				cout << endl;
+				cout << "--ERROR-- This powerplant is not in the Actual Market --ERROR--" << endl << endl;
+			}
+			else if (checkElektro == false) {
+				cout << endl;
+				cout << "--ERROR-- You do not have enough elektros for this Power Plant --ERROR--" << endl;
+			}
 
-				if (p->getElektro() <= plantBid) {
-					cout << "Player " << p->getColor() << endl;
-					cout << "You do not have enough elektros to bid" << endl;
+		}
+
+	
+		//Checking if other players have bought
+
+		//Everyone after current player still auctioning
+		while (tracker != getNumberOfPlayers()) {
+
+			if (tracker == getNumberOfPlayers() - 1) {
+				int winnerIndex = 0;
+				
+				//Independent for loop searching for winner of auction
+				for (int k = 0; k < getNumberOfPlayers(); k++) {
+					if (vector_player[k]->hasAuction == false)
+						winnerOfAuction = winnerIndex;
+					winnerIndex++;
+				}
+				break;
+			}
+			cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
+			cout << "@@@@ Starting Auction @@@@" << endl;
+			cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
+
+			string answer;
+			int playerBid;
+
+			p = getNextPlayer(*p);
+			while (p->hasAuction == true) {
+				cout << "Player " << p->getColor() << " has given up auctioning" << endl; system("pause");
+				p = getNextPlayer(*p);
+			}
+			cout << endl;
+	
+			if (p->getElektro() <= plantBid) {
+				cout << "Player " << p->getColor() << endl;
+				cout << "You do not have enough elektros to bid" << endl;
+				tracker++;
+				p->hasAuction = true;
+				continue;
+			}
+
+			//At this point the player has been validated to auction
+			cout << "It's your turn Player " << p->getColor() << endl;
+			cout << "You currently have " << p->getElektro() << " elektros" << endl;
+			cout << "The current bid is " << plantBid << endl;
+			cout << "Do you want to bid on power plant? Type 'y' for yes or 'n' for no" << endl;
+			cin >> answer;
+
+			if (answer == "y") {
+				cout << "Please enter the amount you want to bid: " << endl;
+				cin >> playerBid;
+
+				bool bidTooLow = playerBid <= plantBid;
+				bool notEnoughElektro = playerBid > p->getElektro();
+
+				//Forfeit right to auction if wrong input. 
+				if (bidTooLow) {
+					cout << endl;
+					cout << "Your bid is too low" << endl;
+					p->hasAuction = true;
 					tracker++;
-					hasAuction[getPosition(p->getColor())] = true;
-					continue;
+				}
+				else if (notEnoughElektro) {
+					cout << endl;
+					cout << "Your bid is too high" << endl;
+					p->hasAuction = true;
+					tracker++;
 				}
 
-				//At this point the player can auction
-				cout << "It's your turn Player " << p->getColor() << endl;
-				cout << "You currently have " << p->getElektro() << " elektros" << endl;
-				cout << "The current bid is " << plantBid << endl;
-				cout << "Do you want to bid on power plant? Type 'y' for yes or 'n' for no" << endl;
-				cin >> answer;
-
-				if (answer == "y") {
-					cout << "Please enter the amount you want to bid: " << endl;
-					cin >> playerBid;
-
-					bool bidTooLow = playerBid <= plantBid;
-					bool notEnoughElektro = playerBid > p->getElektro();
-
-					//Forfeit right to auction if wrong input. 
-					if (bidTooLow) {
-						cout << endl;
-						cout << "Your bid is too low" << endl;
-						hasAuction[getPosition(p->getColor())] = true;
-						tracker++;
-					}
-					else if (notEnoughElektro) {
-						cout << endl;
-						cout << "Your bid is too high" << endl;
-						hasAuction[getPosition(p->getColor())] = true;
-						tracker++;
-					}
-
-					if (bidTooLow == false && notEnoughElektro == false) {
-						//Player has entered valid bid.
-						plantBid = playerBid;
-						cout << "Bid has changed too: " << plantBid << endl; system("pause"); cout << endl;
-					}
-
-				}//End if yes
-
-				if (answer == "n") {
-					tracker++;
-					hasAuction[getPosition(p->getColor())] = true;
+				if (bidTooLow == false && notEnoughElektro == false) {
+					//Player has entered valid bid.
+					plantBid = playerBid;
+					cout << "Bid has changed too: " << plantBid << endl; system("pause"); cout << endl;
 				}
 
-			} //end while auction
+			}//End if yes
 
-			//At this point tracker should be 2 i.e., everyone has taken a chance at auctioning
-			cout << "Player " << vector_player[winnerOfAuction]->getColor() << " has won" << endl;
-			hasBought[getPosition(vector_player[winnerOfAuction]->getColor())] = true;
-			system("pause");
+			if (answer == "n") {
+				tracker++;
+				p->hasAuction = true;
+			}
 
-		}//If has not bought
+		} //end while auction
 
-		cout << "This player " << p->getColor() << " has already bought" << endl; system("pause");
+		//At this point tracker should be 2 i.e., everyone has taken a chance at auctioning
+		cout << "Player " << vector_player[winnerOfAuction]->getColor() << " has won" << endl;
+		vector_player[winnerOfAuction]->hasBought = true;
+		vector_player[winnerOfAuction]->addPlant(powerplants_Vector->getAndRemoveSpecificPowerplant(intialPlantValue));
+		
+		system("pause");
+
 
 
 	} //end for 
 
+
+	//Any stragglers
+	for (int z = 0; z < getNumberOfPlayers(); z++) {
+
+		Player * p = vector_player[z];
+		string choice;
+		int plantBid;
+		string decisionToPurchase = "";
+		bool checkPP = false;
+		bool checkElektro = false;
+
+
+		if (p->hasBought == false) {
+
+			if (turnCounter > 1) {
+				cout << "Player with color " << p->getColor() << " do you still wish to buy a plant? (y/n) " << endl;
+				cin >> choice;
+
+				if (choice == "n")
+					break;
+
+				else if (choice == "y") {
+
+					powerplants_Vector->printMarket();
+					cout << "Select a plant to buy from the market: " << endl;
+					cin >> plantBid;
+
+
+					if (powerplants_Vector->isPowerplantInActualMarket(plantBid) == false) {
+						cout << endl;
+						cout << "--ERROR-- This powerplant is not in the Actual Market --ERROR--" << endl << endl;
+						break;
+					}
+					else if (p->getElektro()>plantBid == false) {
+						cout << endl;
+						cout << "--ERROR-- You do not have enough elektros for this Power Plant --ERROR--" << endl;
+						break;
+					}
+					cout << "You have bought plant " << plantBid << endl;
+					p->addPlant(powerplants_Vector->getAndRemoveSpecificPowerplant(plantBid));
+					system("pause");
+				}
+			}
+
+			 if (turnCounter == 1) {
+		
+				 while (checkPP == false || checkElektro == false) {
+					 powerplants_Vector->printMarket();
+					 cout << "Since this is the first turn, player " << p->getColor() << " must buy a plant." << endl;
+					 cout << "Select a plant to buy from the market: " << endl;
+					 cin >> plantBid;
+
+					 checkPP = powerplants_Vector->isPowerplantInActualMarket(plantBid);
+					 checkElektro = p->getElektro() > plantBid;
+
+					 if (checkPP == false) {
+						 cout << endl;
+						 cout << "--ERROR-- This powerplant is not in the Actual Market --ERROR--" << endl << endl;
+						 system("pause");
+					 }
+					 else if (checkElektro == false) {
+						 cout << endl;
+						 cout << "--ERROR-- You do not have enough elektros for this Power Plant --ERROR--" << endl;
+						 system("pause");
+					 }
+				 }
+
+				 cout << "You have bought plant " << plantBid << endl;
+				 p->addPlant(powerplants_Vector->getAndRemoveSpecificPowerplant(plantBid));
+				 system("pause");
+			} //end of turn 1
+		
+		}
+
+	}
 
 
 
