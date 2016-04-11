@@ -56,6 +56,8 @@ public:
 	//Overload
 	bool comparePlayer(Player* pp);
 
+	bool hasBought = false;
+	bool hasAuction = false;
 private:
 	static int number_of_players;
 	int playerNumber;

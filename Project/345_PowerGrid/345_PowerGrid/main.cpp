@@ -67,7 +67,7 @@ AreaManager * area_manager = new AreaManager();
 	b1->reorderPlayersHighestNumHouses();
 	*/
 	
-int test() {
+int main() {
 	
 	int CHANGETHISFORTURNS = 4; //number of turns to play
 
@@ -78,7 +78,7 @@ int test() {
 	std::vector<Player*> vector_player;
 
 	//Add the number of players in the vector collection
-	for (int i = 1; i < 3; i++)
+	for (int i = 1; i < 4; i++)
 	{
 		
 		cout << "\nPlayer " << i << endl << "Please insert your color: ";
@@ -145,8 +145,7 @@ int test() {
 		turn->buyPowerPlant();
 		 turn->buyRawMaterial();
 		//turn->building();
-
-		turn->bureaucracy();
+		//turn->bureaucracy();
 		turn->incrementTurnCounter(); //HAS BE REMOVED AFTER WE FINISH BUREACRACY
 
 
@@ -157,7 +156,7 @@ int test() {
 }
 
 
-int main(){
+int x(){
 
 	int CHANGETHISFORTURNS = 4; //number of turns to play
 

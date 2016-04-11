@@ -260,7 +260,7 @@ void PowerplantManager::sortMarket() {
 bool PowerplantManager::hasEnoughElektroForMarket(int elektro) {
 
 	//checks only first powerplant since market is already sorted
-	if ((*powerplantsVector)[0].getBid() <= elektro) {
+	if ((*powerplantsVector)[0].getBid() <= elektro) { 
 		return true;
 	}
 	return false;

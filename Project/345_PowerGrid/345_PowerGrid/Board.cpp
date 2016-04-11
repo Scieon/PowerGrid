@@ -95,7 +95,7 @@ void Board::turnOrder() {
 			cout << "We are keeping the order" << endl;
 		cout << "The player with the most houses will start. If tied, biggest powerplant number will go. " << endl;
 		*/
-		
+
 		cout << "The player with the most houses will start. If tied, biggest powerplant number will go. " << endl;
 		void reorderPlayersHighestNumHouses();
 
@@ -110,8 +110,166 @@ void Board::buyPowerPlant() {
 	cout << " THIS IS SECOND STEP THE BUYING OF POWER PLANTS" << endl;
 	cout << " ///////////////////////////////////////////////////////" << endl;
 
-	Player* p = vector_player[0];//first player bids
+	bool * hasBought = new bool[getNumberOfPlayers()];
+	bool * hasAuction = new bool[getNumberOfPlayers()];
+	string * playerColors = new string[getNumberOfPlayers()];
+	bool checkPP = false;
+	bool checkElektro = false;
 
+	int winnerOfAuction;
+
+	for (int i = 0; i < getNumberOfPlayers(); i++) {
+		playerColors[i] = vector_player[i]->getColor();
+		hasBought[i] = false;
+		hasAuction[i] = false;
+		cout << getPosition(vector_player[i]->getColor()) << endl;
+	}
+
+	system("pause");
+	//Looping through all players
+	for (int i = 0; i < getNumberOfPlayers(); i++) {
+
+		//Resetting auctioning statuses
+		for (int i = 0; i < getNumberOfPlayers(); i++) {
+			hasAuction[i] = false;
+			hasAuction[i] = hasBought[i];
+		}
+
+		int tracker = i, plantBid;
+		Player * p = vector_player[i];
+
+		if (hasBought[getPosition(p->getColor())] == false) {
+
+			cout << "Player with color " << p->getColor() << " can bid first " << endl;
+			powerplants_Vector->printMarket();
+			cout << "\nPlayer " << p->getColor() << endl;
+
+			//Making player bid
+			while (!checkPP || !checkElektro) {
+
+				cout << "You currently have " << p->getElektro() << " elektros" << endl;
+				cout << "Please enter the minimum bid of the Power Plant you want from the Actual Market" << endl;
+				cout << "Power Plant minimum bid: " << endl;
+
+				cin >> plantBid;
+
+
+				checkPP = powerplants_Vector->isPowerplantInActualMarket(plantBid);
+				checkElektro = powerplants_Vector->hasEnoughElektroForMarket(p->getElektro());
+
+				if (!checkPP) {
+					cout << endl;
+					cout << "--ERROR-- This powerplant is not in the Actual Market --ERROR--" << endl << endl;
+				}
+				else if (!checkElektro) {
+					cout << endl;
+					cout << "--ERROR-- You do not have enough elektros for this Power Plant --ERROR--" << endl;
+				}
+
+			}
+
+			//Skip player that has bought
+			if (hasBought[getPosition(p->getColor())] == true) {
+				continue;
+			}
+			//Checking if other players have bought
+
+			//Everyone after current player still auctioning
+			while (tracker != getNumberOfPlayers()) {
+
+				if (tracker == getNumberOfPlayers() - 1) {
+					int winnerIndex = 0;
+					for (int k = 0; k < getNumberOfPlayers(); k++) {
+						if (hasAuction[k] == false)
+							winnerOfAuction = winnerIndex;
+						winnerIndex++;
+					}
+					break;
+				}
+				cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
+				cout << "@@@@ Starting Auction @@@@" << endl;
+				cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
+
+				string answer;
+				int playerBid;
+
+				p = getNextPlayer(*p);
+				while (hasAuction[getPosition(p->getColor())] == true) {
+					cout << "Player " << p->getColor() << " has given up auctioning" << endl; system("pause");
+					p = getNextPlayer(*p);
+				}
+				cout << endl;
+
+				if (p->getElektro() <= plantBid) {
+					cout << "Player " << p->getColor() << endl;
+					cout << "You do not have enough elektros to bid" << endl;
+					tracker++;
+					hasAuction[getPosition(p->getColor())] = true;
+					continue;
+				}
+
+				//At this point the player can auction
+				cout << "It's your turn Player " << p->getColor() << endl;
+				cout << "You currently have " << p->getElektro() << " elektros" << endl;
+				cout << "The current bid is " << plantBid << endl;
+				cout << "Do you want to bid on power plant? Type 'y' for yes or 'n' for no" << endl;
+				cin >> answer;
+
+				if (answer == "y") {
+					cout << "Please enter the amount you want to bid: " << endl;
+					cin >> playerBid;
+
+					bool bidTooLow = playerBid <= plantBid;
+					bool notEnoughElektro = playerBid > p->getElektro();
+
+					//Forfeit right to auction if wrong input. 
+					if (bidTooLow) {
+						cout << endl;
+						cout << "Your bid is too low" << endl;
+						hasAuction[getPosition(p->getColor())] = true;
+						tracker++;
+					}
+					else if (notEnoughElektro) {
+						cout << endl;
+						cout << "Your bid is too high" << endl;
+						hasAuction[getPosition(p->getColor())] = true;
+						tracker++;
+					}
+
+					if (bidTooLow == false && notEnoughElektro == false) {
+						//Player has entered valid bid.
+						plantBid = playerBid;
+						cout << "Bid has changed too: " << plantBid << endl; system("pause"); cout << endl;
+					}
+
+				}//End if yes
+
+				if (answer == "n") {
+					tracker++;
+					hasAuction[getPosition(p->getColor())] = true;
+				}
+
+			} //end while auction
+
+			//At this point tracker should be 2 i.e., everyone has taken a chance at auctioning
+			cout << "Player " << vector_player[winnerOfAuction]->getColor() << " has won" << endl;
+			hasBought[getPosition(vector_player[winnerOfAuction]->getColor())] = true;
+			system("pause");
+
+		}//If has not bought
+
+		cout << "This player " << p->getColor() << " has already bought" << endl; system("pause");
+
+
+	} //end for 
+
+
+
+
+	/*
+
+	//--------------------------------------------------------------------------
+	Player* p = vector_player[0];//first player bids
 	bool playerAlreadyBought = false;
 	while (true) {
 
@@ -232,7 +390,7 @@ void Board::buyPowerPlant() {
 		if (powerplants_Vector->getStep3Trigger()) {
 			cout << "Step 3 has started" << endl;
 			powerplants_Vector->getAndRemoveSpecificPowerplant(999999);
-			setStep3(); 
+			setStep3();
 			powerplants_Vector->setStep3Trigger(false);//to avoid conflict if it stays true
 		}
 	}
@@ -245,6 +403,7 @@ void Board::buyPowerPlant() {
 		}
 
 	}
+	*/
 }
 
 /* Step 3 - Buy raw material. In this part, the last player will begin. In other words, it's the reverse order of buying power plant who starts. */
@@ -383,7 +542,7 @@ void Board::building() {
 	EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 	SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 	TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-	
+
 
 	mapOfPlayersCity->setStep2(true);
 	mapOfPlayersCity->setStep3(true);
@@ -443,14 +602,14 @@ void Board::building() {
 					cout << "Player " << p->getColor() << " would you like to build a house?." << endl;
 					cout << "Type 'y' for yes or 'n' for no." << endl;
 					cin >> buildOption;
-				} 
-				else 
+				}
+				else
 				{
 
 					pair<vector<double>, vector<list<int> > > costAndPath = mapOfPlayersCity->getAvailableIndicesCost(p->getHouseManager()->getHouseIndices(), p->getElektro());
 					vector<double> costVector = costAndPath.first;
 					vector<list<int> > pathVector = costAndPath.second;
-					
+
 					//If there is no free city to put a house in
 					if (costAndPath == pair<vector<double>, vector<list<int> > >()) {
 						cout << "Player " << p->getColor() << "There is no city in that map that is free to play." << endl;
@@ -462,7 +621,7 @@ void Board::building() {
 						cout << "These are the houses you can purchase: " << endl;
 
 						//print indices
-						mapOfPlayersCity->printAvailableIndicesCost(p->getHouseManager()->getHouseIndices(), p->getElektro()); 
+						mapOfPlayersCity->printAvailableIndicesCost(p->getHouseManager()->getHouseIndices(), p->getElektro());
 
 						//Get input from player and get the position of the index in the vector
 						pair<int, int> indexPositionPair = pleaseChooseIndexToBuildIn(pathVector);
@@ -471,7 +630,7 @@ void Board::building() {
 
 						cout << "You are purchasing the house at Index " + playerIndex << endl;
 
-						
+
 						//Go from the shortest path and build houses that the player 
 						//does not currently own and have an empty space
 						for (int index : pathVector[indexPosition]) {
@@ -484,9 +643,9 @@ void Board::building() {
 								mapOfPlayersCity->setPlayerHouse(index, p->getColor()); //add house in map
 								cout << "House index " << index << " name: " << mapOfPlayersCity->getIndexName(index) << " purchased" << endl;
 							}
-							
+
 						}
-						
+
 						//Get cost of purchase of the index the player wants to purchase
 						int costOfPurchase = (int)costVector[indexPosition];
 						p->subtractMoney(costOfPurchase); //substract elektro
@@ -544,7 +703,7 @@ void Board::bureaucracy() {
 		cout << "*****************************************************************" << endl;
 		cout << "PLAYER " << p->getColor() << " has " << p->getHouseManager()->getHouseCount() << " houses." << endl;
 		cout << "Please note you can only power as many cities as you own. Any exceeding that will be wasted resources." << endl;
-		cout << "Do you wish to power any cities(Yes/No): "; 
+		cout << "Do you wish to power any cities(Yes/No): ";
 		cin >> decisionToPower; cout << endl;
 
 
@@ -552,7 +711,7 @@ void Board::bureaucracy() {
 		if (decisionToPower == "Yes" || decisionToPower == "yes" || decisionToPower == "YES" || decisionToPower == "y") {
 			int choice = -1;
 			int nbCitiesPowered = 0;
-			
+
 			//If player has no houses than they just get 10 elektros
 			if (p->getNumberHouses() == 0) {
 				choice = 0;
@@ -571,22 +730,22 @@ void Board::bureaucracy() {
 					//Checking for unique plants
 					for (int i = 0; i <= 2; i++) {
 						if (poweredPlants[i] == -1) {
-							poweredPlants[i] = choice; 
+							poweredPlants[i] = choice;
 
 							p->powerCity(choice);
 							nbCitiesPowered += p->getPowerplantPower(choice);
-						
+
 							cout << "You have powered " << nbCitiesPowered << " cities so far." << endl << endl;
 							break;
 						}
-						else if(poweredPlants[i] == choice){
-							cout <<"You have already powered that plant!" << endl << endl;
+						else if (poweredPlants[i] == choice) {
+							cout << "You have already powered that plant!" << endl << endl;
 							break;
 						}
 					}//End of for
 				}///End of if
-				
-				else if(choice != 0){
+
+				else if (choice != 0) {
 					cout << "Invalid choice" << endl << endl;
 				}
 				system("pause");
@@ -603,10 +762,10 @@ void Board::bureaucracy() {
 			p->getPaid(0);
 		}
 	}
-	
+
 	system("pause");
 	//Replenish Resource Market according to step
-	if(step2==true)
+	if (step2 == true)
 		market->refill(2, getNumberOfPlayers());
 
 	else if (step3 == true)
@@ -645,6 +804,11 @@ int Board::getNumberOfPlayers() {
 Player * Board::getNextPlayer(Player & p) {
 	if (&p == &*vector_player[0]) {
 		return vector_player[1];
+	}
+	if (getNumberOfPlayers() == 3) {
+		if (&p == &*vector_player[1]) {
+			return vector_player[2];
+		}
 	}
 	return vector_player[0];
 
@@ -690,7 +854,7 @@ void Board::houseScoringTrack() {
 
 
 //Prompt asking you to choose the index you want to build in. Used in building phase
-pair<int,int> Board::pleaseChooseIndexToBuildIn(vector<list<int> > vectorListOfPaths) {
+pair<int, int> Board::pleaseChooseIndexToBuildIn(vector<list<int> > vectorListOfPaths) {
 
 	pair<int, int> indexPositionPair;
 	int index;
@@ -731,7 +895,7 @@ pair<int,int> Board::pleaseChooseIndexToBuildIn(vector<list<int> > vectorListOfP
 
 			indexPositionPair.first = index; //set map index
 			indexPositionPair.second = positionOfIndex; //set position or the index in the vectorList
-			break;  
+			break;
 		}
 	}
 
@@ -823,7 +987,7 @@ void Board::setStep3() {
 int Board::getHighestNumHousesOfPlayers()
 {
 	int maxHouse = -1;
-	
+
 	for (Player* player : vector_player) {
 		int houseCount = player->getNumberHouses();
 
