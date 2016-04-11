@@ -609,6 +609,20 @@ void Board::bureaucracy() {
 		system("EXIT");
 	}
 
+	//Place the highest numbered powerplant at the end of the list
+	if (!step3) {
+		powerplants_Vector->bureaucracyPhaseReorder();
+		if (powerplants_Vector->getStep3Trigger()) {
+			cout << "Step 3 has started..." << endl;
+			setStep3();
+			powerplants_Vector->setStep3Trigger(false);//to avoid conflict if it stays true
+		}
+	}
+	//step 3 remove the lowest powerplant
+	else {
+		powerplants_Vector->removeLowestPowerplant();
+	}
+
 	turnCounter++; //the first round going through this will be different then afterwards it will become the same
 }
 
