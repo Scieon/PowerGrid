@@ -553,6 +553,10 @@ void Board::bureaucracy() {
 		if (decisionToPower == "Yes" || decisionToPower == "yes" || decisionToPower == "YES" || decisionToPower == "y") {
 			int choice = -1;
 			int nbCitiesPowered = 0;
+			
+			//If player has no houses than they just get 10 elektros
+			if (p->getNumberHouses() == 0)
+				choice = 0;
 
 			while (choice != 0) {
 				p->showInfo();

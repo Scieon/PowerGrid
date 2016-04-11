@@ -80,13 +80,14 @@ int test() {
 	//Add the number of players in the vector collection
 	for (int i = 1; i < 3; i++)
 	{
-		/*
+		
 		cout << "\nPlayer " << i << endl << "Please insert your color: ";
 		cin >> color;
 		Player* p = new Player(color);
 		vector_player.push_back(p);
 
-		*/
+		
+		/*
 		Player* player1 = new Player("Red");
 		
 
@@ -105,7 +106,7 @@ int test() {
 		player1->addPlant(pp21);
 
 		vector_player.push_back(player1);
-	
+	*/
 	}
 
 	//Now we have to get the areas played from players
@@ -140,9 +141,9 @@ int test() {
 
 	
 
-		//turn->turnOrder();
-		//turn->buyPowerPlant();
-		// turn->buyRawMaterial();
+		turn->turnOrder();
+		turn->buyPowerPlant();
+		 turn->buyRawMaterial();
 		//turn->building();
 
 		turn->bureaucracy();
@@ -194,7 +195,7 @@ int main(){
 			turn->buyPowerPlant();
 			turn->buyRawMaterial();
 			turn->building();
-			//turn->bureaucracy();
+			turn->bureaucracy();
 			turn->incrementTurnCounter(); //HAS BE REMOVED AFTER WE FINISH BUREACRACY
 
 			if (turn->checkMapCorrectness()) {

@@ -68,7 +68,9 @@ string Player::getColor() {
 void Player::getPaid(int houses) {
 
 	int paymentTable[21] = { 10, 22, 33, 44, 54, 64, 73, 82, 90, 98, 105, 112, 118, 124, 129, 134, 138, 142, 145, 148, 150 };
-	this->setElektro(this->elektro + paymentTable[getNumberHouses()]);
+	this->setElektro(this->elektro + paymentTable[houses]);
+	
+	cout << "Player " << getColor() << " has been paid " << paymentTable[houses] << " elektros." << endl;
 
 }
 
