@@ -683,6 +683,7 @@ void Board::bureaucracy() {
 	cout << " ///////////////////////////////////////////////////////" << endl;
 
 	string decisionToPower;
+	vector<int> endGameNbCitiesPowered;
 
 	reverse(vector_player.begin(), vector_player.end());
 	for (Player* p : vector_player) {
@@ -747,12 +748,59 @@ void Board::bureaucracy() {
 				nbCitiesPowered = p->getNumberHouses();
 			}
 			p->getPaid(nbCitiesPowered);
+
+			//if end game
+			if (endGameTriggered) {
+				endGameNbCitiesPowered.push_back(nbCitiesPowered);
+			}
 		}
 		//Player chooses to power no cities
 		else {
 			p->getPaid(10);
 		}
 	}
+
+	if (endGameTriggered) {
+
+		//get maximum value in vector
+		int max = 0;
+		for (int i : endGameNbCitiesPowered) {
+			if (i > max) {
+				max = i;
+			}
+		}
+
+		int nbOfOccurenceOfMaxValue = std::count(endGameNbCitiesPowered.begin(), endGameNbCitiesPowered.end(), max);
+
+		if (nbOfOccurenceOfMaxValue == 1) {
+			int index = std::find(endGameNbCitiesPowered.begin(), endGameNbCitiesPowered.end(), max) - endGameNbCitiesPowered.begin();
+
+			cout << "Player " << vector_player[index]->getColor() << " has won the game with " << max << " houses powered" << endl;
+			cout << "Thank you for playing Funkenschlag" << endl;
+			cout << "EXITING PROGRAM! ..." << endl;
+			system("EXIT");
+		}
+		else {
+			//I hate you
+			cout << "There is a tie with 2 or more players having the same number of highest number of powered houses" << endl;
+			cout << "Calculating who between them has the highest powerplant" << endl;
+
+			/*
+			//https://stackoverflow.com/questions/25846235/finding-the-indexes-of-all-occurrences-of-an-element-in-a-vector
+			int highestPowerplant = 0;
+			std::vector<int>::iterator iter = endGameNbCitiesPowered.begin();
+			while ((iter = std::find_if(iter, endGameNbCitiesPowered.end(), max)) != endGameNbCitiesPowered.end())
+			{
+				// Do something with iter
+
+				iter++;
+			}
+			*/
+
+		}
+
+	}
+
 
 	system("pause");
 	//Replenish Resource Market according to step
