@@ -511,14 +511,25 @@ void Board::building() {
 		}
 	}
 
-	//Get each player house size and activate step2 if conditions are met
+	//Reorder the market according to the highest number of houses
+	//activate step3 if conditions are met
 	powerplants_Vector->buildingPhaseReorder(getHighestNumHousesOfPlayers());
+
+	//Set step2 if we are not in step2 or in step3 already, and we have more than 7 houses
+	if (!step2 && !step3 && getHighestNumHousesOfPlayers() >= 7 ) {
+		setStep2();
+	}
 
 	//if step3 has been triggered then set step3 to all and put the trigger back to false
 	if (powerplants_Vector->getStep3Trigger()) {
 		cout << "Step 3 has started..." << endl;
 		setStep3();
 		powerplants_Vector->setStep3Trigger(false);//to avoid conflict if it stays true
+	}
+
+	if (getHighestNumHousesOfPlayers() >= 17) {
+		endGameTriggered = true;
+		cout << "End game has been triggered! At least 1 player has 17 houses or more" << endl;
 	}
 
 }
@@ -817,6 +828,12 @@ void Board::setStep3() {
 	step3 = true;
 	mapOfPlayersCity->setStep3(true);
 	powerplants_Vector->setStep3(true);
+}
+
+void Board::setStep2()
+{
+	step2 = true;
+	mapOfPlayersCity->setStep2(true);
 }
 
 //returns highest number of houses of a player

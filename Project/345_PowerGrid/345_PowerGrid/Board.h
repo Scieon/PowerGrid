@@ -24,6 +24,7 @@ public:
 	int indexOfHighest(vector<Player*> vector, int index);
 	void swapValues(Player& p1, Player& p2);
 	void setStep3();
+	void setStep2();
 	int getNumberOfPlayers();
 
 	//prompt player to purchase index
@@ -48,6 +49,7 @@ private:
 
 	bool step2;
 	bool step3;
+	bool endGameTriggered = false;
 
 
 	
