@@ -8,6 +8,9 @@
 #include "Board.h"
 #include "ResourceMarket.h"
 #include "Powerplant.h"
+#include "BoardBuilder.h"
+#include "NormalGameBuilder.h"
+#include "GameLoaderSaver.h"
 
 using namespace std;
 
@@ -174,6 +177,14 @@ int x(){
 	if (answer != "y") {
 		//Load game
 		Board * turn = new Board();
+
+
+		GameLoaderSaver gameLoaderSaver; //director
+		NormalGameBuilder* normalGame = new NormalGameBuilder;
+		gameLoaderSaver.setGameBuilder(normalGame);
+		gameLoaderSaver.loadBoard(); //load board in builder pattern
+		Board * turn = gameLoaderSaver.getBoard();
+		
 
 		turn->loadGame(); //loads map, pplants, resource market
 

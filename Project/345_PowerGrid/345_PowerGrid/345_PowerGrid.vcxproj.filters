@@ -28,6 +28,9 @@
     <Filter Include="Source Files\Test">
       <UniqueIdentifier>{abf9fe21-4811-4c76-982a-62291e453593}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Builder Pattern">
+      <UniqueIdentifier>{90de3d4e-16e1-429a-8838-fa16e7f6c218}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="House.cpp">
@@ -158,10 +161,20 @@
     <ClInclude Include="Board.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameLoaderSaver.h">
+      <Filter>Header Files\Builder Pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="BoardBuilder.h">
+      <Filter>Header Files\Builder Pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalGameBuilder.h">
+      <Filter>Header Files\Builder Pattern</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Project2.vcxproj" />
     <None Include="Project2.vcxproj.filters" />
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>
