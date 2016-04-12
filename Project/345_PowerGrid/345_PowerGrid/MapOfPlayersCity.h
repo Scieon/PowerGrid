@@ -8,6 +8,7 @@ using namespace std;
 class MapOfPlayersCity
 {
 public:
+	MapOfPlayersCity();
 	MapOfPlayersCity(Map * map);
 	~MapOfPlayersCity();
 

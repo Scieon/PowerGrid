@@ -344,26 +344,50 @@ void PowerplantManager::setStep3Trigger(bool value)
 
 void PowerplantManager::buildingPhaseReorder(int highestNumberOfHouses)
 {
-	int count = 0;
-	for (int i = 0; i < 8; i++) {
-		if ((*powerplantsVector)[i].getBid() == -1) {
-			step3trigger = true;
-			continue;
+	if (step3) {
+		//if we are in step3 then erase the first powerplant
+		powerplantsVector->erase(powerplantsVector->begin());
+		//get ppvector.size
+		int ppVSize = powerplantsVector->size();
+
+		if (ppVSize >= 6) {
+			for (int i = 0; i < 6; i++) {
+				if ((*powerplantsVector)[i].getBid() <= highestNumberOfHouses) {
+					powerplantsVector->erase(powerplantsVector->begin() + i);
+					sortMarket();
+					i = 0; //reset i=0 so it rechecks if a smaller pp is found
+					continue;
+				}
+			}
 		}
-		else if ((*powerplantsVector)[i].getBid() <= highestNumberOfHouses) {
-			powerplantsVector->erase(powerplantsVector->begin() + i);
-			sortMarket();
-			i = 0; //reset i=0 so it rechecks if a smaller pp is found
-			continue;
+		//else do nothing since the market will still be sorted and we will just remove the lowest powerplant
+	}
+	else {
+		//in step1 or step2
+		int count = 0;
+		for (int i = 0; i < 8; i++) {
+			if ((*powerplantsVector)[i].getBid() == -1) {
+				step3trigger = true;
+				continue;
+			}
+			else if ((*powerplantsVector)[i].getBid() <= highestNumberOfHouses) {
+				powerplantsVector->erase(powerplantsVector->begin() + i);
+				sortMarket();
+				i = 0; //reset i=0 so it rechecks if a smaller pp is found
+				continue;
+			}
 		}
+
+		if (step3trigger) {
+			cout << "Step 3 card found in building phase. Deleting step3 card, lowest powerplant card and shuffling the drawing deck" << endl;
+			powerplantsVector->erase(powerplantsVector->begin()); //delete the step3 card
+			powerplantsVector->erase(powerplantsVector->begin() + 1); //delete the lowest powerplant
+			random_shuffle(powerplantsVector->begin() + 6, powerplantsVector->end()); //shuffling the draw pile
+		}
+
 	}
 
-	if (step3trigger) {
-		cout << "Step 3 card found in building phase. Deleting step3 card, lowest powerplant card and shuffling the drawing deck" << endl;
-		powerplantsVector->erase(powerplantsVector->begin()); //delete the step3 card
-		powerplantsVector->erase(powerplantsVector->begin() + 1); //delete the lowest powerplant
-		random_shuffle(powerplantsVector->begin() + 6, powerplantsVector->end()); //shuffling the draw pile
-	}
+	
 }
 
 void PowerplantManager::bureaucracyPhaseReorder()

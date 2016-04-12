@@ -10,6 +10,11 @@ using namespace std;
 //Player's houses location
 
 
+MapOfPlayersCity::MapOfPlayersCity()
+{
+	map = new Map();
+}
+
 MapOfPlayersCity::MapOfPlayersCity(Map * map) {
 	player_houses = new vector<vector<string> >(42);
 	city_manager = CityManager();

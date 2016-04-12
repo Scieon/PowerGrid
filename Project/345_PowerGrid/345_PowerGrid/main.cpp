@@ -8,7 +8,6 @@
 #include "Board.h"
 #include "ResourceMarket.h"
 #include "Powerplant.h"
-#include "IOFile.h"
 
 using namespace std;
 
@@ -174,17 +173,7 @@ int x(){
 	cin >> answer;
 	if (answer != "y") {
 		//Load game
-		Player* player1 = new Player("not");
-		Player* player2 = new Player("important");
-		std::vector<Player*> vector_player;
-		vector_player.push_back(player1);
-		vector_player.push_back(player2);
-		IOFile::loadPlayer(*player1, *player2); //load players
-		AreaManager * area_manager = new AreaManager(); //do not delete
-		area_manager->setGameAreas(*IOFile::loadAreas()); //load areas
-		Map *gameMap = new Map(area_manager); //load map
-
-		Board * turn = new Board(vector_player, gameMap);
+		Board * turn = new Board();
 
 		turn->loadGame(); //loads map, pplants, resource market
 

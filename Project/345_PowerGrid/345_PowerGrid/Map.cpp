@@ -21,7 +21,7 @@ const double max_weight = std::numeric_limits<double>::infinity();
 
 //HardCoded values of Map
 Map::Map() {
-
+	area_manager = new AreaManager();
 }
 
 Map::Map(AreaManager *area)

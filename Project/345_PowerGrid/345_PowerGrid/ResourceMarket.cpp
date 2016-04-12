@@ -1,6 +1,5 @@
 #include "ResourceMarket.h"
 #include "ResourceManager.h"
-#include "IOFile.h"
 #include <iostream>
 #include <fstream>
 #include <istream>

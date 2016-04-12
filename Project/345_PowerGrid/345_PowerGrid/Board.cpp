@@ -2,6 +2,9 @@
 #include <algorithm>
 #include <string>
 #include <vector>
+#include <fstream>
+#include <istream>
+#include <sstream>
 
 #include "Board.h"
 #include "PowerPlant.h"
@@ -9,7 +12,6 @@
 #include "PowerPlantManager.h"
 #include "Map.h"
 #include "MapOfPlayersCity.h"
-#include "IOFile.h"
 
 
 using namespace std;
@@ -19,6 +21,8 @@ Board::Board() {
 	turnCounter = 1; //keep track round number
 	nbOfPlayer = 0; //how many people are playing in this game. for now we will have 2 only.
 	market = new ResourceMarket();
+	powerplants_Vector = new PowerplantManager();
+	mapOfPlayersCity = new MapOfPlayersCity();
 	step2 = false;
 	step3 = false;
 }
@@ -784,14 +788,25 @@ void Board::building() {
 		}
 	}
 
-	//Get each player house size and activate step2 if conditions are met
+	//Reorder the market according to the highest number of houses
+	//activate step3 if conditions are met
 	powerplants_Vector->buildingPhaseReorder(getHighestNumHousesOfPlayers());
+
+	//Set step2 if we are not in step2 or in step3 already, and we have more than 7 houses
+	if (!step2 && !step3 && getHighestNumHousesOfPlayers() >= 7 ) {
+		setStep2();
+	}
 
 	//if step3 has been triggered then set step3 to all and put the trigger back to false
 	if (powerplants_Vector->getStep3Trigger()) {
 		cout << "Step 3 has started..." << endl;
 		setStep3();
 		powerplants_Vector->setStep3Trigger(false);//to avoid conflict if it stays true
+	}
+
+	if (getHighestNumHousesOfPlayers() >= 17) {
+		endGameTriggered = true;
+		cout << "End game has been triggered! At least 1 player has 17 houses or more" << endl;
 	}
 
 }
@@ -930,19 +945,19 @@ Player * Board::getNextPlayer(Player & p) {
 
 void Board::loadGame()
 {
-	IOFile::loadMap(mapOfPlayersCity);
-	IOFile::loadPowerplants(powerplants_Vector);
-	IOFile::loadNbPlayersAndTurnCoutner(nbOfPlayer, turnCounter);
+	loadMap();
+	loadPowerplants();
+	loadNbPlayersAndTurnCoutner();
+	loadPlayer();
 	market->loadMarket();
 }
 
 void Board::saveGame()
 {
-	IOFile::saveAreas(mapOfPlayersCity);
-	IOFile::saveMap(mapOfPlayersCity);
-	IOFile::saveNbPlayerAndTurnCounter(nbOfPlayer, turnCounter);
-	IOFile::savePlayer(*vector_player[0], *vector_player[1]);
-	IOFile::savePowerplants(powerplants_Vector);
+	saveMap();
+	saveNbPlayerAndTurnCounter();
+	savePlayer();
+	savePowerplants();
 	market->saveMarket();
 }
 
@@ -952,11 +967,38 @@ void Board::incrementTurnCounter() {
 
 bool Board::checkMapCorrectness() {
 
-	bool mapCorrect = IOFile::verifyMapCorrectness(mapOfPlayersCity);
-	if (mapCorrect) {
-		return true;
+	vector<int> game_indices = mapOfPlayersCity->getMap()->getPlayedIndicesVector();
+	vector<vector<string> > * player_houses = mapOfPlayersCity->getPlayerHousesVector();
+
+	vector<int> * indicesNotInGame = new vector<int>();
+
+	//finds the indices that we are not playing and stores it in indicesNotInGame
+	for (unsigned int i = 0; i < player_houses->size(); i++) {
+
+		bool integerIsInGameIndices = find(game_indices.begin(), game_indices.end(), i) != game_indices.end();
+
+		if (integerIsInGameIndices) {
+			continue; //present
+		}
+		else {
+			indicesNotInGame->push_back(i); //not present
+		}
 	}
-	return false;
+
+
+	//If there is a player in an location where we are not playing
+	for (int index : *indicesNotInGame) {
+		if ((*player_houses)[index].size() != 0) {
+			delete indicesNotInGame;
+			indicesNotInGame = NULL;
+			return false;
+			//Map is not correct, there is player in index not in game
+		}
+	}
+
+	delete indicesNotInGame;
+	indicesNotInGame = NULL;
+	return true;
 }
 
 //Keeps track of the number of houses each player has (the scoring track on top of the board game)
@@ -1097,6 +1139,12 @@ void Board::setStep3() {
 	powerplants_Vector->setStep3(true);
 }
 
+void Board::setStep2()
+{
+	step2 = true;
+	mapOfPlayersCity->setStep2(true);
+}
+
 //returns highest number of houses of a player
 int Board::getHighestNumHousesOfPlayers()
 {
@@ -1112,4 +1160,389 @@ int Board::getHighestNumHousesOfPlayers()
 
 	return maxHouse;
 
+}
+
+void Board::savePlayer() {
+	ofstream output;
+	// Create/open a file
+	output.open("player.txt");
+
+	//counter
+	int i = 1;
+	for (Player* p : vector_player) {
+		vector<House> vec_house1 = p->getHouseManager()->getHouseVector();
+		vector<Powerplant> vec_pp1 = *p->getPowerplantsVector();
+
+		cout << "Saving Player " << i << endl;
+		output << "Player1" << endl;
+		output << "Elektro=" << p->getElektro() << endl;
+		output << "Color=" << p->getColor() << endl;
+		output << "Coal=" << p->getResource("Coal") << endl;
+		output << "Oil=" << p->getResource("Oil") << endl;
+		output << "Garbage=" << p->getResource("Garbage") << endl;
+		output << "Uranium=" << p->getResource("Uranium") << endl;
+
+		output << "Player_Houses:" << endl;
+		for (House house : vec_house1) {
+			output << house.getIndex() << "," << house.getLocation() << endl;
+		}
+		output << "End_Player_Houses" << endl;
+
+		output << "Player_Powerplants" << endl;
+		for (Powerplant pp : vec_pp1) {
+			output << "Bid=" << pp.getBid() <<
+				" Type=" << pp.getType() <<
+				" Resource_required=" << pp.getResourceReq() <<
+				" Cities_powered=" << pp.getCitiesPowered() <<
+				endl;
+		}
+		output << "End_Player_Powerplants" << endl;
+
+		cout << "Player " << i << " saved" << endl;
+	}
+
+	output.close();
+}
+
+void Board::loadPlayer() {
+
+	ifstream input("player.txt");
+
+	string line;
+	int pos;
+
+	vector_player = vector<Player*>(); //create 3 new players
+	Player * p1 = new Player("not important");
+	Player * p2 = new Player("not important");
+	Player * p3 = new Player("not important");
+
+	vector_player.push_back(p1);
+	vector_player.push_back(p2);
+	vector_player.push_back(p3);
+
+	for (Player* p : vector_player) {
+	
+		input >> line; //Player#
+
+
+		input >> line;
+		pos = line.find("=");
+		p->setElektro(stoi(line.substr(pos + 1))); //elektro
+
+		input >> line;
+		pos = line.find("=");
+		p->setColor(line.substr(pos + 1)); //Color
+
+		input >> line;
+		pos = line.find("=");
+		p->addResource("Coal", stoi(line.substr(pos + 1))); //coal
+
+		input >> line;
+		pos = line.find("=");
+		p->addResource("Oil", stoi(line.substr(pos + 1))); //oil
+
+		input >> line;
+		pos = line.find("=");
+		p->addResource("Garbage", stoi(line.substr(pos + 1))); //garbage
+
+		input >> line;
+		pos = line.find("=");
+		p->addResource("Uranium", stoi(line.substr(pos + 1))); //uranium
+
+		input >> line; //Player_Houses:
+
+		input >> line;
+
+		while (line != "End_Player_Houses") {
+
+			pos = line.find(",");
+			int index = stoi(line.substr(0, pos)); //get index
+			string location = line.substr(pos + 1); //get location
+
+			House * house = new House(index, location);
+			p->getHouseManager()->addHouses(*house);
+			input >> line;
+		}
+		input >> line; //End_Player_Houses
+		input >> line; //Player_Powerplants
+
+		while (line != "End_Player_Powerplants") {
+
+			int min_bid;
+			string type;
+			int resource_required;
+			int city_powered;
+
+			pos = line.find("=");
+			min_bid = stoi(line.substr(pos + 1));
+
+			input >> line;
+
+			pos = line.find("=");
+			type = line.substr(pos + 1);
+
+			input >> line;
+
+			pos = line.find("=");
+			resource_required = stoi(line.substr(pos + 1));
+
+			input >> line;
+
+			pos = line.find("=");
+			city_powered = stoi(line.substr(pos + 1));
+
+			p->addPlant(new Powerplant(min_bid, type, resource_required, city_powered));
+
+			input >> line;
+			
+		}
+	
+	}
+
+	input.close();
+}
+
+//saves the areas and the Map
+void Board::saveMap() {
+
+	//save areas
+	ofstream outputAreas;
+	// Create/open a file
+	outputAreas.open("area.txt");
+
+	outputAreas << "Areas" << endl;
+	//Save map areas
+	vector<bool> values(*(mapOfPlayersCity->getMap()->getAreasPlayed())); //shallow copy
+	int i = 0;//counter
+	for (bool val : values) {
+		if (val) {
+			outputAreas << i << endl;
+		}
+		i++;
+	}
+
+	outputAreas << endl;
+	outputAreas.close();
+
+	//
+	//save map part
+	//
+	vector<vector<string> > * player_houses = mapOfPlayersCity->getPlayerHousesVector();
+
+	ofstream outputMap;
+	// Create/open a file
+	outputMap.open("map.txt");
+	cout << "Saving map..." << endl;
+
+	//Saves player houses
+	for (unsigned int i = 0; i < player_houses->size(); i++) {
+		if ((*player_houses)[i].size() == 0) {
+			outputMap << i << endl;
+		}
+		else if ((*player_houses)[i].size() == 1) {
+			outputMap << i << "," << (*player_houses)[i][0] << endl;
+		}
+		else if ((*player_houses)[i].size() == 2) {
+			outputMap << i << "," << (*player_houses)[i][0] << "," << (*player_houses)[i][1] << endl;
+		}
+		else if ((*player_houses)[i].size() == 3) {
+			outputMap << i << "," << (*player_houses)[i][0] << "," << (*player_houses)[i][1] << "," << (*player_houses)[i][2] << endl;
+		}
+	}
+
+
+	cout << "Map saved..." << endl;
+	outputMap.close();
+}
+
+void Board::loadMap() {
+
+	ifstream inputAreas("area.txt");;
+	string line;
+	inputAreas >> line; //Areas
+	inputAreas >> line;
+
+	int i1 = stoi(line); //area1
+	inputAreas >> line;
+	int i2 = stoi(line); //area2
+	inputAreas >> line;
+	int i3 = stoi(line); //area3
+
+	Area * a1 = new Area(i1);
+	Area * a2 = new Area(i2);
+	Area * a3 = new Area(i3);
+
+	//Used for areamanager constructor
+	vector<Area> * areas = new vector<Area>();
+	areas->push_back(*a1);
+	areas->push_back(*a2);
+	areas->push_back(*a3);
+
+	inputAreas.close();
+
+	AreaManager * area_manager = new AreaManager(); //do not delete
+	area_manager->setGameAreas(*areas); //load areas
+	Map *gameMap = new Map(area_manager); //load map
+
+	mapOfPlayersCity = new MapOfPlayersCity(gameMap); //load the areas into the map
+
+	//
+	//Load map section
+	//
+	ifstream inputMap("map.txt");
+
+	vector<vector<string> > * loadMap = new vector<vector<string> >(42);
+
+	string skip;
+
+	//Fills up loadMap vector from map.txt
+	while (!inputMap.eof()) {
+
+		inputMap >> skip;
+
+		//splits the string with the delimiter ','
+		vector<string> internal;
+		stringstream ss(skip); // Turn the string into a stream.
+		string tok;
+		//put string into vector
+		while (getline(ss, tok, ',')) {
+			internal.push_back(tok);
+		}
+
+		//get the index
+		int index = stoi(internal[0]);
+
+		//no player
+		if (internal.size() == 1) {
+
+		}
+		//1 player
+		else if (internal.size() == 2) {
+
+			(*loadMap)[index].push_back(internal[1]);
+		}
+		//2 player
+		else if (internal.size() == 3) {
+
+			(*loadMap)[index].push_back(internal[1]);
+			(*loadMap)[index].push_back(internal[2]);
+		}
+		//3 player
+		else if (internal.size() == 4) {
+
+			(*loadMap)[index].push_back(internal[1]);
+			(*loadMap)[index].push_back(internal[2]);
+			(*loadMap)[index].push_back(internal[3]);
+		}
+	}
+
+
+	//Loads the players into map 
+	mapOfPlayersCity->loadPlayerHouses(*loadMap); 
+
+	delete loadMap;
+	loadMap = NULL;
+
+	inputMap.close();
+}
+
+
+void Board::savePowerplants()
+{
+	ofstream output;
+	// Create/open a file
+	output.open("powerplant.txt");
+
+	output << "Powerplants" << endl;
+	vector<Powerplant> * ppVector = powerplants_Vector->getPowerplantVector();
+
+	for (Powerplant pp : *ppVector) {
+		output << "Bid=" << pp.getBid() <<
+			" Type=" << pp.getType() <<
+			" Resource_required=" << pp.getResourceReq() <<
+			" Cities_powered=" << pp.getCitiesPowered() <<
+			endl;
+	}
+	output.close();
+}
+
+void Board::loadPowerplants()
+{
+	ifstream input;
+	// Create/open a file
+	input.open("powerplant.txt");
+
+	vector<Powerplant> * pp_vector = new vector<Powerplant>();
+	int pos; //position
+	string line;
+
+	input >> line; //powerplants
+	input >> line;
+	while (!input.eof()) {
+
+		int min_bid;
+		string type;
+		int resource_required;
+		int city_powered;
+
+		pos = line.find("=");
+		min_bid = stoi(line.substr(pos + 1));
+
+		input >> line;
+
+		pos = line.find("=");
+		type = line.substr(pos + 1);
+
+		input >> line;
+
+		pos = line.find("=");
+		resource_required = stoi(line.substr(pos + 1));
+
+		input >> line;
+
+		pos = line.find("=");
+		city_powered = stoi(line.substr(pos + 1));
+
+		pp_vector->push_back(*new Powerplant(min_bid, type, resource_required, city_powered));
+
+		input >> line;
+	}
+
+	powerplants_Vector->setPowerplantVector(pp_vector);
+
+	input.close();
+}
+
+
+void Board::saveNbPlayerAndTurnCounter()
+{
+	ofstream output;
+	// Create/open a file
+	output.open("nbPlayerAndTurn.txt");
+
+	output << "NbOfPlayers=" << nbOfPlayer << endl;
+	output << "TurnCount=" << turnCounter << endl;
+
+	output.close();
+}
+
+void Board::loadNbPlayersAndTurnCoutner()
+{
+	ifstream input;
+	// Create/open a file
+	input.open("nbPlayerAndTurn.txt");
+
+	string line;
+	int pos;
+
+	input >> line; //NbOfPlayers
+	pos = line.find("=");
+	nbOfPlayer = stoi(line.substr(pos + 1));
+
+	input >> line;
+
+	pos = line.find("="); //TurnCount
+	turnCounter = stoi(line.substr(pos + 1));
+
+	input.close();
 }

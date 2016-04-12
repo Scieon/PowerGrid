@@ -21,9 +21,11 @@ public:
 	void houseScoringTrack();
 	void reorderPlayersHighestNumHouses();
 	int getHighestNumHousesOfPlayers();
+	
 	int indexOfHighest(vector<Player*> vector, int index);
 	void swapValues(Player& p1, Player& p2);
 	void setStep3();
+	void setStep2();
 	int getNumberOfPlayers();
 
 
@@ -31,13 +33,23 @@ public:
 	pair<int, int> pleaseChooseIndexToBuildIn(vector<list<int>> vectorListOfPaths);
 	int pleaseChooseIndexToBuildIn();
 	
-
-
-	void loadGame();
-	void saveGame();
 	void incrementTurnCounter(); //TO BE REMOVED AFTER WE FINISH BUREACRACY!
 
+
 	bool checkMapCorrectness();
+
+	//general load/savegame
+	void loadGame();
+	void saveGame();
+	//Save Game section
+	void savePlayer();
+	void loadPlayer();
+	void saveMap();
+	void loadMap();
+	void savePowerplants();
+	void loadPowerplants();
+	void saveNbPlayerAndTurnCounter();
+	void loadNbPlayersAndTurnCoutner();
 
 private:
 	int turnCounter;
@@ -49,6 +61,7 @@ private:
 
 	bool step2;
 	bool step3;
+	bool endGameTriggered = false;
 
 
 	
