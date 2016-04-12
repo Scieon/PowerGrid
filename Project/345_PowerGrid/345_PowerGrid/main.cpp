@@ -207,7 +207,7 @@ int x(){
 		std::vector<Player*> vector_player;
 
 		//Add the number of players in the vector collection
-		for (int i = 1; i < 3; i++)
+		for (int i = 1; i < 4; i++)
 		{
 			cout << "\nPlayer " << i << endl << "Please insert your color: ";
 			cin >> color;

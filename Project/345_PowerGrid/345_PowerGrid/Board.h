@@ -23,6 +23,8 @@ public:
 	int getHighestNumHousesOfPlayers();
 	
 	int indexOfHighest(vector<Player*> vector, int index);
+	void reOrderHighestPlayerPwp();
+	int indexOfHighestPwp(vector<Player*> vector, int startIndex);
 	void swapValues(Player& p1, Player& p2);
 	void setStep3();
 	void setStep2();

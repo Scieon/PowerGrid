@@ -147,10 +147,12 @@ void Board::buyPowerPlant() {
 			continue;
 		}
 
+		//Fail-safe band-aid fix 
 		if (i > 0) {
 			if (vector_player[i - 1]->hasBought == true)
 				tracker--;
 		}
+
 		cout << "Player with color " << p->getColor() << " can bid first " << endl;
 		powerplants_Vector->printMarket();
 		cout << "\nPlayer " << p->getColor() << endl;
@@ -376,152 +378,9 @@ void Board::buyPowerPlant() {
 
 	//First round will tell if there is an order change depending who bought the highest power plant
 	if (turnCounter == 1) {
-		if (vector_player[0]->getHighestMinBid() < vector_player[1]->getHighestMinBid()) {
-			reverse(vector_player.begin(), vector_player.end());
-			cout << "The first player for next round (meaning the last player with lowest powerplant number) will be, PLAYER " << vector_player[1]->getColor() << endl;
-		}
-
+		reOrderHighestPlayerPwp();
 	}
 
-	//-- OLD AUCTION PHASE FROM BUILD 1 ONLY WORKS FOR 2 PLAYERS --//
-	/*
-
-	//--------------------------------------------------------------------------
-	Player* p = vector_player[0];//first player bids
-	bool playerAlreadyBought = false;
-	while (true) {
-
-
-		cout << "Player with color " << p->getColor() << " can bid first " << endl;
-
-		powerplants_Vector->printMarket();
-
-		cout << endl;
-		cout << "Player " << p->getColor() << endl;
-		cout << "You currently have " << p->getElektro() << " elektros" << endl;
-		cout << "Please enter the minimum bid of the Power Plant you want from the Actual Market" << endl;
-		cout << "Power Plant minimum bid: " << endl;
-
-		int plantBid;
-		cin >> plantBid;
-
-		bool checkPP = powerplants_Vector->isPowerplantInActualMarket(plantBid);
-		bool checkElektro = powerplants_Vector->hasEnoughElektroForMarket(p->getElektro());
-
-		while (!checkPP || !checkElektro) {
-			if (!checkPP) {
-				cout << endl;
-				cout << "--ERROR-- This powerplant is not in the Actual Market --ERROR--" << endl << endl;
-			}
-			else if (!checkElektro) {
-				cout << endl;
-				cout << "--ERROR-- You do not have enough elektros for this Power Plant --ERROR--" << endl;
-			}
-			cout << "You currently have " << p->getElektro() << " elektros" << endl;
-			cout << "Please enter the minimum bid of the Power Plant you want to buy in the Actual Market" << endl;
-			cout << "Power Plant minimum bid: " << endl;
-			cin >> plantBid;
-			checkPP = powerplants_Vector->isPowerplantInActualMarket(plantBid);
-			checkElektro = powerplants_Vector->hasEnoughElektroForMarket(plantBid);
-		}
-
-		//Checks if the other player already bought a powerplant -- just works for 1 round. If yes, then there is no need for an auction.
-		//The player with no powerplant will automatically buy the lowest plantBid without the other player interfering
-		if (getNextPlayer(*p)->getPowerplantsVector()->size() == 1 && playerAlreadyBought) {
-			p->addPlant(powerplants_Vector->getAndRemoveSpecificPowerplant(plantBid));
-			p->setElektro(p->getElektro() - plantBid);
-			cout << "\nPlayer " << p->getColor() << " has " << p->getElektro() << "." << endl << endl;
-			break;
-			//If both players bought a powerplant on the first round then break from the first while (stop buying powerplant)
-			if (p->getPowerplantsVector()->size() == 1) {
-				break;
-			}
-		}
-
-		if (playerAlreadyBought) {
-			break;
-		}
-		int powerPlantBid = plantBid; //to know the actual minimum bid
-		string answer;
-		int playerBid;
-
-		cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
-		cout << "@@@@ Starting Auction @@@@" << endl;
-		cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
-
-		while (true) {
-
-			p = getNextPlayer(*p);
-			cout << endl;
-
-			if (p->getElektro() <= plantBid) {
-				cout << "Player " << p->getColor() << endl;
-				cout << "You do not have enough elektros to bid" << endl;
-				break;
-			}
-
-			cout << "It's your turn Player " << p->getColor() << endl;
-			cout << "You currently have " << p->getElektro() << " elektros" << endl;
-			cout << "The current bid is " << plantBid << endl;
-			cout << "Do you want to bid on power plant? Type 'y' for yes or 'n' for no" << endl;
-			cin >> answer;
-
-			if (answer == "y") {
-				cout << "Please enter the amount you want to bid: " << endl;
-				cin >> playerBid;
-
-				bool bidTooLow = playerBid <= plantBid;
-				bool notEnoughElektro = playerBid > p->getElektro();
-
-				while (bidTooLow || notEnoughElektro) {
-					if (bidTooLow) {
-						cout << endl;
-						cout << "Your bid is too low" << endl;
-					}
-					else if (notEnoughElektro) {
-						cout << endl;
-						cout << "Your bid is too high" << endl;
-					}
-
-					cout << "Please enter the amount you want to bid: " << endl;
-					cin >> playerBid;
-					bidTooLow = playerBid < plantBid;
-					notEnoughElektro = playerBid > p->getElektro();
-				}
-				plantBid = playerBid;
-				//Reloop
-			}
-
-			//If they they don't want to auction anymore then the next player will end up buying the powerplant
-			else if (answer == "n") {
-				p = getNextPlayer(*p);
-				p->setElektro(p->getElektro() - plantBid);
-				cout << "Player " << p->getColor() << " has " << p->getElektro() << "." << endl;
-				p->addPlant(powerplants_Vector->getAndRemoveSpecificPowerplant(powerPlantBid));// adds into next person's powerplant possession
-				playerAlreadyBought = true;
-				p = getNextPlayer(*p);
-				break;
-			}
-		}
-
-		//if step3 card has been found
-		if (powerplants_Vector->getStep3Trigger()) {
-			cout << "Step 3 has started" << endl;
-			powerplants_Vector->getAndRemoveSpecificPowerplant(999999);
-			setStep3();
-			powerplants_Vector->setStep3Trigger(false);//to avoid conflict if it stays true
-		}
-	}
-
-	//First round will tell if there is an order change depending who bought the highest power plant
-	if (turnCounter == 1) {
-		if (vector_player[0]->getHighestMinBid() < vector_player[1]->getHighestMinBid()) {
-			reverse(vector_player.begin(), vector_player.end());
-			cout << "The first player for next round (meaning the last player with lowest powerplant number) will be, PLAYER " << vector_player[1]->getColor() << endl;
-		}
-
-	}
-	*/
 }
 
 /* Step 3 - Buy raw material. In this part, the last player will begin. In other words, it's the reverse order of buying power plant who starts. */
@@ -1545,4 +1404,35 @@ void Board::loadNbPlayersAndTurnCoutner()
 	turnCounter = stoi(line.substr(pos + 1));
 
 	input.close();
+}
+
+// Selection sort function that re-orders the players with the highest number of houses
+void Board::reOrderHighestPlayerPwp() {
+	int indexOfNextHighest = 0; //default
+	int index = 0; //default
+	indexOfHighest(vector_player, index);
+	for (Player* p : vector_player) {
+		indexOfNextHighest = indexOfHighest(vector_player, index);
+		swapValues(*vector_player[index], *vector_player[indexOfNextHighest]);
+		index++;
+	}
+
+	for (Player* p : vector_player) {
+		cout << "PLAYER " << p->getColor() << " has " << p->getHighestMinBid() << " as their highest powerplant." << endl;
+	}
+}
+
+// Find the highest index of powerplant
+int Board::indexOfHighestPwp(vector<Player*> vector, int startIndex) {
+	int maxPowerplant = vector[startIndex]->getHighestMinBid();
+	int indexOfMax = startIndex;
+
+	for (int index = startIndex + 1; index < vector.size(); index++) {
+
+		if (vector[index]->getHighestMinBid() > maxPowerplant) {
+			maxPowerplant = vector[index]->getHighestMinBid();
+			indexOfMax = index;
+		}
+	}
+	return indexOfMax;
 }
