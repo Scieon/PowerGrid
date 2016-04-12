@@ -69,9 +69,6 @@
     <ClCompile Include="ResourceMarket.cpp">
       <Filter>Source Files\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="IOFile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AreaManager.cpp">
       <Filter>Source Files\Map</Filter>
     </ClCompile>
@@ -139,9 +136,6 @@
     </ClInclude>
     <ClInclude Include="ResourceMarket.h">
       <Filter>Header Files\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="IOFile.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Area.h">
       <Filter>Header Files\Map</Filter>
