@@ -756,7 +756,7 @@ void Board::bureaucracy() {
 		}
 		//Player chooses to power no cities
 		else {
-			p->getPaid(10);
+			p->getPaid(0); //Player is paid according to number of cities they power
 		}
 	}
 
@@ -1515,7 +1515,7 @@ void Board::loadNbPlayersAndTurnCoutner()
 	input.close();
 }
 
-// Selection sort function that re-orders the players with the highest number of houses
+// Selection sort function that re-orders the players with the highest number of pwp
 void Board::reOrderHighestPlayerPwp() {
 	int indexOfNextHighest = 0; //default
 	int index = 0; //default

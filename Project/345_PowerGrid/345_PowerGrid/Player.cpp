@@ -104,8 +104,8 @@ void Player::addPlant(Powerplant * p1) {
 
 	if (this->isPowerplantsFull()) {
 
-		cout << "You alread have 3 powerplants" << endl;
-		cout << "You have to remove on of your powerplants. Here are your plants:" << endl << endl;
+		cout << "You already have 3 powerplants." << endl;
+		cout << "You have to remove one of your powerplants. Here are your plants:" << endl << endl;
 		cout << "@@@@@@@@@@@@@@@@@" << endl;
 		cout << "Your powerplants" << endl;
 		cout << "@@@@@@@@@@@@@@@@@" << endl <<endl;
