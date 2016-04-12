@@ -111,21 +111,25 @@ void Board::buyPowerPlant() {
 	cout << " ///////////////////////////////////////////////////////" << endl;
 
 
+	int winnerOfAuction; 
+	int intialPlantValue; //Keeping plant minimum bid to search for it 
 
-	int winnerOfAuction;
-	int intialPlantValue;
-
+	//Reseting the statuses of every player at begining of phase 2
 	for (int i = 0; i < getNumberOfPlayers(); i++) {
 		vector_player[i]->hasAuction = false;
 		vector_player[i]->hasBought = false;
 	}
 
-
-	//Looping through all players
+	//Giving every player a chance to buy a powerplant
 	for (int i = 0; i < getNumberOfPlayers(); i++) {
 
-		bool checkPP = false;
+		//Helper variables to validate that player can purchase powerplant
+		bool checkPP = false; 
 		bool checkElektro = false;
+
+		int tracker = i; //Counter for players that still want to auction
+		int plantBid; //Players bid on given plant
+		Player * p = vector_player[i]; //Player currently auctioning
 
 		//Resetting auctioning statuses
 		for (int i = 0; i < getNumberOfPlayers(); i++) {
@@ -133,22 +137,23 @@ void Board::buyPowerPlant() {
 			vector_player[i]->hasAuction = vector_player[i]->hasBought;
 		}
 
-		int tracker = i;
-		int plantBid;
-		Player * p = vector_player[i];
-
 		//Skip player that has bought
 		if (vector_player[i]->hasBought == true) {
-			cout << vector_player[i]->getColor() << " has bought" << endl; system("pause");
+			cout << vector_player[i]->getColor() << " has already bought a powerplant." << endl;
 			continue;
 		}
 
+		if (i > 0) {
+			if (vector_player[i - 1]->hasBought == true)
+				tracker--;
+		}
 		cout << "Player with color " << p->getColor() << " can bid first " << endl;
 		powerplants_Vector->printMarket();
 		cout << "\nPlayer " << p->getColor() << endl;
 
 		string decisionToPurchase = "";
 
+		//If its not the first turn give the player an option to decline buying plants
 		if (turnCounter > 1) {
 			while (decisionToPurchase != "y" && decisionToPurchase != "n") {
 				cout << "Do you wish to buy any powerplants (y/n): ";
@@ -156,7 +161,7 @@ void Board::buyPowerPlant() {
 			}
 
 			if (decisionToPurchase == "n") {
-				cout << "Player " << p->getColor() << " is a rebel." << endl;
+				cout << "Player " << p->getColor() << " has decided not to buy a power plant." << endl;
 				system("pause");
 				p->hasBought = true;
 				continue;
@@ -164,7 +169,7 @@ void Board::buyPowerPlant() {
 		}
 	
 
-		//Making player bid
+		//Player selects a powerplant to buy
 		while (checkPP == false || checkElektro == false) {
 
 			cout << "You currently have " << p->getElektro() << " elektros" << endl;
@@ -174,8 +179,7 @@ void Board::buyPowerPlant() {
 			cin >> plantBid;
 
 			intialPlantValue = plantBid;
-		
-
+	
 			checkPP = powerplants_Vector->isPowerplantInActualMarket(plantBid);
 			checkElektro = p->getElektro() > plantBid;
 
@@ -191,14 +195,12 @@ void Board::buyPowerPlant() {
 		}
 
 	
-		//Checking if other players have bought
-
 		//Everyone after current player still auctioning
 		while (tracker != getNumberOfPlayers()) {
 
 			if (tracker == getNumberOfPlayers() - 1) {
 				int winnerIndex = 0;
-				
+
 				//Independent for loop searching for winner of auction
 				for (int k = 0; k < getNumberOfPlayers(); k++) {
 					if (vector_player[k]->hasAuction == false)
@@ -216,12 +218,12 @@ void Board::buyPowerPlant() {
 
 			p = getNextPlayer(*p);
 			while (p->hasAuction == true) {
-				cout << "Player " << p->getColor() << " has given up auctioning" << endl; system("pause");
+			//	cout << "Player " << p->getColor() << " has given up auctioning" << endl; system("pause");
 				p = getNextPlayer(*p);
 			}
 			cout << endl;
 	
-			if (p->getElektro() <= plantBid) {
+			if (p->getElektro() < plantBid) {
 				cout << "Player " << p->getColor() << endl;
 				cout << "You do not have enough elektros to bid" << endl;
 				tracker++;
@@ -260,7 +262,7 @@ void Board::buyPowerPlant() {
 				if (bidTooLow == false && notEnoughElektro == false) {
 					//Player has entered valid bid.
 					plantBid = playerBid;
-					cout << "Bid has changed too: " << plantBid << endl; system("pause"); cout << endl;
+					cout << "Bid has changed too: " << plantBid << endl; cout << endl;
 				}
 
 			}//End if yes
@@ -273,21 +275,19 @@ void Board::buyPowerPlant() {
 		} //end while auction
 
 		//At this point tracker should be 2 i.e., everyone has taken a chance at auctioning
-		cout << "Player " << vector_player[winnerOfAuction]->getColor() << " has won" << endl;
+		cout << "Player " << vector_player[winnerOfAuction]->getColor() << " has won powerplant " << intialPlantValue << endl;
 		vector_player[winnerOfAuction]->hasBought = true;
 		vector_player[winnerOfAuction]->addPlant(powerplants_Vector->getAndRemoveSpecificPowerplant(intialPlantValue));
-		
+		vector_player[winnerOfAuction]->subtractMoney(plantBid);
 		system("pause");
-
-
 
 	} //end for 
 
 
-	//Any stragglers
-	for (int z = 0; z < getNumberOfPlayers(); z++) {
+	//Anyone who lost in the auction but may still want to buy
+	for (int i = 0; i < getNumberOfPlayers(); i++) {
 
-		Player * p = vector_player[z];
+		Player * p = vector_player[i];
 		string choice;
 		int plantBid;
 		string decisionToPurchase = "";
@@ -323,6 +323,7 @@ void Board::buyPowerPlant() {
 					}
 					cout << "You have bought plant " << plantBid << endl;
 					p->addPlant(powerplants_Vector->getAndRemoveSpecificPowerplant(plantBid));
+					p->subtractMoney(plantBid);
 					system("pause");
 				}
 			}
@@ -352,6 +353,7 @@ void Board::buyPowerPlant() {
 
 				 cout << "You have bought plant " << plantBid << endl;
 				 p->addPlant(powerplants_Vector->getAndRemoveSpecificPowerplant(plantBid));
+				 p->subtractMoney(plantBid);
 				 system("pause");
 			} //end of turn 1
 		
@@ -367,6 +369,17 @@ void Board::buyPowerPlant() {
 		setStep3();
 		powerplants_Vector->setStep3Trigger(false);//to avoid conflict if it stays true
 	}
+
+	//First round will tell if there is an order change depending who bought the highest power plant
+	if (turnCounter == 1) {
+		if (vector_player[0]->getHighestMinBid() < vector_player[1]->getHighestMinBid()) {
+			reverse(vector_player.begin(), vector_player.end());
+			cout << "The first player for next round (meaning the last player with lowest powerplant number) will be, PLAYER " << vector_player[1]->getColor() << endl;
+		}
+
+	}
+
+	//-- OLD AUCTION PHASE FROM BUILD 1 ONLY WORKS FOR 2 PLAYERS --//
 	/*
 
 	//--------------------------------------------------------------------------

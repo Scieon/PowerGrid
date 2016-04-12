@@ -141,9 +141,9 @@ int main() {
 
 	
 
-		//turn->turnOrder();
+		turn->turnOrder();
 		turn->buyPowerPlant();
-	//	turn->buyRawMaterial();
+		turn->buyRawMaterial();
 		//turn->building();
 		//turn->bureaucracy();
 		turn->incrementTurnCounter(); //HAS BE REMOVED AFTER WE FINISH BUREACRACY

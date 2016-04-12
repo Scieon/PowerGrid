@@ -26,15 +26,6 @@ public:
 	void setStep3();
 	int getNumberOfPlayers();
 
-	int getPosition(string color) {
-
-		for (int i = 0; i < getNumberOfPlayers(); i++) {
-			if (vector_player[i]->getColor() == color)
-				return i;
-		}
-		cout << "Not found" << endl; system("pause");
-		return -2;
-	}
 
 	//prompt player to purchase index
 	pair<int, int> pleaseChooseIndexToBuildIn(vector<list<int>> vectorListOfPaths);
