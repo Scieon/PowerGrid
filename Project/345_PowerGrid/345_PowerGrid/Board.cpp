@@ -1467,7 +1467,7 @@ void Board::loadNbPlayersAndTurnCoutner()
 	input.close();
 }
 
-// Selection sort function that re-orders the players with the highest number of houses
+// Selection sort function that re-orders the players with the highest number of pwp
 void Board::reOrderHighestPlayerPwp() {
 	int indexOfNextHighest = 0; //default
 	int index = 0; //default
