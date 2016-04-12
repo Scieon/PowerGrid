@@ -781,21 +781,69 @@ void Board::bureaucracy() {
 			system("EXIT");
 		}
 		else {
-			//I hate you
 			cout << "There is a tie with 2 or more players having the same number of highest number of powered houses" << endl;
-			cout << "Calculating who between them has the highest powerplant" << endl;
+			cout << "Calculating who between them has the highest elektro count..." << endl;
+			
+			vector<Player*> highestNbHousePlayers; //all players that have the same highest number of powered houses
 
-			/*
 			//https://stackoverflow.com/questions/25846235/finding-the-indexes-of-all-occurrences-of-an-element-in-a-vector
-			int highestPowerplant = 0;
 			std::vector<int>::iterator iter = endGameNbCitiesPowered.begin();
 			while ((iter = std::find_if(iter, endGameNbCitiesPowered.end(), max)) != endGameNbCitiesPowered.end())
 			{
-				// Do something with iter
-
+				int index = iter - endGameNbCitiesPowered.begin(); //get index of player
+				highestNbHousePlayers.push_back[vector_player[index]]; //add player at the index
 				iter++;
 			}
-			*/
+
+			int highestElektro = 0;
+			int indexOfHighestElektroPlayer = 0;
+
+			//find the highest elektro count 
+			for (int i = 0; i < highestNbHousePlayers.size(); i++) {
+
+				int playerMaxElektro = highestNbHousePlayers[i]->getElektro();
+
+				if (playerMaxElektro > highestElektro) {
+					highestElektro = playerMaxElektro;
+					indexOfHighestElektroPlayer = i;
+				}
+			}
+
+			int nbOfOccurenceOfElektro = std::count(endGameNbCitiesPowered.begin(), endGameNbCitiesPowered.end(), highestElektro);
+
+			if (nbOfOccurenceOfElektro == 1) {
+				cout << "Player " << vector_player[indexOfHighestElektroPlayer]->getColor() << " has won the game with " << max << " houses powered" << endl;
+				cout << " with the most elektro ($" << highestElektro << ")" << endl;
+				cout << "Thank you for playing Funkenschlag" << endl;
+				cout << "EXITING PROGRAM! ..." << endl;
+				system("EXIT");
+			}
+			else {
+				//there was a tie again, get the highest number of houses
+				int highestNbOfHouses = 0;
+				int indexOfHighestNbOfHouses = 0;
+
+				//for 3 players only
+				//find the highest elektro count 
+				for (int i = 0; i < highestNbHousePlayers.size(); i++) {
+
+					int playerMaxNumberOfHouses = highestNbHousePlayers[i]->getNumberHouses();
+
+					if (playerMaxNumberOfHouses > highestNbOfHouses) {
+						highestNbOfHouses = playerMaxNumberOfHouses;
+						indexOfHighestNbOfHouses = i;
+					}
+				}
+				cout << "Player " << vector_player[indexOfHighestNbOfHouses]->getColor() << " has won the game with " << max << " houses powered" << endl;
+				cout << " with the most elektro ($" << highestElektro << ")" << "and with the highest number of houses ( " << highestNbOfHouses << ")" <<  endl;
+				cout << "Thank you for playing Funkenschlag" << endl;
+				cout << "EXITING PROGRAM! ..." << endl;
+				system("EXIT");
+
+
+			}
+			
+			
 
 		}
 
