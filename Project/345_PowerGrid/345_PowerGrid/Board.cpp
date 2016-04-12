@@ -750,7 +750,7 @@ void Board::bureaucracy() {
 		}
 		//Player chooses to power no cities
 		else {
-			p->getPaid(0);
+			p->getPaid(10);
 		}
 	}
 
