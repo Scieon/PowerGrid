@@ -144,6 +144,7 @@ void Board::buyPowerPlant() {
 		//Skip player that has bought
 		if (vector_player[i]->hasBought == true) {
 			cout << vector_player[i]->getColor() << " has already bought a powerplant." << endl;
+			p->hasAuction = true;
 			continue;
 		}
 
@@ -203,8 +204,10 @@ void Board::buyPowerPlant() {
 	
 		//Everyone after current player still auctioning
 		while (tracker != getNumberOfPlayers()) {
+			int nbPlayerAuctioned = getNumberOfPlayersThatHaveAucitoned();
 
-			if (tracker == getNumberOfPlayers() - 1) {
+			if (tracker == getNumberOfPlayers() - 1
+				|| getNumberOfPlayers() - nbPlayerAuctioned == 1) {
 				int winnerIndex = 0;
 
 				//Independent for loop searching for winner of auction
@@ -786,6 +789,16 @@ void Board::bureaucracy() {
 
 int Board::getNumberOfPlayers() {
 	return nbOfPlayer;
+}
+
+int Board::getNumberOfPlayersThatHaveAucitoned() {
+	int i = 0;
+	for (Player* p : vector_player) {
+		if (p->hasAuction) {
+			i++;
+		}
+	}
+	return i;
 }
 
 //Returns next player

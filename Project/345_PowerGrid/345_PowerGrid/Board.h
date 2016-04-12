@@ -29,6 +29,7 @@ public:
 	void setStep3();
 	void setStep2();
 	int getNumberOfPlayers();
+	int getNumberOfPlayersThatHaveAucitoned();
 
 
 	//prompt player to purchase index
