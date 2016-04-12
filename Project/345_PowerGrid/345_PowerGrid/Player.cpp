@@ -103,7 +103,32 @@ int Player::getResource(string type) {
 void Player::addPlant(Powerplant * p1) {
 
 	if (this->isPowerplantsFull()) {
-		return;
+
+		cout << "You alread have 3 powerplants" << endl;
+		cout << "You have to remove on of your powerplants. Here are your plants:" << endl << endl;
+		cout << "@@@@@@@@@@@@@@@@@" << endl;
+		cout << "Your powerplants" << endl;
+		cout << "@@@@@@@@@@@@@@@@@" << endl <<endl;
+		for (Powerplant pp : *powerplants) {
+			pp.showPlantInfo();
+		}
+
+		cout << "Please choose 0,1 or 2 to remove the powerplant" << endl;
+		int input;
+		cin >> input;
+		bool b1 = input != 0;
+		bool b2 = input != 1;
+		bool b3 = input != 2;
+		while (b1 || b2 || b3) {
+			cout << "Invalid input, please enter 0, 1 or 2 to remove the powerplant you want" << endl;
+			cin >> input;
+			b1 = input != 0;
+			b2 = input != 1;
+			b3 = input != 2;
+		}
+		powerplants->erase(powerplants->begin() + input); //erase powerplant
+
+		powerplants->push_back(*p1);
 	}
 	else {
 		powerplants->push_back(*p1);
