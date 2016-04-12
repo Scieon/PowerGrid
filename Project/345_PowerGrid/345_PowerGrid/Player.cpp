@@ -108,7 +108,7 @@ void Player::addPlant(Powerplant * p1) {
 	else {
 		powerplants->push_back(*p1);
 		numberOfPlants++;
-
+		subtractMoney(p1->getBid());
 	}
 }
 

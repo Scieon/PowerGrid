@@ -360,7 +360,13 @@ void Board::buyPowerPlant() {
 	}
 
 
-
+	//if step3 card has been found
+	if (powerplants_Vector->getStep3Trigger()) {
+		cout << "Step 3 has started" << endl;
+		powerplants_Vector->getAndRemoveSpecificPowerplant(999999);
+		setStep3();
+		powerplants_Vector->setStep3Trigger(false);//to avoid conflict if it stays true
+	}
 	/*
 
 	//--------------------------------------------------------------------------
