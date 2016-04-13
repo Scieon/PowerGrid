@@ -1,12 +1,15 @@
 #pragma once
 #include "Player.h"
+#include "Subject.h"
 #include "Map.h"
 #include "MapOfPlayersCity.h"
 #include "ResourceMarket.h"
 #include <iostream>
+
+
 using namespace std;
 
-class Board{
+class Board : public Subject{
 public:
 	Board();
 	Board(std::vector<Player*> vector_player, Map * map);
@@ -53,6 +56,10 @@ public:
 	void loadPowerplants();
 	void saveNbPlayerAndTurnCounter();
 	void loadNbPlayersAndTurnCoutner();
+
+	friend class BasicStatistics;
+	friend class ElektrosStats;
+	friend class ResourceStats;
 
 private:
 	int turnCounter;

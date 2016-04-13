@@ -31,6 +31,12 @@
     <Filter Include="Header Files\Builder Pattern">
       <UniqueIdentifier>{90de3d4e-16e1-429a-8838-fa16e7f6c218}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Design Pattern">
+      <UniqueIdentifier>{e6ec65e9-dfb3-4023-a91b-4ec6eb7d8f66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Design Pattern">
+      <UniqueIdentifier>{5538709a-b1ab-4d3b-88d6-fffa9010115a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="House.cpp">
@@ -102,6 +108,24 @@
     <ClCompile Include="Board.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BasicStatistics.cpp">
+      <Filter>Source Files\Design Pattern</Filter>
+    </ClCompile>
+    <ClCompile Include="ElektrosStats.cpp">
+      <Filter>Source Files\Design Pattern</Filter>
+    </ClCompile>
+    <ClCompile Include="Statistics.cpp">
+      <Filter>Source Files\Design Pattern</Filter>
+    </ClCompile>
+    <ClCompile Include="Subject.cpp">
+      <Filter>Source Files\Design Pattern</Filter>
+    </ClCompile>
+    <ClCompile Include="StatsDecorator.cpp">
+      <Filter>Source Files\Design Pattern</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceStats.cpp">
+      <Filter>Source Files\Design Pattern</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="House.h">
@@ -169,6 +193,27 @@
     </ClInclude>
     <ClInclude Include="NormalGameBuilder.h">
       <Filter>Header Files\Builder Pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicStatistics.h">
+      <Filter>Header Files\Design Pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="ElektrosStats.h">
+      <Filter>Header Files\Design Pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceStats.h">
+      <Filter>Header Files\Design Pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="Statistics.h">
+      <Filter>Header Files\Design Pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>Header Files\Design Pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="StatsDecorator.h">
+      <Filter>Header Files\Design Pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Header Files\Design Pattern</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

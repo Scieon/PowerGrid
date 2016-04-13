@@ -435,3 +435,27 @@ void ResourceMarket::showInfo() {
 
 }
 
+int ResourceMarket::getTotal(string resource) {
+
+	int quantity = 0;
+
+	if (resource == "Uranium") {
+		for (int i = 0; i <= 11; i++)
+			quantity += market[i]->getResourceQuantity(resource);
+		return quantity;
+	}
+
+	for (int i = 0; i <= 7; i++)
+		quantity += market[i]->getResourceQuantity(resource);
+
+	return quantity;
+}
+
+void ResourceMarket::showRemaining() {
+
+	cout << "Remaining Coal in Market: " << getTotal("Coal") << endl
+		<< "Remaining Oil in Market: " << getTotal("Oil") << endl
+		<< "Remaining Garbage in Market: " << getTotal("Garbage") << endl
+		<< "Remaining Uranium in Market: " << getTotal("Uranium") << endl;
+
+}

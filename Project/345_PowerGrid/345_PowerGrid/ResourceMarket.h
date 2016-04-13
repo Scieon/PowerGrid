@@ -21,6 +21,8 @@ public:
 	void updateMarket(string resource, int quantity); //Removes resources purchased by players during phase 3
 	void showInfo();
 
+	void showRemaining();
+	int getTotal(string resource);
 	void refill(int step, int players); //Refills the resource market according to step and number of players
 	
 private:

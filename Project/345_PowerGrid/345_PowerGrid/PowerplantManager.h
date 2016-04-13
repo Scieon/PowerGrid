@@ -48,6 +48,8 @@ public:
 	void bureaucracyPhaseReorder();
 
 	void removeLowestPowerplant();
+
+	int getPlantNumber(int index);
 	
 private:
 	vector<Powerplant> * powerplantsVector;

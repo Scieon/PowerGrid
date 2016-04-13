@@ -11,6 +11,9 @@
 #include "BoardBuilder.h"
 #include "NormalGameBuilder.h"
 #include "GameLoaderSaver.h"
+#include "BasicStatistics.h"
+#include "ElektrosStats.h"
+#include "ResourceStats.h"
 
 using namespace std;
 
@@ -142,6 +145,13 @@ int main(){
 			cin >> nbPlayers;
 		} while (nbPlayers != 2 && nbPlayers != 3);
 
+		string stats = "";
+		do {
+			cout << "Would you like to log game statistics during the game? (y/n): "; 
+			cin >> stats;
+		} while (stats != "y" && stats != "n");
+
+		
 		
 		std::vector<Player*> vector_player;
 
@@ -205,14 +215,21 @@ int main(){
 
 		Board * turn = new Board(vector_player, gameMap);
 		
+		if (stats == "y") {
+
+			Statistics * b1 = new BasicStatistics(turn);
+			b1 = new ElektrosStats(b1);
+			b1 = new ResourceStats(b1);
+
+		}
 		//turns
 		int y = 1;
 		while (y<CHANGETHISFORTURNS) {
 			turn->turnOrder();
 			turn->buyPowerPlant();
 			turn->buyRawMaterial();
-			//turn->building();
-			//turn->bureaucracy();
+			turn->building();
+			turn->bureaucracy();
 			turn->incrementTurnCounter(); 
 
 			if (turn->checkMapCorrectness()) {

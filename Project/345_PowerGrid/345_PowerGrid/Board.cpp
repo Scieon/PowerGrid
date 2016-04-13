@@ -59,6 +59,7 @@ int Board::getTurnCounter() {
 who has the most number of houses in the network. If two players are tied, then choose the player with the largest number of power plant. */
 void Board::turnOrder() {
 	//Enters this step in the first round because it will randomize who gets to play first.
+	notify();
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	cout << " THIS IS FIRST STEP TO DETERMINE THE TURN ORDER" << endl;
 	cout << " ///////////////////////////////////////////////////////" << endl;

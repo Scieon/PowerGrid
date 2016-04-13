@@ -413,3 +413,10 @@ void PowerplantManager::bureaucracyPhaseReorder()
 void PowerplantManager::removeLowestPowerplant() {
 	powerplantsVector->erase(powerplantsVector->begin());
 }
+
+int PowerplantManager::getPlantNumber(int index) {
+
+	return (*powerplantsVector)[index].getBid();
+
+
+}
