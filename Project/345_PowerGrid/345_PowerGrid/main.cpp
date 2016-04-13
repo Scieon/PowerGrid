@@ -17,7 +17,7 @@ using namespace std;
 
 
 	
-int main() {
+int x() {
 	
 	int CHANGETHISFORTURNS = 4; //number of turns to play
 
@@ -81,9 +81,9 @@ int main() {
 }
 
 
-int x(){
+int main(){
 
-	int CHANGETHISFORTURNS = 4; //number of turns to play
+	int CHANGETHISFORTURNS = 100; //number of turns to play
 
 	cout << "Welcome to Funkenschlag" << endl;
 	cout << "In order to enjoy the full experience, please make sure you make "
@@ -136,12 +136,17 @@ int x(){
 
 		int nbPlayers;
 		string color;
-		cout << "You can only play with 2 players. More player option coming soon" << endl;
+
+		do {
+			cout << "How many players would like to play the game? (2-3): ";
+			cin >> nbPlayers;
+		} while (nbPlayers != 2 && nbPlayers != 3);
+
 		
 		std::vector<Player*> vector_player;
 
 		//Add the number of players in the vector collection
-		for (int i = 1; i < 4; i++)
+		for (int i = 1; i < nbPlayers+1; i++)
 		{
 			cout << "\nPlayer " << i << endl << "Please insert your color: ";
 			cin >> color;

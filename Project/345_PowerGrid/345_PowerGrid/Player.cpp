@@ -119,7 +119,7 @@ void Player::addPlant(Powerplant * p1) {
 		bool b1 = input != 0;
 		bool b2 = input != 1;
 		bool b3 = input != 2;
-		while (b1 || b2 || b3) {
+		while (b1 && b2 && b3) {
 			cout << "Invalid input, please enter 0, 1 or 2 to remove the powerplant you want" << endl;
 			cin >> input;
 			b1 = input != 0;

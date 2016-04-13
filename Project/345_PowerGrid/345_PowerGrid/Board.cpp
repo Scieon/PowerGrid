@@ -148,7 +148,7 @@ void Board::buyPowerPlant() {
 			continue;
 		}
 
-		//Fail-safe band-aid fix 
+		//Fix
 		if (i > 0) {
 			if (vector_player[i - 1]->hasBought == true)
 				tracker--;
@@ -169,7 +169,6 @@ void Board::buyPowerPlant() {
 
 			if (decisionToPurchase == "n") {
 				cout << "Player " << p->getColor() << " has decided not to buy a power plant." << endl;
-				system("pause");
 				p->hasBought = true;
 				continue;
 			}
@@ -227,7 +226,6 @@ void Board::buyPowerPlant() {
 
 			p = getNextPlayer(*p);
 			while (p->hasAuction == true) {
-			//	cout << "Player " << p->getColor() << " has given up auctioning" << endl; system("pause");
 				p = getNextPlayer(*p);
 			}
 			cout << endl;
@@ -288,7 +286,7 @@ void Board::buyPowerPlant() {
 		vector_player[winnerOfAuction]->hasBought = true;
 		vector_player[winnerOfAuction]->addPlant(powerplants_Vector->getAndRemoveSpecificPowerplant(intialPlantValue));
 		vector_player[winnerOfAuction]->subtractMoney(plantBid);
-		system("pause");
+		//system("pause");
 
 	} //end for 
 
@@ -330,10 +328,9 @@ void Board::buyPowerPlant() {
 						cout << "--ERROR-- You do not have enough elektros for this Power Plant --ERROR--" << endl;
 						break;
 					}
-					cout << "You have bought plant " << plantBid << endl;
+					cout << "Player " << p->getColor() << " has bought plant " << plantBid << endl;
 					p->addPlant(powerplants_Vector->getAndRemoveSpecificPowerplant(plantBid));
 					p->subtractMoney(plantBid);
-					system("pause");
 				}
 			}
 
@@ -360,10 +357,10 @@ void Board::buyPowerPlant() {
 					 }
 				 }
 
-				 cout << "You have bought plant " << plantBid << endl;
+				 cout << "Player " << p->getColor() << " has bought plant " << plantBid << endl;
 				 p->addPlant(powerplants_Vector->getAndRemoveSpecificPowerplant(plantBid));
 				 p->subtractMoney(plantBid);
-				 system("pause");
+	
 			} //end of turn 1
 		
 		}
