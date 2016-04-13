@@ -14,60 +14,8 @@
 
 using namespace std;
 
-/* Testing for resource replenish
-void pause() {
-	system("pause");
-	cout << endl << endl << endl;
-
-}
-int main() {
-
-	ResourceMarket * r = new ResourceMarket();
-	r->showInfo();
-
-	string resource; int qty;
-	cout << "Enter resource: ";
-	cin >> resource;
-	cout << "\nEnter Quantity: ";
-	cin >> qty;
 
 
-	r->updateMarket(resource, qty);
-	pause();
-
-	r->showInfo();
-	pause();
-
-	cout << endl << endl << endl;
-	r->replenish(resource, 3);
-	r->showInfo();
-
-	system("pause");
-}
-*/
-
-/* Testing for turnOrder() 
-AreaManager * area_manager = new AreaManager();
-	Map *gameMap = new Map(area_manager);
-	std::vector<Player*> vector_player;
-	Player* player1 = new Player("ROB");
-	Player* player2 = new Player("DANVI");
-	Player* player3 = new Player("KHOI");
-	Powerplant* p1 = new Powerplant(3, "coal", 3, 2);
-	Powerplant* p2 = new Powerplant(4, "coal", 3, 2);
-	Powerplant* p3 = new Powerplant(5, "coal", 3, 2);
-	player1->addPlant(p1);
-	player2->addPlant(p2);
-	player3->addPlant(p3);
-	player1->getHouseManager()->setHouseCount(3);
-	player2->getHouseManager()->setHouseCount(2);
-	player3->getHouseManager()->setHouseCount(2);
-	vector_player.push_back(player1);
-	vector_player.push_back(player2);
-	vector_player.push_back(player3);
-	Board* b1 = new Board(vector_player, gameMap);
-	b1->reorderPlayersHighestNumHouses();
-	*/
 	
 int main() {
 	
@@ -82,33 +30,10 @@ int main() {
 	//Add the number of players in the vector collection
 	for (int i = 1; i < 4; i++)
 	{
-		
 		cout << "\nPlayer " << i << endl << "Please insert your color: ";
 		cin >> color;
 		Player* p = new Player(color);
 		vector_player.push_back(p);
-
-		
-		/*
-		Player* player1 = new Player("Red");
-		
-
-		Powerplant* p1 = new Powerplant(8, "Coal", 3, 2);
-	
-		Powerplant* pp1 = new Powerplant(12, "Hybrid", 2, 2);
-
-		Powerplant* pp21 = new Powerplant(13, "Eco", 0, 1);
-		player1->addResource("Coal", 6);
-		player1->addResource("Oil", 6);
-	
-
-		player1->addPlant(p1);
-
-		player1->addPlant(pp1);
-		player1->addPlant(pp21);
-
-		vector_player.push_back(player1);
-	*/
 	}
 
 	//Now we have to get the areas played from players
@@ -142,14 +67,12 @@ int main() {
 
 
 	
-
 		turn->turnOrder();
 		turn->buyPowerPlant();
 		turn->buyRawMaterial();
 		//turn->building();
 		//turn->bureaucracy();
-		turn->incrementTurnCounter(); //HAS BE REMOVED AFTER WE FINISH BUREACRACY
-
+		turn->incrementTurnCounter(); 
 
 		y++;
 	}
@@ -183,7 +106,7 @@ int x(){
 		NormalGameBuilder* normalGame = new NormalGameBuilder;
 		gameLoaderSaver.setGameBuilder(normalGame);
 		gameLoaderSaver.loadBoard(); //load board in builder pattern
-		Board * turn = gameLoaderSaver.getBoard();
+	    turn = gameLoaderSaver.getBoard();
 		
 
 		turn->loadGame(); //loads map, pplants, resource market
@@ -195,7 +118,7 @@ int x(){
 			turn->buyRawMaterial();
 			turn->building();
 			//turn->bureaucracy();
-			turn->incrementTurnCounter(); //HAS BE REMOVED AFTER WE FINISH BUREACRACY
+			turn->incrementTurnCounter(); 
 
 			if (turn->checkMapCorrectness()) {
 				cout << "Map is correct.... Saving game.... DONE!" << endl;
@@ -285,7 +208,7 @@ int x(){
 			turn->buyRawMaterial();
 			//turn->building();
 			//turn->bureaucracy();
-			turn->incrementTurnCounter(); //HAS BE REMOVED AFTER WE FINISH BUREACRACY
+			turn->incrementTurnCounter(); 
 
 			if (turn->checkMapCorrectness()) {
 				cout << "Map is correct.... Saving game.... DONE!" << endl;

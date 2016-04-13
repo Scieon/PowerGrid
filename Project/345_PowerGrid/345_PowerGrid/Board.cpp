@@ -759,7 +759,7 @@ void Board::bureaucracy() {
 			p->getPaid(0); //Player is paid according to number of cities they power
 		}
 	}
-
+	/*
 	if (endGameTriggered) {
 
 		//get maximum value in vector
@@ -848,7 +848,7 @@ void Board::bureaucracy() {
 		}
 
 	}
-
+	*/
 
 	system("pause");
 	//Replenish Resource Market according to step
