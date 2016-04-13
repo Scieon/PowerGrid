@@ -37,5 +37,5 @@ Bid=22 Type=Eco Resource_required=0 Cities_powered=2
 Bid=18 Type=Eco Resource_required=0 Cities_powered=2
 Bid=26 Type=Oil Resource_required=2 Cities_powered=5
 Bid=44 Type=Eco Resource_required=0 Cities_powered=5
-Bid=-1 Type=Step 3 Resource_required=-1 Cities_powered=-1
+Bid=-1 Type=Step_3 Resource_required=-1 Cities_powered=-1
 Bid=42 Type=Coal Resource_required=2 Cities_powered=6

@@ -58,7 +58,7 @@ PowerplantManager::PowerplantManager() {
 	Powerplant eco44(44, "Eco", 0, 5);
 	Powerplant eco50(50, "Eco", 0, 6);
 
-	Powerplant step3(-1, "Step 3", -1, -1);
+	Powerplant step3(-1, "Step_3", -1, -1);
 
 
 	powerplantsVector = new vector<Powerplant>();
