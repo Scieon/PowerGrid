@@ -51,8 +51,7 @@ int main(){
 			turn->buyPowerPlant();
 			turn->buyRawMaterial();
 			turn->building();
-			//turn->bureaucracy();
-			turn->incrementTurnCounter(); 
+			turn->bureaucracy(); 
 
 			if (turn->checkMapCorrectness()) {
 				cout << "Map is correct.... Saving game.... DONE!" << endl;
@@ -160,8 +159,7 @@ int main(){
 			turn->buyPowerPlant();
 			turn->buyRawMaterial();
 			turn->building();
-			turn->bureaucracy();
-			turn->incrementTurnCounter(); 
+			turn->bureaucracy(); 
 
 			if (turn->checkMapCorrectness()) {
 				cout << "Map is correct.... Saving game.... DONE!" << endl;

@@ -1164,6 +1164,7 @@ void Board::savePlayer() {
 		output << "End_Player_Powerplants" << endl;
 
 		cout << "Player " << i << " saved" << endl;
+		i++; //used only to display which player is saved
 	}
 
 	output.close();
@@ -1487,6 +1488,19 @@ void Board::saveNbPlayerAndTurnCounter()
 
 	output << "NbOfPlayers=" << nbOfPlayer << endl;
 	output << "TurnCount=" << turnCounter << endl;
+	if (step2) {
+		output << "Step2=" << 1 << endl;
+	}
+	else {
+		output << "Step2=" << 0 << endl;
+	}
+
+	if (step3) {
+		output << "Step3=" << 1 << endl;
+	}
+	else {
+		output << "Step3=" << 0 << endl;
+	}
 
 	output.close();
 }
@@ -1508,6 +1522,23 @@ void Board::loadNbPlayersAndTurnCoutner()
 
 	pos = line.find("="); //TurnCount
 	turnCounter = stoi(line.substr(pos + 1));
+
+	input >> line;
+
+	pos = line.find("="); //Step2
+	int step2 = stoi(line.substr(pos + 1));
+	if (step2 == 1) {
+		setStep2();
+	}
+	
+	input >> line;
+
+	pos = line.find("="); //Step3
+	int step3 = stoi(line.substr(pos + 1));
+	if (step3 == 1) {
+		setStep3();
+	}
+
 
 	input.close();
 }
