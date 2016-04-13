@@ -14,6 +14,7 @@
 #include "BasicStatistics.h"
 #include "ElektrosStats.h"
 #include "ResourceStats.h"
+#include <fstream>
 
 using namespace std;
 
@@ -21,6 +22,8 @@ using namespace std;
 
 int main(){
 
+	ofstream output;
+	output.open("gamelog.txt");
 	int CHANGETHISFORTURNS = 100; //number of turns to play
 
 	cout << "Welcome to Funkenschlag" << endl;
