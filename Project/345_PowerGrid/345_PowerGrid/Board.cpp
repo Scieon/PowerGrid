@@ -693,7 +693,7 @@ void Board::bureaucracy() {
 		cout << "*****************************************************************" << endl;
 		cout << "PLAYER " << p->getColor() << " has " << p->getHouseManager()->getHouseCount() << " houses." << endl;
 		cout << "Please note you can only power as many cities as you own. Any exceeding that will be wasted resources." << endl;
-		cout << "Do you wish to power any cities(Yes/No): ";
+		cout << "Do you wish to power any cities(yes/no): ";
 		cin >> decisionToPower; cout << endl;
 
 
@@ -738,7 +738,7 @@ void Board::bureaucracy() {
 				else if (choice != 0) {
 					cout << "Invalid choice" << endl << endl;
 				}
-				system("pause");
+			
 			}
 
 			if (nbCitiesPowered > p->getNumberHouses()) {
@@ -848,7 +848,6 @@ void Board::bureaucracy() {
 	}
 	*/
 
-	system("pause");
 	//Replenish Resource Market according to step
 	if (step2 == true)
 		market->refill(2, getNumberOfPlayers());

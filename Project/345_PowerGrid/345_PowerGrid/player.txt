@@ -1,6 +1,6 @@
 Player1
-Elektro=34
-Color=blue
+Elektro=55
+Color=RED
 Coal=0
 Oil=0
 Garbage=0
@@ -8,13 +8,11 @@ Uranium=0
 Player_Houses:
 End_Player_Houses
 Player_Powerplants
-Bid=3 Type=Oil Resource_required=2 Cities_powered=1
-Bid=6 Type=Garbage Resource_required=1 Cities_powered=1
-Bid=7 Type=Oil Resource_required=3 Cities_powered=2
+Bid=5 Type=Hybrid Resource_required=2 Cities_powered=1
 End_Player_Powerplants
 Player1
-Elektro=46
-Color=red
+Elektro=56
+Color=BLUE
 Coal=0
 Oil=0
 Garbage=0
@@ -23,4 +21,16 @@ Player_Houses:
 End_Player_Houses
 Player_Powerplants
 Bid=4 Type=Coal Resource_required=2 Cities_powered=1
+End_Player_Powerplants
+Player1
+Elektro=57
+Color=BLACK
+Coal=0
+Oil=0
+Garbage=0
+Uranium=0
+Player_Houses:
+End_Player_Houses
+Player_Powerplants
+Bid=3 Type=Oil Resource_required=2 Cities_powered=1
 End_Player_Powerplants
