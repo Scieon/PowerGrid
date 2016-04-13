@@ -59,6 +59,12 @@ int Board::getTurnCounter() {
 who has the most number of houses in the network. If two players are tied, then choose the player with the largest number of power plant. */
 void Board::turnOrder() {
 	//Enters this step in the first round because it will randomize who gets to play first.
+	
+
+	ofstream output;
+	output.open("gamelog.txt", ios::out | ios::app);
+	output << "------------First Phase------------" << endl;
+
 	notify();
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	cout << " THIS IS FIRST STEP TO DETERMINE THE TURN ORDER" << endl;
@@ -111,6 +117,11 @@ void Board::turnOrder() {
  a power plant. Later on, we will implement the auction. */
 void Board::buyPowerPlant() {
 
+	ofstream output;
+	output.open("gamelog.txt", ios::out | ios::app);
+	output << "------------Second Phase------------" << endl;
+
+	notify();
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	cout << " THIS IS SECOND STEP THE BUYING OF POWER PLANTS" << endl;
 	cout << " ///////////////////////////////////////////////////////" << endl;
@@ -387,6 +398,11 @@ void Board::buyPowerPlant() {
 /* Step 3 - Buy raw material. In this part, the last player will begin. In other words, it's the reverse order of buying power plant who starts. */
 void Board::buyRawMaterial() {
 
+	ofstream output;
+	output.open("gamelog.txt", ios::out | ios::app);
+	output << "------------Third Phase------------" << endl;
+
+	notify();
 	cout << endl;
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	cout << " THIS IS THIRD STEP TO BUY RAW MATERIALS" << endl;
@@ -509,6 +525,12 @@ void Board::buyRawMaterial() {
 
 /* Step 4 - Building houses. Can choose which city one would like to build in. We would have to implement the cost it takes to get from one city to the next. */
 void Board::building() {
+
+	ofstream output;
+	output.open("gamelog.txt", ios::out | ios::app);
+	output << "------------Fourth Phase------------" << endl;
+
+	notify();
 	string buildOption;
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	cout << " THIS IS FOURTH STEP TO BUILD HOUSES" << endl;
@@ -662,6 +684,12 @@ void Board::building() {
   We are at phase 1 until someone builds the 7th house. Then phase 2 ends when phase 3 card is drawn. Also, during phase 1 and 2, we must place the
   highest power plant under the stack. On the other hand, in phase 3, we will move the lowest power plant under the stack.*/
 void Board::bureaucracy() {
+
+	ofstream output;
+	output.open("gamelog.txt", ios::out | ios::app);
+	output << "------------Fifth Phase------------" << endl;
+
+	notify();
 	cout << " ///////////////////////////////////////////////////////" << endl;
 	cout << " THIS IS FIFTH STEP THE BUREAUCRACY" << endl;
 	cout << " ///////////////////////////////////////////////////////" << endl;

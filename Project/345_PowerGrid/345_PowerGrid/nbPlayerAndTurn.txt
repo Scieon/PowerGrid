@@ -1,4 +1,4 @@
 NbOfPlayers=3
-TurnCount=2
+TurnCount=3
 Step2=0
 Step3=0

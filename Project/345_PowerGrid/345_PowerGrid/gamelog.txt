@@ -1,0 +1,528 @@
+------------First Phase------------
+Player Red has 0 number of house(s).
+Player Red has a total of 0 resources.
+
+Player Blue has 0 number of house(s).
+Player Blue has a total of 0 resources.
+
+Player Green has 0 number of house(s).
+Player Green has a total of 0 resources.
+
+Powerplant number 3 is currently in Actual Market.
+Powerplant number 4 is currently in Actual Market.
+Powerplant number 5 is currently in Actual Market.
+Powerplant number 6 is currently in Actual Market.
+Powerplant number 7 is currently in Future Market.
+Powerplant number 8 is currently in Future Market.
+Powerplant number 9 is currently in Future Market.
+Powerplant number 10 is currently in Future Market.
+
+Remaining Coal in Market: 24
+Remaining Oil in Market: 18
+Remaining Garbage in Market: 6
+Remaining Uranium in Market: 2
+
+Player Red has 50 elektros.
+Player Blue has 50 elektros.
+Player Green has 50 elektros.
+
+Player Red has 0% of total Coal avalailable.
+Player Red has 0% of total Oil available.
+Player Red has 0% of total Garbage available.
+Player Red has 0% of total Uranium available.
+
+Player Blue has 0% of total Coal avalailable.
+Player Blue has 0% of total Oil available.
+Player Blue has 0% of total Garbage available.
+Player Blue has 0% of total Uranium available.
+
+Player Green has 0% of total Coal avalailable.
+Player Green has 0% of total Oil available.
+Player Green has 0% of total Garbage available.
+Player Green has 0% of total Uranium available.
+
+
+------------Second Phase------------
+Player Red has 0 number of house(s).
+Player Red has a total of 0 resources.
+
+Player Blue has 0 number of house(s).
+Player Blue has a total of 0 resources.
+
+Player Green has 0 number of house(s).
+Player Green has a total of 0 resources.
+
+Powerplant number 3 is currently in Actual Market.
+Powerplant number 4 is currently in Actual Market.
+Powerplant number 5 is currently in Actual Market.
+Powerplant number 6 is currently in Actual Market.
+Powerplant number 7 is currently in Future Market.
+Powerplant number 8 is currently in Future Market.
+Powerplant number 9 is currently in Future Market.
+Powerplant number 10 is currently in Future Market.
+
+Remaining Coal in Market: 24
+Remaining Oil in Market: 18
+Remaining Garbage in Market: 6
+Remaining Uranium in Market: 2
+
+Player Red has 50 elektros.
+Player Blue has 50 elektros.
+Player Green has 50 elektros.
+
+Player Red has 0% of total Coal avalailable.
+Player Red has 0% of total Oil available.
+Player Red has 0% of total Garbage available.
+Player Red has 0% of total Uranium available.
+
+Player Blue has 0% of total Coal avalailable.
+Player Blue has 0% of total Oil available.
+Player Blue has 0% of total Garbage available.
+Player Blue has 0% of total Uranium available.
+
+Player Green has 0% of total Coal avalailable.
+Player Green has 0% of total Oil available.
+Player Green has 0% of total Garbage available.
+Player Green has 0% of total Uranium available.
+
+
+------------Third Phase------------
+Player Red has 0 number of house(s).
+Player Red has a total of 0 resources.
+
+Player Blue has 0 number of house(s).
+Player Blue has a total of 0 resources.
+
+Player Green has 0 number of house(s).
+Player Green has a total of 0 resources.
+
+Powerplant number 4 is currently in Actual Market.
+Powerplant number 7 is currently in Actual Market.
+Powerplant number 8 is currently in Actual Market.
+Powerplant number 9 is currently in Actual Market.
+Powerplant number 10 is currently in Future Market.
+Powerplant number 13 is currently in Future Market.
+Powerplant number 18 is currently in Future Market.
+Powerplant number 50 is currently in Future Market.
+
+Remaining Coal in Market: 24
+Remaining Oil in Market: 18
+Remaining Garbage in Market: 6
+Remaining Uranium in Market: 2
+
+Player Red has 44 elektros.
+Player Blue has 45 elektros.
+Player Green has 47 elektros.
+
+Player Red has 0% of total Coal avalailable.
+Player Red has 0% of total Oil available.
+Player Red has 0% of total Garbage available.
+Player Red has 0% of total Uranium available.
+
+Player Blue has 0% of total Coal avalailable.
+Player Blue has 0% of total Oil available.
+Player Blue has 0% of total Garbage available.
+Player Blue has 0% of total Uranium available.
+
+Player Green has 0% of total Coal avalailable.
+Player Green has 0% of total Oil available.
+Player Green has 0% of total Garbage available.
+Player Green has 0% of total Uranium available.
+
+
+------------Fourth Phase------------
+Player Green has 0 number of house(s).
+Player Green has a total of 0 resources.
+
+Player Blue has 0 number of house(s).
+Player Blue has a total of 0 resources.
+
+Player Red has 0 number of house(s).
+Player Red has a total of 0 resources.
+
+Powerplant number 4 is currently in Actual Market.
+Powerplant number 7 is currently in Actual Market.
+Powerplant number 8 is currently in Actual Market.
+Powerplant number 9 is currently in Actual Market.
+Powerplant number 10 is currently in Future Market.
+Powerplant number 13 is currently in Future Market.
+Powerplant number 18 is currently in Future Market.
+Powerplant number 50 is currently in Future Market.
+
+Remaining Coal in Market: 24
+Remaining Oil in Market: 18
+Remaining Garbage in Market: 6
+Remaining Uranium in Market: 2
+
+Player Green has 47 elektros.
+Player Blue has 45 elektros.
+Player Red has 44 elektros.
+
+Player Green has 0% of total Coal avalailable.
+Player Green has 0% of total Oil available.
+Player Green has 0% of total Garbage available.
+Player Green has 0% of total Uranium available.
+
+Player Blue has 0% of total Coal avalailable.
+Player Blue has 0% of total Oil available.
+Player Blue has 0% of total Garbage available.
+Player Blue has 0% of total Uranium available.
+
+Player Red has 0% of total Coal avalailable.
+Player Red has 0% of total Oil available.
+Player Red has 0% of total Garbage available.
+Player Red has 0% of total Uranium available.
+
+
+------------Fifth Phase------------
+Player Green has 0 number of house(s).
+Player Green has a total of 0 resources.
+
+Player Blue has 0 number of house(s).
+Player Blue has a total of 0 resources.
+
+Player Red has 0 number of house(s).
+Player Red has a total of 0 resources.
+
+Powerplant number 4 is currently in Actual Market.
+Powerplant number 7 is currently in Actual Market.
+Powerplant number 8 is currently in Actual Market.
+Powerplant number 9 is currently in Actual Market.
+Powerplant number 10 is currently in Future Market.
+Powerplant number 13 is currently in Future Market.
+Powerplant number 18 is currently in Future Market.
+Powerplant number 50 is currently in Future Market.
+
+Remaining Coal in Market: 24
+Remaining Oil in Market: 18
+Remaining Garbage in Market: 6
+Remaining Uranium in Market: 2
+
+Player Green has 47 elektros.
+Player Blue has 45 elektros.
+Player Red has 44 elektros.
+
+Player Green has 0% of total Coal avalailable.
+Player Green has 0% of total Oil available.
+Player Green has 0% of total Garbage available.
+Player Green has 0% of total Uranium available.
+
+Player Blue has 0% of total Coal avalailable.
+Player Blue has 0% of total Oil available.
+Player Blue has 0% of total Garbage available.
+Player Blue has 0% of total Uranium available.
+
+Player Red has 0% of total Coal avalailable.
+Player Red has 0% of total Oil available.
+Player Red has 0% of total Garbage available.
+Player Red has 0% of total Uranium available.
+
+
+------------First Phase------------
+Player Red has 0 number of house(s).
+Player Red has a total of 0 resources.
+
+Player Blue has 0 number of house(s).
+Player Blue has a total of 0 resources.
+
+Player Green has 0 number of house(s).
+Player Green has a total of 0 resources.
+
+Powerplant number 4 is currently in Actual Market.
+Powerplant number 7 is currently in Actual Market.
+Powerplant number 8 is currently in Actual Market.
+Powerplant number 9 is currently in Actual Market.
+Powerplant number 10 is currently in Future Market.
+Powerplant number 13 is currently in Future Market.
+Powerplant number 18 is currently in Future Market.
+Powerplant number 50 is currently in Future Market.
+
+Remaining Coal in Market: 24
+Remaining Oil in Market: 20
+Remaining Garbage in Market: 7
+Remaining Uranium in Market: 3
+
+Player Red has 54 elektros.
+Player Blue has 55 elektros.
+Player Green has 57 elektros.
+
+Player Red has 0% of total Coal avalailable.
+Player Red has 0% of total Oil available.
+Player Red has 0% of total Garbage available.
+Player Red has 0% of total Uranium available.
+
+Player Blue has 0% of total Coal avalailable.
+Player Blue has 0% of total Oil available.
+Player Blue has 0% of total Garbage available.
+Player Blue has 0% of total Uranium available.
+
+Player Green has 0% of total Coal avalailable.
+Player Green has 0% of total Oil available.
+Player Green has 0% of total Garbage available.
+Player Green has 0% of total Uranium available.
+
+
+------------Second Phase------------
+Player Red has 0 number of house(s).
+Player Red has a total of 0 resources.
+
+Player Blue has 0 number of house(s).
+Player Blue has a total of 0 resources.
+
+Player Green has 0 number of house(s).
+Player Green has a total of 0 resources.
+
+Powerplant number 4 is currently in Actual Market.
+Powerplant number 7 is currently in Actual Market.
+Powerplant number 8 is currently in Actual Market.
+Powerplant number 9 is currently in Actual Market.
+Powerplant number 10 is currently in Future Market.
+Powerplant number 13 is currently in Future Market.
+Powerplant number 18 is currently in Future Market.
+Powerplant number 50 is currently in Future Market.
+
+Remaining Coal in Market: 24
+Remaining Oil in Market: 20
+Remaining Garbage in Market: 7
+Remaining Uranium in Market: 3
+
+Player Red has 54 elektros.
+Player Blue has 55 elektros.
+Player Green has 57 elektros.
+
+Player Red has 0% of total Coal avalailable.
+Player Red has 0% of total Oil available.
+Player Red has 0% of total Garbage available.
+Player Red has 0% of total Uranium available.
+
+Player Blue has 0% of total Coal avalailable.
+Player Blue has 0% of total Oil available.
+Player Blue has 0% of total Garbage available.
+Player Blue has 0% of total Uranium available.
+
+Player Green has 0% of total Coal avalailable.
+Player Green has 0% of total Oil available.
+Player Green has 0% of total Garbage available.
+Player Green has 0% of total Uranium available.
+
+
+------------Third Phase------------
+Player Red has 0 number of house(s).
+Player Red has a total of 0 resources.
+
+Player Blue has 0 number of house(s).
+Player Blue has a total of 0 resources.
+
+Player Green has 0 number of house(s).
+Player Green has a total of 0 resources.
+
+Powerplant number 4 is currently in Actual Market.
+Powerplant number 7 is currently in Actual Market.
+Powerplant number 8 is currently in Actual Market.
+Powerplant number 9 is currently in Actual Market.
+Powerplant number 10 is currently in Future Market.
+Powerplant number 13 is currently in Future Market.
+Powerplant number 18 is currently in Future Market.
+Powerplant number 50 is currently in Future Market.
+
+Remaining Coal in Market: 24
+Remaining Oil in Market: 20
+Remaining Garbage in Market: 7
+Remaining Uranium in Market: 3
+
+Player Red has 54 elektros.
+Player Blue has 55 elektros.
+Player Green has 57 elektros.
+
+Player Red has 0% of total Coal avalailable.
+Player Red has 0% of total Oil available.
+Player Red has 0% of total Garbage available.
+Player Red has 0% of total Uranium available.
+
+Player Blue has 0% of total Coal avalailable.
+Player Blue has 0% of total Oil available.
+Player Blue has 0% of total Garbage available.
+Player Blue has 0% of total Uranium available.
+
+Player Green has 0% of total Coal avalailable.
+Player Green has 0% of total Oil available.
+Player Green has 0% of total Garbage available.
+Player Green has 0% of total Uranium available.
+
+
+------------Fourth Phase------------
+Player Green has 0 number of house(s).
+Player Green has a total of 0 resources.
+
+Player Blue has 0 number of house(s).
+Player Blue has a total of 0 resources.
+
+Player Red has 0 number of house(s).
+Player Red has a total of 0 resources.
+
+Powerplant number 4 is currently in Actual Market.
+Powerplant number 7 is currently in Actual Market.
+Powerplant number 8 is currently in Actual Market.
+Powerplant number 9 is currently in Actual Market.
+Powerplant number 10 is currently in Future Market.
+Powerplant number 13 is currently in Future Market.
+Powerplant number 18 is currently in Future Market.
+Powerplant number 50 is currently in Future Market.
+
+Remaining Coal in Market: 24
+Remaining Oil in Market: 20
+Remaining Garbage in Market: 7
+Remaining Uranium in Market: 3
+
+Player Green has 57 elektros.
+Player Blue has 55 elektros.
+Player Red has 54 elektros.
+
+Player Green has 0% of total Coal avalailable.
+Player Green has 0% of total Oil available.
+Player Green has 0% of total Garbage available.
+Player Green has 0% of total Uranium available.
+
+Player Blue has 0% of total Coal avalailable.
+Player Blue has 0% of total Oil available.
+Player Blue has 0% of total Garbage available.
+Player Blue has 0% of total Uranium available.
+
+Player Red has 0% of total Coal avalailable.
+Player Red has 0% of total Oil available.
+Player Red has 0% of total Garbage available.
+Player Red has 0% of total Uranium available.
+
+
+------------Fifth Phase------------
+Player Green has 0 number of house(s).
+Player Green has a total of 0 resources.
+
+Player Blue has 0 number of house(s).
+Player Blue has a total of 0 resources.
+
+Player Red has 0 number of house(s).
+Player Red has a total of 0 resources.
+
+Powerplant number 4 is currently in Actual Market.
+Powerplant number 7 is currently in Actual Market.
+Powerplant number 8 is currently in Actual Market.
+Powerplant number 9 is currently in Actual Market.
+Powerplant number 10 is currently in Future Market.
+Powerplant number 13 is currently in Future Market.
+Powerplant number 18 is currently in Future Market.
+Powerplant number 50 is currently in Future Market.
+
+Remaining Coal in Market: 24
+Remaining Oil in Market: 20
+Remaining Garbage in Market: 7
+Remaining Uranium in Market: 3
+
+Player Green has 57 elektros.
+Player Blue has 55 elektros.
+Player Red has 54 elektros.
+
+Player Green has 0% of total Coal avalailable.
+Player Green has 0% of total Oil available.
+Player Green has 0% of total Garbage available.
+Player Green has 0% of total Uranium available.
+
+Player Blue has 0% of total Coal avalailable.
+Player Blue has 0% of total Oil available.
+Player Blue has 0% of total Garbage available.
+Player Blue has 0% of total Uranium available.
+
+Player Red has 0% of total Coal avalailable.
+Player Red has 0% of total Oil available.
+Player Red has 0% of total Garbage available.
+Player Red has 0% of total Uranium available.
+
+
+------------First Phase------------
+Player Red has 0 number of house(s).
+Player Red has a total of 0 resources.
+
+Player Blue has 0 number of house(s).
+Player Blue has a total of 0 resources.
+
+Player Green has 0 number of house(s).
+Player Green has a total of 0 resources.
+
+Powerplant number 4 is currently in Actual Market.
+Powerplant number 7 is currently in Actual Market.
+Powerplant number 8 is currently in Actual Market.
+Powerplant number 9 is currently in Actual Market.
+Powerplant number 10 is currently in Future Market.
+Powerplant number 13 is currently in Future Market.
+Powerplant number 18 is currently in Future Market.
+Powerplant number 50 is currently in Future Market.
+
+Remaining Coal in Market: 24
+Remaining Oil in Market: 22
+Remaining Garbage in Market: 8
+Remaining Uranium in Market: 4
+
+Player Red has 64 elektros.
+Player Blue has 65 elektros.
+Player Green has 67 elektros.
+
+Player Red has 0% of total Coal avalailable.
+Player Red has 0% of total Oil available.
+Player Red has 0% of total Garbage available.
+Player Red has 0% of total Uranium available.
+
+Player Blue has 0% of total Coal avalailable.
+Player Blue has 0% of total Oil available.
+Player Blue has 0% of total Garbage available.
+Player Blue has 0% of total Uranium available.
+
+Player Green has 0% of total Coal avalailable.
+Player Green has 0% of total Oil available.
+Player Green has 0% of total Garbage available.
+Player Green has 0% of total Uranium available.
+
+
+------------Second Phase------------
+Player Red has 0 number of house(s).
+Player Red has a total of 0 resources.
+
+Player Blue has 0 number of house(s).
+Player Blue has a total of 0 resources.
+
+Player Green has 0 number of house(s).
+Player Green has a total of 0 resources.
+
+Powerplant number 4 is currently in Actual Market.
+Powerplant number 7 is currently in Actual Market.
+Powerplant number 8 is currently in Actual Market.
+Powerplant number 9 is currently in Actual Market.
+Powerplant number 10 is currently in Future Market.
+Powerplant number 13 is currently in Future Market.
+Powerplant number 18 is currently in Future Market.
+Powerplant number 50 is currently in Future Market.
+
+Remaining Coal in Market: 24
+Remaining Oil in Market: 22
+Remaining Garbage in Market: 8
+Remaining Uranium in Market: 4
+
+Player Red has 64 elektros.
+Player Blue has 65 elektros.
+Player Green has 67 elektros.
+
+Player Red has 0% of total Coal avalailable.
+Player Red has 0% of total Oil available.
+Player Red has 0% of total Garbage available.
+Player Red has 0% of total Uranium available.
+
+Player Blue has 0% of total Coal avalailable.
+Player Blue has 0% of total Oil available.
+Player Blue has 0% of total Garbage available.
+Player Blue has 0% of total Uranium available.
+
+Player Green has 0% of total Coal avalailable.
+Player Green has 0% of total Oil available.
+Player Green has 0% of total Garbage available.
+Player Green has 0% of total Uranium available.
+
+
