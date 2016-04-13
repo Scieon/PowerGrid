@@ -515,20 +515,6 @@ void Board::building() {
 	cout << " ///////////////////////////////////////////////////////" << endl;
 
 
-	/*
-	TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-	EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-	SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-	TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-
-
-	mapOfPlayersCity->setStep2(true);
-	mapOfPlayersCity->setStep3(true);
-
-	vector_player[0]->subtractMoney(-200);
-	vector_player[1]->subtractMoney(-200);
-	*/
-
 	for (Player* p : vector_player) {
 
 		cout << "*****************************************************************" << endl;
@@ -908,12 +894,12 @@ Player * Board::getNextPlayer(Player & p) {
 
 }
 
-void Board::loadGame()
+void Board::loadGame(string playerText, string areaText, string mapText, string powerplantText, string nbPlayerAndTurnText)
 {
-	loadMap();
-	loadPowerplants();
-	loadNbPlayersAndTurnCoutner();
-	loadPlayer();
+	loadMap(areaText, mapText);
+	loadPowerplants(powerplantText);
+	loadNbPlayersAndTurnCoutner(nbPlayerAndTurnText);
+	loadPlayer(playerText);
 	market->loadMarket();
 }
 
@@ -1170,9 +1156,9 @@ void Board::savePlayer() {
 	output.close();
 }
 
-void Board::loadPlayer() {
+void Board::loadPlayer(string textFile) {
 
-	ifstream input("player.txt");
+	ifstream input(textFile);
 
 	string line;
 	int pos;
@@ -1297,7 +1283,7 @@ void Board::saveMap() {
 
 	ofstream outputMap;
 	// Create/open a file
-	outputMap.open("map.txt");
+	outputMap.open("mapText");
 	cout << "Saving map..." << endl;
 
 	//Saves player houses
@@ -1321,9 +1307,9 @@ void Board::saveMap() {
 	outputMap.close();
 }
 
-void Board::loadMap() {
+void Board::loadMap(string areaText, string mapText) {
 
-	ifstream inputAreas("area.txt");;
+	ifstream inputAreas(areaText);;
 	string line;
 	inputAreas >> line; //Areas
 	inputAreas >> line;
@@ -1355,7 +1341,7 @@ void Board::loadMap() {
 	//
 	//Load map section
 	//
-	ifstream inputMap("map.txt");
+	ifstream inputMap(mapText);
 
 	vector<vector<string> > * loadMap = new vector<vector<string> >(42);
 
@@ -1432,11 +1418,11 @@ void Board::savePowerplants()
 	output.close();
 }
 
-void Board::loadPowerplants()
+void Board::loadPowerplants(string text)
 {
 	ifstream input;
 	// Create/open a file
-	input.open("powerplant.txt");
+	input.open(text);
 
 	vector<Powerplant> * pp_vector = new vector<Powerplant>();
 	int pos; //position
@@ -1505,11 +1491,11 @@ void Board::saveNbPlayerAndTurnCounter()
 	output.close();
 }
 
-void Board::loadNbPlayersAndTurnCoutner()
+void Board::loadNbPlayersAndTurnCoutner(string text)
 {
 	ifstream input;
 	// Create/open a file
-	input.open("nbPlayerAndTurn.txt");
+	input.open(text);
 
 	string line;
 	int pos;

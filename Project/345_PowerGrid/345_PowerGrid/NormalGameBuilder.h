@@ -11,7 +11,7 @@ public:
 	}
 
 	virtual void loadGame() {
-		board->loadGame();
+		board->loadGame("player.txt", "area.txt", "map.txt", "powerplant.txt", "nbPlayerAndTurn.txt");
 
 	}
 };

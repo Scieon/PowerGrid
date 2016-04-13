@@ -45,17 +45,17 @@ public:
 	bool checkMapCorrectness();
 
 	//general load/savegame
-	void loadGame();
+	void loadGame(string playerText, string areaText, string mapText, string powerplantText, string nbPlayerAndTurnText);
 	void saveGame();
 	//Save Game section
 	void savePlayer();
-	void loadPlayer();
+	void loadPlayer(string);
 	void saveMap();
-	void loadMap();
+	void loadMap(string, string);
 	void savePowerplants();
-	void loadPowerplants();
+	void loadPowerplants(string);
 	void saveNbPlayerAndTurnCounter();
-	void loadNbPlayersAndTurnCoutner();
+	void loadNbPlayersAndTurnCoutner(string);
 
 	friend class BasicStatistics;
 	friend class ElektrosStats;
@@ -77,5 +77,6 @@ private:
 	
 	//Gets the next player. Used for auction
 	Player * getNextPlayer(Player & p);
+	
 };
 
