@@ -37,17 +37,13 @@ int main(){
 	cin >> answer;
 	if (answer != "y") {
 		//Load game
-		Board * turn = new Board();
 
 
 		GameLoaderSaver gameLoaderSaver; //director
 		NormalGameBuilder* normalGame = new NormalGameBuilder;
 		gameLoaderSaver.setGameBuilder(normalGame);
-		gameLoaderSaver.loadBoard(); //load board in builder pattern
-	    turn = gameLoaderSaver.getBoard();
-		
-
-		turn->loadGame(); //loads map, pplants, resource market
+		gameLoaderSaver.loadBoard(); //load board in builder pattern loads map, pplants, resource market
+		Board *turn = gameLoaderSaver.getBoard();
 
 		int y = 1;
 		while (y<CHANGETHISFORTURNS) {
