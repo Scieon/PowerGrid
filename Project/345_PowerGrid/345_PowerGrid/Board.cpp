@@ -762,7 +762,8 @@ void Board::bureaucracy() {
 			cout << "Player " << vector_player[index]->getColor() << " has won the game with " << max << " houses powered" << endl;
 			cout << "Thank you for playing Funkenschlag" << endl;
 			cout << "EXITING PROGRAM! ..." << endl;
-			system("EXIT");
+			system("pause");
+			exit(1);
 		}
 		else {
 			cout << "There is a tie with 2 or more players having the same number of highest number of powered houses" << endl;
@@ -800,7 +801,8 @@ void Board::bureaucracy() {
 				cout << " with the most elektro ($" << highestElektro << ")" << endl;
 				cout << "Thank you for playing Funkenschlag" << endl;
 				cout << "EXITING PROGRAM! ..." << endl;
-				system("EXIT");
+				system("pause");
+				exit(1);
 			}
 			else {
 				//there was a tie again, get the highest number of houses
@@ -822,7 +824,8 @@ void Board::bureaucracy() {
 				cout << " with the most elektro ($" << highestElektro << ")" << "and with the highest number of houses ( " << highestNbOfHouses << ")" <<  endl;
 				cout << "Thank you for playing Funkenschlag" << endl;
 				cout << "EXITING PROGRAM! ..." << endl;
-				system("EXIT");
+				system("pause");
+				exit(1);
 
 
 			}
