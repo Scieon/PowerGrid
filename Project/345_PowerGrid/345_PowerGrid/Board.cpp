@@ -903,12 +903,12 @@ void Board::loadGame(string playerText, string areaText, string mapText, string 
 	market->loadMarket();
 }
 
-void Board::saveGame()
+void Board::saveGame(string playerText, string areaText, string mapText, string powerplantText, string nbPlayerAndTurnText)
 {
-	saveMap();
-	saveNbPlayerAndTurnCounter();
-	savePlayer();
-	savePowerplants();
+	saveMap(areaText, mapText);
+	savePowerplants(powerplantText);
+	saveNbPlayerAndTurnCounter(nbPlayerAndTurnText);
+	savePlayer(playerText);
 	market->saveMarket();
 }
 
@@ -1113,10 +1113,10 @@ int Board::getHighestNumHousesOfPlayers()
 
 }
 
-void Board::savePlayer() {
+void Board::savePlayer(string text) {
 	ofstream output;
 	// Create/open a file
-	output.open("player.txt");
+	output.open(text);
 
 	//counter
 	int i = 1;
@@ -1255,12 +1255,12 @@ void Board::loadPlayer(string textFile) {
 }
 
 //saves the areas and the Map
-void Board::saveMap() {
+void Board::saveMap(string areaText, string mapText) {
 
 	//save areas
 	ofstream outputAreas;
 	// Create/open a file
-	outputAreas.open("area.txt");
+	outputAreas.open(areaText);
 
 	outputAreas << "Areas" << endl;
 	//Save map areas
@@ -1283,7 +1283,7 @@ void Board::saveMap() {
 
 	ofstream outputMap;
 	// Create/open a file
-	outputMap.open("mapText");
+	outputMap.open(mapText);
 	cout << "Saving map..." << endl;
 
 	//Saves player houses
@@ -1399,11 +1399,11 @@ void Board::loadMap(string areaText, string mapText) {
 }
 
 
-void Board::savePowerplants()
+void Board::savePowerplants(string text)
 {
 	ofstream output;
 	// Create/open a file
-	output.open("powerplant.txt");
+	output.open(text);
 
 	output << "Powerplants" << endl;
 	vector<Powerplant> * ppVector = powerplants_Vector->getPowerplantVector();
@@ -1466,11 +1466,11 @@ void Board::loadPowerplants(string text)
 }
 
 
-void Board::saveNbPlayerAndTurnCounter()
+void Board::saveNbPlayerAndTurnCounter(string text)
 {
 	ofstream output;
 	// Create/open a file
-	output.open("nbPlayerAndTurn.txt");
+	output.open(text);
 
 	output << "NbOfPlayers=" << nbOfPlayer << endl;
 	output << "TurnCount=" << turnCounter << endl;

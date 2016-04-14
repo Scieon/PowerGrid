@@ -46,15 +46,15 @@ public:
 
 	//general load/savegame
 	void loadGame(string playerText, string areaText, string mapText, string powerplantText, string nbPlayerAndTurnText);
-	void saveGame();
+	void saveGame(string playerText, string areaText, string mapText, string powerplantText, string nbPlayerAndTurnText);
 	//Save Game section
-	void savePlayer();
+	void savePlayer(string);
 	void loadPlayer(string);
-	void saveMap();
+	void saveMap(string, string);
 	void loadMap(string, string);
-	void savePowerplants();
+	void savePowerplants(string);
 	void loadPowerplants(string);
-	void saveNbPlayerAndTurnCounter();
+	void saveNbPlayerAndTurnCounter(string);
 	void loadNbPlayersAndTurnCoutner(string);
 
 	friend class BasicStatistics;

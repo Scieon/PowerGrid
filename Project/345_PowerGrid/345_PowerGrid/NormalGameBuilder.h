@@ -7,7 +7,7 @@ class NormalGameBuilder : public BoardBuilder {
 
 public:
 	virtual void saveGame() {
-		board->saveGame();
+		board->saveGame("player.txt", "area.txt", "map.txt", "powerplant.txt", "nbPlayerAndTurn.txt");
 	}
 
 	virtual void loadGame() {

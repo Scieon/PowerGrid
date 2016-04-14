@@ -55,7 +55,10 @@ int main(){
 
 			if (turn->checkMapCorrectness()) {
 				cout << "Map is correct.... Saving game.... DONE!" << endl;
-				turn->saveGame(); // map is correct..save game
+				GameLoaderSaver gameLoaderSaver; //director
+				NormalGameBuilder* normalGame = new NormalGameBuilder;
+				gameLoaderSaver.setGameBuilder(normalGame);
+				gameLoaderSaver.saveBoard(turn); //load board in builder pattern loads map, pplants, resource market
 			}
 
 			y++;
@@ -163,7 +166,13 @@ int main(){
 
 			if (turn->checkMapCorrectness()) {
 				cout << "Map is correct.... Saving game.... DONE!" << endl;
-				turn->saveGame(); // map is correct..save game
+
+
+				GameLoaderSaver gameLoaderSaver; //director
+				NormalGameBuilder* normalGame = new NormalGameBuilder;
+				gameLoaderSaver.setGameBuilder(normalGame);
+				gameLoaderSaver.saveBoard(turn); //load board in builder pattern loads map, pplants, resource market
+
 			}
 
 			y++;
